@@ -1,0 +1,11 @@
+{
+    "name": "baete/blog",
+    "description": "Blog PHP OpenClassRoom",
+    "authors": [
+        {
+            "name": "BAETE Romain",
+            "email": "baete.romain.code@gmail.com"
+        }
+    ],
+    "require": {}
+}
