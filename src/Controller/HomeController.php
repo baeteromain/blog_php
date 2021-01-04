@@ -1,11 +1,13 @@
 <?php 
 namespace App\Controller;
 
-class HomeController{
+use App\core\Controller;
+
+class HomeController extends Controller{
 
     public function Home()
     {
-        echo "Page Home";
+        return $this->render('home/index.twig');
     }
 
 }
