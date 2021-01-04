@@ -15,6 +15,6 @@
     "require": {
         "altorouter/altorouter": "^2.0",
         "symfony/var-dumper": "^5.2",
-        "twig/twig": "2.0"
+        "twig/twig": "^3.1"
     }
 }
