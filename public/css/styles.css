@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* NAV */
+.animated_title {
+    border-right: solid 3px rgba(0, 247, 255, 0.75);
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 25px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Animation */
+.animated_title {
+    animation: animated-text 2s steps(29, end) 1s 1 normal both,
+        animated-cursor 600ms steps(29, end) infinite;
+}
+
+/* text animation */
+
+@keyframes animated-text {
+    from {
+        width: 0;
+    }
+    to {
+        width: 220px;
+    }
+}
+
+/* cursor animations */
+
+@keyframes animated-cursor {
+    from {
+        border-right-color: rgba(0, 247, 255, 0.75);
+    }
+    to {
+        border-right-color: transparent;
+    }
+}
+
+/* BANNER */
+
+.quote-banner,
+.nes {
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* BODY */
