@@ -17,6 +17,6 @@
         "altorouter/altorouter": "^2.0",
         "symfony/var-dumper": "^5.2",
         "twig/twig": "^3.1",
-        "swiftmailer/swiftmailer": "^6.2"
+        "phpmailer/phpmailer": "^6.2"
     }
 }
