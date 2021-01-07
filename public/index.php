@@ -11,8 +11,3 @@ $router = new Router();
 
 $router->run();
 
-$mail = new Mailer(true, EMAIL_USERNAME);
-
-$mail->Subject ='sujet test';
-$mail->Body = "<h1>TEST</h1>";
-$mail->send();
