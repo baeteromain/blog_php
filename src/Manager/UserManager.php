@@ -19,4 +19,35 @@ class UserManager extends Database{
         );
     }
 
+    public function checkUsername($username)
+    {
+
+        $result = $this->createQuery('
+            SELECT COUNT(username) 
+            FROM user WHERE username = :username',
+                [
+                    'username' => $username,
+                ]
+        );
+        $isUnique = $result->fetchColumn();
+        if($isUnique){
+            return 'Le pseudo existe déjà';
+        }
+    }
+
+    public function checkEmail($email)
+    {
+        $result = $this->createQuery('
+            SELECT COUNT(username) 
+            FROM user WHERE email = :email',
+                [
+                    'email' => $email,
+                ]
+        );
+        $isUnique = $result->fetchColumn();
+        if($isUnique){
+            return 'Un compte avec cette adresse email existe déjà';
+        }
+    }
+
 }
