@@ -8,8 +8,8 @@ class Router extends AltoRouter {
     public function __construct()
     {
         $this->map('GET', '/', 'HomeController#Home');
-        $this->map('GET', '/register', 'RegisterController#Register');     
-        $this->map('POST', '/register', 'RegisterController#Signin');     
+        $this->map('GET', '/register', 'RegisterController#signin');     
+        $this->map('POST', '/register', 'RegisterController#signin');     
     }
 
     public function run()
