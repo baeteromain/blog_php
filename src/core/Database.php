@@ -30,7 +30,7 @@ abstract class Database {
         } 
         
         catch (Exception $errorConnection) {
-            die('Erreur de connection: ' . $errorConnection->getMessage());
+            die('Erreur de connexion: ' . $errorConnection->getMessage());
         }
     }
 
