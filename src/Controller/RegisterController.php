@@ -12,14 +12,15 @@ class RegisterController extends Controller{
 
     public function signin()
     {
-        if(!empty($_POST)){
+        $post = $this->post;
+        if(!empty($post)){
         
-           $validations = new Validator($_POST);
+           $validations = new Validator($post);
            $errors = $validations->validate('register');
            if(empty($errors)){
             
                $user = new UserManager;
-               $user->createUser($_POST['username'], $_POST['email'], $_POST['password'], self::SUBSCRIBER);
+               $user->createUser($post['username'], $post['email'], $post['password'], self::SUBSCRIBER);
                header('Location: /');
                exit;
            }
@@ -27,7 +28,7 @@ class RegisterController extends Controller{
         }
         return $this->render('register/index.twig', [
             'errors' => $errors ?? null,
-            'post' => $_POST ?? null
+            'post' => $post ?? null
             ]);
     }
 }
