@@ -13,7 +13,7 @@ class UserManager extends Database{
                 [
                     'username' => $username,
                     'email' => $email,
-                    'password' => $password,
+                    'password' => password_hash($password, PASSWORD_BCRYPT),
                     'role' => $role,
                 ]
         );
