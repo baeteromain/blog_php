@@ -18,7 +18,7 @@ class Mailer extends PHPMailer{
         $this->Password   = EMAIL_PASSWORD;                               // SMTP password
         $this->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
         $this->Port       = EMAIL_PORT;
-        
+        $this->isHTML(true);
         $this->setFrom(EMAIL_USERNAME, 'Romain');
         $this->addAddress($to);  
         
