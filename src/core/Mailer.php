@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Mailer extends PHPMailer{
 
-    public function __construct($exceptions, string $to)
+    public function __construct($exceptions, string $to, string $username, string $template)
     {
         parent::__construct($exceptions);
         #$this->SMTPDebug = SMTP::DEBUG_SERVER;
@@ -20,7 +20,14 @@ class Mailer extends PHPMailer{
         $this->Port       = EMAIL_PORT;
         $this->isHTML(true);
         $this->setFrom(EMAIL_USERNAME, 'Romain');
-        $this->addAddress($to);  
+        $this->addAddress($to);
+        if ($template === 'register'){
+            $this->Subject = 'Inscription au blog de Romain';
+            $message = file_get_contents('../templates/register/mail.html');
+            $message =str_replace('%username%', $username, $message);
+            $message =str_replace('%email%', $to, $message);
+            $this->Body = $message;
+        } 
         
     }
 
