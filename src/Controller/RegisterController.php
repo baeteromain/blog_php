@@ -10,6 +10,7 @@ class RegisterController extends Controller{
 
     const SUBSCRIBER = 1;
     const ADMIN = 2;
+    const REGISTER_TEMPLATE = 'register';
 
     public function signin()
     {
@@ -27,15 +28,12 @@ class RegisterController extends Controller{
            if($checkEmail){
                $errors['email'] = $checkEmail;
            }
+
            if(empty($errors)){
-            
-               
+
                $userManager->createUser($post['username'], $post['email'], $post['password'], self::SUBSCRIBER);
                
-               $mailer = new Mailer(true, $post['email']);
-
-               $mailer->Subject = 'Inscription au blog de Romain';
-               $mailer->Body = '<h1>Merci pour votre inscription</h1>';
+               $mailer = new Mailer(true, $post['email'], $post['username'], self::REGISTER_TEMPLATE);
                $mailer->send();
                
                header('Location: /');
