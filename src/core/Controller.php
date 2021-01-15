@@ -9,10 +9,12 @@ use Twig\Extension\DebugExtension;
 abstract class Controller {
 
     protected $twig;
+    protected $post;
 
     public function __construct()
     {
         $this->getTwig();
+        $this->post = filter_input_array(INPUT_POST);
     }
 
     public function getTwig()
