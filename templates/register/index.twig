@@ -11,7 +11,7 @@
             <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
                 <legend class="f4 fw6 ph0 mh0 nes">Inscription</legend>
                 <div class="mt3">
-                    <label class="db fw6  lh-copy f6" for="pseudo">Pseudo</label>
+                    <label class="db fw6  lh-copy f6" for="pseudo">Nom d'utilisateur</label>
                     <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
                         name="username" id="pseudo" value="{{ post ? post.username|e : '' }}">
                 </div>
@@ -27,7 +27,7 @@
                     <div class="red pt1 i">{{ errors.email }}</div>
                 {% endif %}
                 <div class="mt3">
-                    <label class="db fw6 lh-copy f6" for="password">Password</label>
+                    <label class="db fw6 lh-copy f6" for="password">Mot de passe</label>
                     <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="password"
                         name="password" id="password" value="{{ post ? post.password|e : '' }}">
                 </div>
@@ -35,7 +35,7 @@
                     <div class="red pt1 i">{{ errors.password }}</div>
                 {% endif %}
                 <div class="mt3">
-                    <label class="db fw6 lh-copy f6" for="password">Confirmation password</label>
+                    <label class="db fw6 lh-copy f6" for="password">Confirmez le mot de passe</label>
                     <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="password"
                         name="confirm_password" id="confirm_password" value="{{ post ? post.confirm_password|e : '' }}">
                 </div>

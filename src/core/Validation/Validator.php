@@ -31,9 +31,9 @@ class Validator extends Constraint{
     {
         $val = trim($this->data[$post_key]);
 
-        $errorBlank = $this->notBlank('pseudo', $val);
-        $errorMinLength = $this->minLength('pseudo', $val, 3);
-        $errorMaxLength = $this->maxLength('pseudo', $val, 45);
+        $errorBlank = $this->notBlank('" Nom d\'utilisateur "', $val);
+        $errorMinLength = $this->minLength('" Nom d\'utilisateur "', $val, 3);
+        $errorMaxLength = $this->maxLength('" Nom d\'utilisateur "', $val, 45);
 
         if($errorBlank){
             $this->addError($post_key, $errorBlank);
@@ -48,8 +48,8 @@ class Validator extends Constraint{
     {
         $val = trim($this->data[$post_key]);
 
-        $errorBlank = $this->notBlank('email', $val);
-        $errorIsEmail = $this->isEmail('email', $val);
+        $errorBlank = $this->notBlank('" Email "', $val);
+        $errorIsEmail = $this->isEmail('" Email "', $val);
 
         if($errorBlank){
             $this->addError($post_key, $errorBlank);
@@ -62,9 +62,9 @@ class Validator extends Constraint{
     {
         $val = $this->data[$post_key];
 
-        $errorBlank = $this->notBlank('password', $val);
-        $errorMinLength = $this->minLength('password', $val, 4);
-        $errorMaxLength = $this->maxLength('password', $val, 60);
+        $errorBlank = $this->notBlank('" Mot de passe "', $val);
+        $errorMinLength = $this->minLength('" Mot de passe "', $val, 4);
+        $errorMaxLength = $this->maxLength('" Mot de passe "', $val, 60);
 
         if($errorBlank){
             $this->addError($post_key, $errorBlank);
@@ -80,8 +80,8 @@ class Validator extends Constraint{
     {
         $val = $this->data[$post_key];
 
-        $errorBlank = $this->notBlank('Confirmation password', $val);
-        $errorMatch = $this->matchPassword('Confirmation password', $val, $this->data['password']);
+        $errorBlank = $this->notBlank('" Confirmez le mot de passe "', $val);
+        $errorMatch = $this->matchPassword('" Confirmez le mot de passe "', $val, $this->data['password']);
 
         if($errorBlank){
             $this->addError($post_key, $errorBlank);

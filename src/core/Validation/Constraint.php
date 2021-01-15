@@ -36,7 +36,7 @@ class Constraint
     public function matchPassword($name, $value, $toCheck)
     {
         if($value !== $toCheck){
-            return 'Le champ ' .$name. ' n\'est pas identique au champ password';
+            return 'Le champ ' .$name. ' n\'est pas identique au champ " Mot de passe "';
         }
         return null;
     }
