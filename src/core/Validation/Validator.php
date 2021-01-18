@@ -22,9 +22,15 @@ class Validator extends Constraint{
             $this->validatePassword('password');
             $this->validateConfirmPassword('confirm_password');
             return $this->errors;
-        } else {
-            throw new Exception('Impossible de faire la vérification');
-        }  
+        } 
+        if($name === 'login'){
+            $this->validateUsername('username');
+            $this->validatePassword('password');
+            return $this->errors;
+        } 
+        
+        throw new Exception('Impossible de faire la vérification');
+         
     }
 
     private function validateUsername($post_key)
