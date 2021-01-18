@@ -1,6 +1,8 @@
 <?php 
 namespace App\Manager;
 
+use PDO;
+use App\Model\User;
 use App\core\Database;
 
 class UserManager extends Database{
@@ -17,6 +19,24 @@ class UserManager extends Database{
                     'role' => $role,
                 ]
         );
+    }
+
+    public function login($username, $password)
+    {
+        $query = $this->createQuery('
+        SELECT *
+        FROM user WHERE username = :username',
+            [
+                'username' => $username,
+            ]
+            );
+        $query->setFetchMode(PDO::FETCH_CLASS, User::class);    
+        $user = $query->fetch();
+        $isPasswordValid =  password_verify($password, $user->getPassword());
+        if (!empty($user) && $isPasswordValid === true) {
+            return true;
+        }
+        return 'Le couple " Nom d\'utilisateur " et " Mot de passe " ne correspondent pas. ';
     }
 
     public function checkUsername($username)
