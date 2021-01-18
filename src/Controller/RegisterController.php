@@ -36,7 +36,7 @@ class RegisterController extends Controller{
                $mailer = new Mailer(true, $post['email'], $post['username'], self::REGISTER_TEMPLATE);
                $mailer->send();
                
-               header('Location: /');
+               header('Location: /login');
                exit;
            }
            
