@@ -30,12 +30,14 @@ class RegisterController extends Controller
             }
 
             if (empty($errors)) {
-                $userManager->createUser($post['username'], $post['email'], $post['password'], self::SUBSCRIBER);
+                $token = bin2hex(openssl_random_pseudo_bytes(16));
+                $userManager->createUser($post['username'], $post['email'], $post['password'], self::SUBSCRIBER, $token);
 
-                $mailer = new Mailer(true, $post['email'], $post['username'], self::REGISTER_TEMPLATE);
+                $mailer = new Mailer(true, $post['email'], $post['username'], self::REGISTER_TEMPLATE, $token);
                 $mailer->send();
 
                 header('Location: /login');
+
                 exit;
             }
         }

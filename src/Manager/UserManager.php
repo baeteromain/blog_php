@@ -8,17 +8,18 @@ use PDO;
 
 class UserManager extends Database
 {
-    public function createUser($username, $email, $password, $role)
+    public function createUser($username, $email, $password, $role, $token)
     {
         return $this->createQuery(
             '
-            INSERT INTO user (username, email, password, role_id)
-            VALUES (:username, :email, :password, :role)',
+            INSERT INTO user (username, email, password, role_id, token)
+            VALUES (:username, :email, :password, :role, :token)',
             [
                 'username' => $username,
                 'email' => $email,
                 'password' => password_hash($password, PASSWORD_BCRYPT),
                 'role' => $role,
+                'token' => $token,
             ]
         );
     }
