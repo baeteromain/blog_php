@@ -40,7 +40,7 @@ class UserManager extends Database
             return true;
         }
 
-        return 'Le couple " Nom d\'utilisateur " et " Mot de passe " ne correspondent pas. ';
+        return $errors['login'] = 'Le couple " Nom d\'utilisateur " et " Mot de passe " ne correspondent pas. ';
     }
 
     public function checkUsername($username)

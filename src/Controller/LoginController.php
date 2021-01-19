@@ -17,14 +17,11 @@ class LoginController extends Controller
             $errors = $validations->validate('login');
             if (empty($errors)) {
                 $result = $userManager->login($post['username'], $post['password']);
-                if (true !== $result) {
-                    $errors['login'] = $result;
-                }
-            }
+                if (true === $result) {
+                    header('Location: /');
 
-            if (empty($errors)) {
-                header('Location: /');
-                exit;
+                    exit;
+                }
             }
         }
 
