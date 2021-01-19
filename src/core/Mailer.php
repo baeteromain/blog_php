@@ -28,7 +28,7 @@ class Mailer extends PHPMailer
             $message = str_replace('%username%', $username, $message);
             $message = str_replace('%email%', $to, $message);
             $this->Body = $message;
-        }
+        } 
     }
 
     public function send()
