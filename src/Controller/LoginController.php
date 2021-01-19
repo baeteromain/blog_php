@@ -1,35 +1,36 @@
-<?php 
+<?php
+
 namespace App\Controller;
 
 use App\core\Controller;
-use App\Manager\UserManager;
 use App\core\Validation\Validator;
+use App\Manager\UserManager;
 
-class LoginController extends Controller{
-
+class LoginController extends Controller
+{
     public function login()
     {
         $post = $this->post;
-        $userManager = new UserManager;
-         if(!empty($post)){
+        $userManager = new UserManager();
+        if (!empty($post)) {
             $validations = new Validator($post);
             $errors = $validations->validate('login');
-            if(empty($errors)){
+            if (empty($errors)) {
                 $result = $userManager->login($post['username'], $post['password']);
-                if ($result !== true){
-                $errors['login'] = $result;
+                if (true !== $result) {
+                    $errors['login'] = $result;
                 }
             }
 
-            if(empty($errors)){
+            if (empty($errors)) {
                 header('Location: /');
-                exit;          
+                exit;
             }
-         }
+        }
+
         return $this->render('login/index.twig', [
             'errors' => $errors ?? null,
-            'post' => $post ?? null
-            ]);
+            'post' => $post ?? null,
+        ]);
     }
-
 }
