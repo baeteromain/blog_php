@@ -1,53 +1,77 @@
-<?php 
+<?php
+
 namespace App\Manager;
 
 use App\core\Database;
+use App\Model\User;
+use PDO;
 
-class UserManager extends Database{
-
-    public function createUser($username, $email, $password, $role){
-
-        return $this->createQuery('
+class UserManager extends Database
+{
+    public function createUser($username, $email, $password, $role)
+    {
+        return $this->createQuery(
+            '
             INSERT INTO user (username, email, password, role_id)
             VALUES (:username, :email, :password, :role)',
-                [
-                    'username' => $username,
-                    'email' => $email,
-                    'password' => password_hash($password, PASSWORD_BCRYPT),
-                    'role' => $role,
-                ]
+            [
+                'username' => $username,
+                'email' => $email,
+                'password' => password_hash($password, PASSWORD_BCRYPT),
+                'role' => $role,
+            ]
         );
+    }
+
+    public function login($username, $password)
+    {
+        $query = $this->createQuery(
+            '
+        SELECT *
+        FROM user WHERE username = :username',
+            [
+                'username' => $username,
+            ]
+        );
+        $query->setFetchMode(PDO::FETCH_CLASS, User::class);
+        $user = $query->fetch();
+        $isPasswordValid = password_verify($password, $user->getPassword());
+        if (!empty($user) && true === $isPasswordValid) {
+            return true;
+        }
+
+        return $errors['login'] = 'Le couple " Nom d\'utilisateur " et " Mot de passe " ne correspondent pas. ';
     }
 
     public function checkUsername($username)
     {
-
-        $result = $this->createQuery('
+        $result = $this->createQuery(
+            '
             SELECT COUNT(username) 
             FROM user WHERE username = :username',
-                [
-                    'username' => $username,
-                ]
+            [
+                'username' => $username,
+            ]
         );
         $isUnique = $result->fetchColumn();
-        if($isUnique){
+        if ($isUnique) {
             return 'Le pseudo existe déjà';
         }
     }
 
     public function checkEmail($email)
     {
-        $result = $this->createQuery('
+        $result = $this->createQuery(
+            '
             SELECT COUNT(username) 
             FROM user WHERE email = :email',
-                [
-                    'email' => $email,
-                ]
+            [
+                'email' => $email,
+            ]
         );
         $isUnique = $result->fetchColumn();
-        if($isUnique){
+        if ($isUnique) {
             return 'Un compte avec cette adresse email existe déjà';
         }
     }
-
 }

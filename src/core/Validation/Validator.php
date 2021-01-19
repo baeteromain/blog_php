@@ -1,14 +1,14 @@
-<?php 
+<?php
+
 namespace App\core\Validation;
 
 use Exception;
-use App\core\Validation\Constraint;
 
-class Validator extends Constraint{
-
+class Validator extends Constraint
+{
     private $data;
     private $errors = [];
-   
+
     public function __construct($data)
     {
         $this->data = $data;
@@ -16,15 +16,22 @@ class Validator extends Constraint{
 
     public function validate($name)
     {
-        if($name === 'register'){
+        if ('register' === $name) {
             $this->validateUsername('username');
             $this->validateEmail('email');
             $this->validatePassword('password');
             $this->validateConfirmPassword('confirm_password');
+
             return $this->errors;
-        } else {
-            throw new Exception('Impossible de faire la vérification');
-        }  
+        }
+        if ('login' === $name) {
+            $this->validateUsername('username');
+            $this->validatePassword('password');
+
+            return $this->errors;
+        }
+
+        throw new Exception('Impossible de faire la vérification');
     }
 
     private function validateUsername($post_key)
@@ -35,11 +42,11 @@ class Validator extends Constraint{
         $errorMinLength = $this->minLength('" Nom d\'utilisateur "', $val, 3);
         $errorMaxLength = $this->maxLength('" Nom d\'utilisateur "', $val, 45);
 
-        if($errorBlank){
+        if ($errorBlank) {
             $this->addError($post_key, $errorBlank);
-        }elseif($errorMinLength) {
+        } elseif ($errorMinLength) {
             $this->addError($post_key, $errorMinLength);
-        }elseif($errorMaxLength){
+        } elseif ($errorMaxLength) {
             $this->addError($post_key, $errorMaxLength);
         }
     }
@@ -51,9 +58,9 @@ class Validator extends Constraint{
         $errorBlank = $this->notBlank('" Email "', $val);
         $errorIsEmail = $this->isEmail('" Email "', $val);
 
-        if($errorBlank){
+        if ($errorBlank) {
             $this->addError($post_key, $errorBlank);
-        }elseif($errorIsEmail) {
+        } elseif ($errorIsEmail) {
             $this->addError($post_key, $errorIsEmail);
         }
     }
@@ -66,14 +73,13 @@ class Validator extends Constraint{
         $errorMinLength = $this->minLength('" Mot de passe "', $val, 4);
         $errorMaxLength = $this->maxLength('" Mot de passe "', $val, 60);
 
-        if($errorBlank){
+        if ($errorBlank) {
             $this->addError($post_key, $errorBlank);
-        }elseif($errorMinLength) {
+        } elseif ($errorMinLength) {
             $this->addError($post_key, $errorMinLength);
-        }elseif($errorMaxLength){
+        } elseif ($errorMaxLength) {
             $this->addError($post_key, $errorMaxLength);
         }
-
     }
 
     private function validateConfirmPassword($post_key)
@@ -83,9 +89,9 @@ class Validator extends Constraint{
         $errorBlank = $this->notBlank('" Confirmez le mot de passe "', $val);
         $errorMatch = $this->matchPassword('" Confirmez le mot de passe "', $val, $this->data['password']);
 
-        if($errorBlank){
+        if ($errorBlank) {
             $this->addError($post_key, $errorBlank);
-        }elseif($errorMatch) {
+        } elseif ($errorMatch) {
             $this->addError($post_key, $errorMatch);
         }
     }
@@ -94,5 +100,4 @@ class Validator extends Constraint{
     {
         $this->errors[$key] = $val;
     }
-
 }

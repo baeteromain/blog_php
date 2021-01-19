@@ -1,13 +1,13 @@
-<?php 
+<?php
+
 namespace App\core;
 
 use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 use Twig\Extension\DebugExtension;
+use Twig\Loader\FilesystemLoader;
 
-
-abstract class Controller {
-
+abstract class Controller
+{
     protected $twig;
     protected $post;
 
@@ -19,7 +19,7 @@ abstract class Controller {
 
     public function getTwig()
     {
-       $loader = new FilesystemLoader('../templates');
+        $loader = new FilesystemLoader('../templates');
         $this->twig = new Environment($loader, [
             //TODO: activate cache in production
             //'cache' => '/path/to/compilation_cache',
