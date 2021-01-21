@@ -37,11 +37,11 @@ class UserManager extends Database
         $query->setFetchMode(PDO::FETCH_CLASS, User::class);
         $user = $query->fetch();
         $isPasswordValid = password_verify($password, $user->getPassword());
-        if (!empty($user) && true === $isPasswordValid) {
+        if (!empty($user) && (true === $isPasswordValid)) {
             return true;
         }
 
-        return $errors['login'] = 'Le couple " Nom d\'utilisateur " et " Mot de passe " ne correspondent pas. ';
+        return false;
     }
 
     public function checkUsername($username)

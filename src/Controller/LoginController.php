@@ -22,6 +22,7 @@ class LoginController extends Controller
 
                     exit;
                 }
+                $errors['login'] = 'Le couple " Nom d\'utilisateur " et " Mot de passe " ne correspondent pas. ';
             }
         }
 
