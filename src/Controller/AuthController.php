@@ -4,44 +4,48 @@ namespace App\Controller;
 
 use App\core\Controller;
 use App\core\Mailer;
-use App\core\Validation\Validator;
+use App\core\Validation\Validation;
 use App\Manager\UserManager;
 
 class AuthController extends Controller
 {
-    const SUBSCRIBER = 1;
-    const ADMIN = 2;
-    const REGISTER_TEMPLATE = 'register';
+    const ROLE = [
+        'subscriber' => 1,
+        'admin' => 2,
+    ];
+    // const SUBSCRIBER = 1;
+    // const ADMIN = 2;
+    // const REGISTER_TEMPLATE = 'register';
+
+    const TEMPLATE = ['register'];
+
+    private $validator;
+    private $userManager;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->validator = new Validation();
+        $this->userManager = new UserManager();
+    }
 
     public function signin()
     {
         $post = $this->post;
-        $userManager = new UserManager();
+
         if (!empty($post)) {
-            $validations = new Validator($post);
-            $errors = $validations->validate('register');
-            $checkUsername = $userManager->checkUsername($post['username']);
-            $checkEmail = $userManager->checkEmail($post['email']);
-            if ($checkUsername) {
-                $errors['username'] = $checkUsername;
-            }
-            if ($checkEmail) {
-                $errors['email'] = $checkEmail;
-            }
+            $errors = $this->validator->validate($post, 'User');
 
-            if (empty($errors)) {
+            if (!$errors) {
                 $token = bin2hex(openssl_random_pseudo_bytes(16));
-                $userManager->createUser($post['username'], $post['email'], $post['password'], self::SUBSCRIBER, $token);
+                $this->userManager->createUser($post['username'], $post['email'], $post['password'], self::ROLE['subscriber'], $token);
 
-                $mailer = new Mailer(true, $post['email'], self::REGISTER_TEMPLATE);
+                $mailer = new Mailer(true, $post['email'], self::TEMPLATE[1]);
 
-                $http = isset($_SERVER['HTTPS']) && 'on' == $_SERVER['HTTPS'] ? 'https://' : 'http://';
-                $url = $http.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'];
-
-                $mailer->Body = $this->renderMail('register/test.html.twig', [
+                $mailer->Body = $this->renderMail('register/mail.html.twig', [
                     'username' => $post['username'],
                     'email' => $post['email'],
-                    'url' => $url,
+                    'url' => Mailer::url(),
                     'token' => $token,
                 ]);
                 $mailer->send();
@@ -61,18 +65,15 @@ class AuthController extends Controller
     public function login()
     {
         $post = $this->post;
-        $userManager = new UserManager();
         if (!empty($post)) {
-            $validations = new Validator($post);
-            $errors = $validations->validate('login');
-            if (empty($errors)) {
-                $result = $userManager->login($post['username'], $post['password']);
-                if (true === $result) {
-                    header('Location: /');
+            if (!$this->userManager->login($post['username'], $post['password'])) {
+                $errors['login'] = 'Vos identifiants sont incorrects';
+            }
 
-                    exit;
-                }
-                $errors['login'] = 'Le couple " Nom d\'utilisateur " et " Mot de passe " ne correspondent pas. ';
+            if (!$errors) {
+                header('Location: /');
+
+                exit;
             }
         }
 

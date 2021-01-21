@@ -26,6 +26,8 @@ class UserManager extends Database
 
     public function login($username, $password)
     {
+        // if (isset($password)) {
+        // }
         $query = $this->createQuery(
             '
         SELECT *
@@ -36,9 +38,13 @@ class UserManager extends Database
         );
         $query->setFetchMode(PDO::FETCH_CLASS, User::class);
         $user = $query->fetch();
-        $isPasswordValid = password_verify($password, $user->getPassword());
-        if (!empty($user) && (true === $isPasswordValid)) {
-            return true;
+        if ($user) {
+            $isPasswordValid = password_verify($password, $user->getPassword());
+            if ($isPasswordValid) {
+                return true;
+            }
+
+            return false;
         }
 
         return false;
@@ -56,8 +62,10 @@ class UserManager extends Database
         );
         $isUnique = $result->fetchColumn();
         if ($isUnique) {
-            return 'Le pseudo existe déjà';
+            return false;
         }
+
+        return true;
     }
 
     public function checkEmail($email)
@@ -72,7 +80,9 @@ class UserManager extends Database
         );
         $isUnique = $result->fetchColumn();
         if ($isUnique) {
-            return 'Un compte avec cette adresse email existe déjà';
+            return false;
         }
+
+        return true;
     }
 }
