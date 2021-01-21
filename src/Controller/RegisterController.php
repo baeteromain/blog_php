@@ -33,12 +33,22 @@ class RegisterController extends Controller
                 $token = bin2hex(openssl_random_pseudo_bytes(16));
                 $userManager->createUser($post['username'], $post['email'], $post['password'], self::SUBSCRIBER, $token);
 
-                $mailer = new Mailer(true, $post['email'], $post['username'], self::REGISTER_TEMPLATE, $token);
+                $mailer = new Mailer(true, $post['email'], self::REGISTER_TEMPLATE);
+
+                $http = isset($_SERVER['HTTPS']) && 'on' == $_SERVER['HTTPS'] ? 'https://' : 'http://';
+                $url = $http.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'];
+
+                $mailer->Body = $this->renderMail('register/test.html.twig', [
+                    'username' => $post['username'],
+                    'email' => $post['email'],
+                    'url' => $url,
+                    'token' => $token,
+                ]);
                 $mailer->send();
 
                 header('Location: /login');
 
-                exit;
+                exit();
             }
         }
 

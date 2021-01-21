@@ -33,4 +33,9 @@ abstract class Controller
     {
         echo $this->twig->render($template, $options);
     }
+
+    public function renderMail($template, $options = [])
+    {
+        return $this->twig->render($template, $options);
+    }
 }
