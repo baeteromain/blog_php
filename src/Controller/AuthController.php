@@ -7,7 +7,7 @@ use App\core\Mailer;
 use App\core\Validation\Validator;
 use App\Manager\UserManager;
 
-class RegisterController extends Controller
+class AuthController extends Controller
 {
     const SUBSCRIBER = 1;
     const ADMIN = 2;
@@ -53,6 +53,30 @@ class RegisterController extends Controller
         }
 
         return $this->render('register/index.twig', [
+            'errors' => $errors ?? null,
+            'post' => $post ?? null,
+        ]);
+    }
+
+    public function login()
+    {
+        $post = $this->post;
+        $userManager = new UserManager();
+        if (!empty($post)) {
+            $validations = new Validator($post);
+            $errors = $validations->validate('login');
+            if (empty($errors)) {
+                $result = $userManager->login($post['username'], $post['password']);
+                if (true === $result) {
+                    header('Location: /');
+
+                    exit;
+                }
+                $errors['login'] = 'Le couple " Nom d\'utilisateur " et " Mot de passe " ne correspondent pas. ';
+            }
+        }
+
+        return $this->render('login/index.twig', [
             'errors' => $errors ?? null,
             'post' => $post ?? null,
         ]);
