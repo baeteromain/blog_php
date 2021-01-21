@@ -23,9 +23,17 @@ class Mailer extends PHPMailer
         $this->isHTML(true);
         $this->setFrom(EMAIL_USERNAME, 'Romain');
         $this->addAddress($to);
+        $this->CharSet = 'UTF-8';
         if ('register' === $template) {
             $this->Subject = 'Inscription au blog de Romain';
         }
+    }
+
+    public static function url()
+    {
+        $http = isset($_SERVER['HTTPS']) && 'on' == $_SERVER['HTTPS'] ? 'https://' : 'http://';
+
+        return $http.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'];
     }
 
     public function send()
