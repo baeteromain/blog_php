@@ -7,7 +7,7 @@ class Validation
     public function validate($data, $name)
     {
         if ('User' === $name) {
-            $userValidation = new UserValidation();
+            $userValidation = new UserValidation($data);
 
             return $userValidation->check($data);
         }

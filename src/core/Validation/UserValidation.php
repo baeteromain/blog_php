@@ -8,13 +8,14 @@ class UserValidation
 {
     private $errors = [];
     private $constraint;
-    private $password;
+    private $post;
     private $userManager;
 
-    public function __construct()
+    public function __construct($post)
     {
         $this->constraint = new Constraint();
         $this->userManager = new UserManager();
+        $this->post = $post;
     }
 
     public function check($post)
@@ -34,9 +35,8 @@ class UserValidation
         } elseif ('password' === $name) {
             $error = $this->checkPassword($name, $value);
             $this->addError($name, $error);
-            $this->password = $value;
         } elseif ('confirm_password' === $name) {
-            $error = $this->checkPasswordConfirm($name, $value, $this->password);
+            $error = $this->checkPasswordConfirm($name, $value, $this->post['password']);
             $this->addError($name, $error);
         } elseif ('email' === $name) {
             $error = $this->checkEmail($name, $value);
