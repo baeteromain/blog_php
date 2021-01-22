@@ -45,3 +45,11 @@
 }
 
 /* BODY */
+
+.main_login {
+    min-height: 600px;
+}
+
+.main_register {
+    min-height: 800px;
+}
