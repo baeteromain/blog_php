@@ -6,8 +6,8 @@
 
 {% block content %}
 
- <main class="pa4 black-80 mt4">
-        <form class="measure center" method="post" action="/login">
+ <main class="pa4 black-80 mt4 min-h-100 main_login">
+        <form class="measure center " method="post" action="/login">
             <fieldset id="login" class="ba b--transparent ph0 mh0">
                 <legend class="f4 fw6 ph0 mh0 nes">Connexion</legend>
                 <div class="mt3">
@@ -40,6 +40,11 @@
                 <a href="#0" class="f6 link dim black db">Vous avez oublié votre mot de passe ?</a>
             </div>
         </form>
+        {% if session.get('register') %}
+            <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+                <span class="i"> {{ session.show('register') }}</span>
+            </div>
+        {% endif %}  
     </main>
     
     <footer style=" background-image:url(https://media.giphy.com/media/1lvotGQwhzi6O0gQtV/giphy.gif);"
