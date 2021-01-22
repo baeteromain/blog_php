@@ -13,11 +13,8 @@ class AuthController extends Controller
         'subscriber' => 1,
         'admin' => 2,
     ];
-    // const SUBSCRIBER = 1;
-    // const ADMIN = 2;
-    // const REGISTER_TEMPLATE = 'register';
 
-    const TEMPLATE = ['register'];
+    const TEMPLATE = 'register';
 
     private $validator;
     private $userManager;
@@ -31,20 +28,20 @@ class AuthController extends Controller
 
     public function signin()
     {
-        $post = $this->post;
-
-        if (!empty($post)) {
-            $errors = $this->validator->validate($post, 'User');
+        if (!empty($this->post)) {
+            $errors = $this->validator->validate($this->post, 'User');
 
             if (!$errors) {
                 $token = bin2hex(openssl_random_pseudo_bytes(16));
-                $this->userManager->createUser($post['username'], $post['email'], $post['password'], self::ROLE['subscriber'], $token);
+                $this->userManager->createUser($this->post['username'], $this->post['email'], $this->post['password'], self::ROLE['subscriber'], $token);
 
-                $mailer = new Mailer(true, $post['email'], self::TEMPLATE[1]);
+                $this->session->set('register', 'Merci de valider votre compte via le lien de confirmation envoyé à votre adresse mail '.$this->post['email']);
+
+                $mailer = new Mailer(true, $this->post['email'], self::TEMPLATE);
 
                 $mailer->Body = $this->renderMail('register/mail.html.twig', [
-                    'username' => $post['username'],
-                    'email' => $post['email'],
+                    'username' => $this->post['username'],
+                    'email' => $this->post['email'],
                     'url' => Mailer::url(),
                     'token' => $token,
                 ]);
@@ -58,15 +55,14 @@ class AuthController extends Controller
 
         return $this->render('register/index.twig', [
             'errors' => $errors ?? null,
-            'post' => $post ?? null,
+            'post' => $this->post ?? null,
         ]);
     }
 
     public function login()
     {
-        $post = $this->post;
-        if (!empty($post)) {
-            if (!$this->userManager->login($post['username'], $post['password'])) {
+        if (!empty($this->post)) {
+            if (!$this->userManager->login($this->post['username'], $this->post['password'])) {
                 $errors['login'] = 'Vos identifiants sont incorrects';
             }
 
@@ -79,7 +75,7 @@ class AuthController extends Controller
 
         return $this->render('login/index.twig', [
             'errors' => $errors ?? null,
-            'post' => $post ?? null,
+            'post' => $this->post ?? null,
         ]);
     }
 }
