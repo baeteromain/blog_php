@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>Détails de votre inscription</h1>
+<br />
+<p>Merci pour votre inscription, voici les détails de votre compte:</p>
+<br />
+
+<ul>
+    <li><strong>Login : </strong>{{ username }}</li>
+    <li><strong>Email : </strong>{{ email }}</li>
+</ul>
+
+<p>
+    Pour valider votre inscription et vous permettre de vous connecter, veuillez cliquer sur le lien
+    suivant :
+</p>
+<p><a href="{{url}}/login?token={{token}}&username={{username}}">Je valide mon adresse mail !</a></p>
+</body>
+</html>

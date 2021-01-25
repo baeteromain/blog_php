@@ -10,11 +10,18 @@ abstract class Controller
 {
     protected $twig;
     protected $post;
+    protected $session;
+    protected $validation;
 
     public function __construct()
     {
+        $request = new Request();
+        $this->get = $request->getGet();
+        $this->post = $request->getPost();
+        $this->session = $request->getSession();
+
         $this->getTwig();
-        $this->post = filter_input_array(INPUT_POST);
+        // $this->post = filter_input_array(INPUT_POST);
     }
 
     public function getTwig()
@@ -27,10 +34,16 @@ abstract class Controller
             'debug' => true,
         ]);
         $this->twig->addExtension(new DebugExtension());
+        $this->twig->addGlobal('session', $this->session);
     }
 
     public function render($template, $options = [])
     {
         echo $this->twig->render($template, $options);
+    }
+
+    public function renderMail($template, $options = [])
+    {
+        return $this->twig->render($template, $options);
     }
 }

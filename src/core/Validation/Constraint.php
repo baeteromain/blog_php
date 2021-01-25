@@ -40,10 +40,10 @@ class Constraint
         return null;
     }
 
-    public function matchPassword($name, $value, $toCheck)
+    public function matchPassword($value, $toCheck)
     {
         if ($value !== $toCheck) {
-            return 'Le champ '.$name.' n\'est pas identique au champ " Mot de passe "';
+            return 'Les mots de passe ne sont pas identiques';
         }
 
         return null;
