@@ -62,14 +62,40 @@ class AuthController extends Controller
     public function login()
     {
         if (!empty($this->post)) {
-            if (!$this->userManager->login($this->post['username'], $this->post['password'])) {
+            $user = $this->userManager->login($this->post['username'], $this->post['password']);
+
+            if (!$user) {
                 $errors['login'] = 'Vos identifiants sont incorrects';
             }
 
-            if (!$errors) {
-                header('Location: /');
+            if ($user) {
+                if ('1' !== $user->getValid()) {
+                    $this->session->set('confirm_email_not_valid', "Votre adresse mail n'est pas encore confirmée, merci de consulter votre boite mail");
+                }
 
-                exit;
+                if ('1' === $user->getValid()) {
+                    $this->session->set('id', $user->getId())
+                        ->set('username', $user->getUsername())
+                        ->set('role', $user->getRole_id())
+                    ;
+
+                    header('Location: /');
+
+                    exit;
+                }
+            }
+        }
+
+        if (!empty($this->get)) {
+            $errors = $this->userManager->emailConfirmation($this->get['token'], $this->get['username']);
+            dump($errors);
+            if ($errors) {
+                $this->session->set('confirm_email_fail', "Le lien d'activation n'est pas valide, ou votre adresse email est déjà vérifiée");
+            }
+
+            if (!$errors) {
+                $this->userManager->validUser($this->get['username'], $this->get['token']);
+                $this->session->set('confirm_email', 'Votre adresse mail est confirmée, connectez-vous !');
             }
         }
 

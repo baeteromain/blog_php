@@ -24,10 +24,41 @@ class UserManager extends Database
         );
     }
 
+    public function emailConfirmation($token, $username)
+    {
+        $result = $this->createQuery(
+            '
+        SELECT COUNT(token)
+        FROM user WHERE username = :username AND token = :token',
+            [
+                'username' => $username,
+                'token' => $token,
+            ]
+        );
+
+        $tokenMatch = $result->fetchColumn();
+        if ($tokenMatch) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function validUser($username, $token)
+    {
+        return $this->createQuery(
+            '
+        UPDATE user SET valid = 1
+        WHERE username = :username AND token = :token',
+            [
+                'username' => $username,
+                'token' => $token,
+            ]
+        );
+    }
+
     public function login($username, $password)
     {
-        // if (isset($password)) {
-        // }
         $query = $this->createQuery(
             '
         SELECT *
@@ -41,7 +72,7 @@ class UserManager extends Database
         if ($user) {
             $isPasswordValid = password_verify($password, $user->getPassword());
             if ($isPasswordValid) {
-                return true;
+                return $user;
             }
 
             return false;

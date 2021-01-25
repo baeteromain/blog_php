@@ -14,6 +14,8 @@ class Session
     public function set($name, $value)
     {
         $_SESSION[$name] = $value;
+
+        return $this;
     }
 
     public function get($name)
