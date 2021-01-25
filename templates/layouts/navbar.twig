@@ -6,15 +6,25 @@
         <h1 class="inline-flex animated_title ma4 ml5 ma0-l">BAËTÉ Romain</h1>
     </div>
     <div class="db dtc-l v-mid tc tr-l">
-        <a class="nes no-underline black bg-animate hover-bg-black hover-white  f6 f7-l  dib mr3 mr2-l pa2"
-            href="/" title="home">Accueil</a>
+        <a class="nes no-underline black bg-animate hover-bg-black hover-white  f6 f7-l  dib mr3 mr2-l pa2" href="/"
+            title="home">Accueil</a>
         <a class="nes no-underline black bg-animate hover-bg-black hover-white   f6 f7-l  dib mr3 mr2-l pa2"
             href="posts.html" title="blog">Blog</a>
         <a class="nes no-underline black bg-animate hover-bg-black hover-white  f6 f7-l  dib mr3 mr2-l pa2"
             href="contact.html" title="contact">Contact</a>
+        {% if session.get('id') is not empty %}
+        <a class="nes no-underline black bg-animate hover-bg-black hover-white  f6 f7-l  dib mr3 mr2-l pa2"
+            href="/profil" title="profil">Mon profil</a>
+        {% else %}
         <a class="nes no-underline black bg-animate hover-bg-black hover-white  f6 f7-l  dib mr3 mr2-l pa2"
             href="/register" title="register">Inscription</a>
-        <a class="nes no-underline black bg-animate hover-bg-black hover-white  f6 f7-l  dib pa2"
-            href="/login" title="login">Connexion</a>
+        {% endif %}
+        {% if session.get('id') is not empty %}
+        <a class="nes no-underline black bg-animate hover-bg-black hover-white  f6 f7-l  dib mr3 mr2-l pa2"
+            href="/logout" title="logout">Déconnexion</a>
+        {% else %}
+        <a class="nes no-underline black bg-animate hover-bg-black hover-white  f6 f7-l  dib pa2" href="/login"
+            title="login">Connexion</a>
+        {% endif %}
     </div>
 </nav>

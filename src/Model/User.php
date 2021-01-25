@@ -14,6 +14,10 @@ class User
 
     private $role_id;
 
+    private $token;
+
+    private $valid;
+
     /**
      * Get the value of id.
      */
@@ -120,6 +124,50 @@ class User
     public function setRole_id($role_id)
     {
         $this->role_id = $role_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of token.
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set the value of token.
+     *
+     * @param mixed $token
+     *
+     * @return self
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of valid.
+     */
+    public function getValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * Set the value of valid.
+     *
+     * @param mixed $valid
+     *
+     * @return self
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
 
         return $this;
     }

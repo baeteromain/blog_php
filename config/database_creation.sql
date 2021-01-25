@@ -42,6 +42,8 @@ CREATE TABLE IF NOT EXISTS `blog_php_br`.`user` (
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(60) NOT NULL,
   `role_id` INT NOT NULL,
+  `token` VARCHAR(255) NULL,
+  `valid` INT NULL DEFAULT 0,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
   PRIMARY KEY (`id`),
