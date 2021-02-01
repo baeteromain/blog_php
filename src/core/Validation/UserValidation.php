@@ -66,7 +66,7 @@ class UserValidation
         if ($this->constraint->maxLength($name, $value, 255)) {
             return $this->constraint->maxLength('username', $value, 255);
         }
-        if (!$this->userManager->checkUsername($value)) {
+        if ($this->userManager->checkUsername($value)) {
             return "Ce nom d'utilisateur exite déja ";
         }
     }
@@ -103,7 +103,7 @@ class UserValidation
         if ($this->constraint->isEmail($name, $value)) {
             return $this->constraint->isEmail('email', $value);
         }
-        if (!$this->userManager->checkEmail($value)) {
+        if ($this->userManager->checkEmail($value)) {
             return 'Cette addresse mail existe déja';
         }
     }

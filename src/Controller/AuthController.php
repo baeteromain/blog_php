@@ -64,7 +64,7 @@ class AuthController extends Controller
     public function forgotpwd()
     {
         if (!empty($this->post['email']) && isset($this->post['email'])) {
-            $exist = !$this->userManager->checkEmail($this->post['email']);
+            $exist = $this->userManager->checkEmail($this->post['email']);
             if ($exist) {
                 $token = bin2hex(openssl_random_pseudo_bytes(16));
                 $this->userManager->tokenForgotpwd($this->post['email'], $token);
@@ -101,6 +101,10 @@ class AuthController extends Controller
             if (!$errors) {
                 $this->userManager->updatePassword($postPassword['password'], $this->post['email']);
                 $this->userManager->removeToken($this->post['email']);
+
+                header('Location: /login');
+
+                exit();
             }
         }
 
@@ -141,8 +145,12 @@ class AuthController extends Controller
             $errors['form_failed_login'] = 'Une erreur est survenue, merci de resaisir vos informations';
         }
 
-        if (!empty($this->get)) {
-            $errors = $this->userManager->emailConfirmation($this->get['email'], $this->get['token']);
+        if (!empty($this->get) && !isset($this->get['email'], $this->post['token'])) {
+            $this->session->set('confirm_email_fail', "Le lien d'activation n'est pas valide");
+        }
+
+        if (!empty($this->get) && isset($this->get['email'], $this->get['token'])) {
+            $errors = !$this->userManager->emailConfirmation($this->get['email'], $this->get['token']);
             if ($errors) {
                 $this->session->set('confirm_email_fail', "Le lien d'activation n'est pas valide, ou votre adresse email est déjà vérifiée");
             }

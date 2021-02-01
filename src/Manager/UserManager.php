@@ -76,10 +76,10 @@ class UserManager extends Database
 
         $tokenMatch = $result->fetchColumn();
         if ($tokenMatch) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public function validEmail($email, $token)
@@ -131,10 +131,10 @@ class UserManager extends Database
         );
         $isUnique = $result->fetchColumn();
         if ($isUnique) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public function checkEmail($email)
@@ -149,9 +149,9 @@ class UserManager extends Database
         );
         $isUnique = $result->fetchColumn();
         if ($isUnique) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 }
