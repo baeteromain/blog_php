@@ -24,14 +24,52 @@ class UserManager extends Database
         );
     }
 
-    public function emailConfirmation($token, $username)
+    public function removeToken($email)
+    {
+        return $this->createQuery(
+            '
+        UPDATE user SET token = null
+        WHERE email = :email',
+            [
+                'email' => $email,
+            ]
+        );
+    }
+
+    public function tokenForgotpwd($email, $token)
+    {
+        return $this->createQuery(
+            '
+        UPDATE user SET token = :token
+        WHERE email = :email',
+            [
+                'email' => $email,
+                'token' => $token,
+            ]
+        );
+    }
+
+    public function updatePassword($password, $email)
+    {
+        return $this->createQuery(
+            '
+            UPDATE user SET password = :password, valid = 1 
+            WHERE email = :email',
+            [
+                'password' => password_hash($password, PASSWORD_BCRYPT),
+                'email' => $email,
+            ]
+        );
+    }
+
+    public function emailConfirmation($email, $token)
     {
         $result = $this->createQuery(
             '
         SELECT COUNT(token)
-        FROM user WHERE username = :username AND token = :token',
+        FROM user WHERE email = :email AND token = :token',
             [
-                'username' => $username,
+                'email' => $email,
                 'token' => $token,
             ]
         );
@@ -44,14 +82,14 @@ class UserManager extends Database
         return true;
     }
 
-    public function validUser($username, $token)
+    public function validEmail($email, $token)
     {
         return $this->createQuery(
             '
         UPDATE user SET valid = 1
-        WHERE username = :username AND token = :token',
+        WHERE email = :email AND token = :token',
             [
-                'username' => $username,
+                'email' => $email,
                 'token' => $token,
             ]
         );
@@ -103,7 +141,7 @@ class UserManager extends Database
     {
         $result = $this->createQuery(
             '
-            SELECT COUNT(username) 
+            SELECT COUNT(email) 
             FROM user WHERE email = :email',
             [
                 'email' => $email,

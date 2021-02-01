@@ -43,6 +43,9 @@
                     <div class="red pt1 i">{{ errors.confirm_password }}</div>
                 {% endif %}
             </fieldset>
+                {% if errors.form_failed_register %}
+                    <div class="red pv1 i">{{ errors.form_failed_register }}</div>
+                {% endif %}
             <div class="">
                 <input
                     class="ph3 pv2 input-reset b--black bg-transparent pointer f6 dib no-underline black bg-animate hover-bg-black hover-white nes"

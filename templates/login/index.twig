@@ -30,14 +30,17 @@
             {% if errors.login %}
                 <div class="red pt1 i pb4">{{ errors.login }}</div>
             {% endif %}
+            {% if errors.form_failed_login %}
+                    <div class="red pv2 i">{{ errors.form_failed_login }}</div>
+                {% endif %}
             <div class="">
                 <input
                     class="ph3 pv2 input-reset b--black bg-transparent pointer f6 dib no-underline black bg-animate hover-bg-black hover-white nes"
                     type="submit" value="Se connecter" name"submit">
             </div>
             <div class="lh-copy mt3">
-                <a href="register.html" class="f6 link dim black db">Inscription</a>
-                <a href="#0" class="f6 link dim black db">Vous avez oublié votre mot de passe ?</a>
+                <a href="/register" class="f6 link dim black db">Inscription</a>
+                <a href="/forgot_password" class="f6 link dim black db">Vous avez oublié votre mot de passe ?</a>
             </div>
         </form>
         {% if session.get('register') %}

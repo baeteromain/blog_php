@@ -41,6 +41,8 @@ class UserValidation
         } elseif ('email' === $name) {
             $error = $this->checkEmail($name, $value);
             $this->addError($name, $error);
+        } else {
+            $this->addError('form_failed_register', 'Une erreur est survenue lors de votre inscription, merci de resaisir vos informations');
         }
     }
 
