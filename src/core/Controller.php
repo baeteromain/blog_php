@@ -24,6 +24,15 @@ abstract class Controller
         // $this->post = filter_input_array(INPUT_POST);
     }
 
+    public function checkLoggedIn()
+    {
+        if ($this->session->get('user')) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getTwig()
     {
         $loader = new FilesystemLoader('../templates');
