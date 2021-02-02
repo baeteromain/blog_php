@@ -13,10 +13,12 @@ class Router extends AltoRouter
         $this->map('POST', '/register', 'AuthController#signin');
         $this->map('GET', '/login', 'AuthController#login');
         $this->map('POST', '/login', 'AuthController#login');
+        $this->map('GET', '/logout', 'AuthController#logout');
         $this->map('GET', '/forgot_password', 'AuthController#forgotpwd');
         $this->map('POST', '/forgot_password', 'AuthController#forgotpwd');
         $this->map('GET', '/changePassword', 'AuthController#changePassword');
         $this->map('POST', '/changePassword', 'AuthController#changePassword');
+        $this->map('GET', '/profil', 'ProfilController#profil');
     }
 
     public function run()
