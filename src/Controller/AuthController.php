@@ -14,7 +14,6 @@ class AuthController extends Controller
         'admin' => 2,
     ];
 
-    // const TEMPLATE = 'register';
     const TEMPLATE = [1 => 'register',
         2 => 'forgot_pwd', ];
 
@@ -101,6 +100,9 @@ class AuthController extends Controller
             if (!$errors) {
                 $this->userManager->updatePassword($postPassword['password'], $this->post['email']);
                 $this->userManager->removeToken($this->post['email']);
+                if ($this->checkLoggedIn()) {
+                    $this->session->stop();
+                }
 
                 header('Location: /login');
 
@@ -130,9 +132,7 @@ class AuthController extends Controller
                 }
 
                 if ('1' === $user->getValid()) {
-                    $this->session->set('id', $user->getId())
-                        ->set('username', $user->getUsername())
-                        ->set('role', $user->getRole_id())
+                    $this->session->set('user', $user)
                     ;
                     header('Location: /');
 
@@ -167,5 +167,16 @@ class AuthController extends Controller
             'errors' => $errors ?? null,
             'post' => $this->post ?? null,
         ]);
+    }
+
+    public function logout()
+    {
+        if ($this->checkLoggedIn()) {
+            $this->session->stop();
+
+            header('Location: /');
+
+            exit;
+        }
     }
 }
