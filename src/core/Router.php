@@ -3,11 +3,15 @@
 namespace App\core;
 
 use AltoRouter;
+use App\Controller\ErrorController;
+use Exception;
 
 class Router extends AltoRouter
 {
     public function __construct()
     {
+        $this->errorController = new ErrorController();
+
         $this->map('GET', '/', 'HomeController#Home');
         $this->map('GET', '/register', 'AuthController#signin');
         $this->map('POST', '/register', 'AuthController#signin');
@@ -19,13 +23,15 @@ class Router extends AltoRouter
         $this->map('GET', '/changePassword', 'AuthController#changePassword');
         $this->map('POST', '/changePassword', 'AuthController#changePassword');
         $this->map('GET', '/profil', 'ProfilController#profil');
+        $this->map('POST', '/profil/update', 'ProfilController#updateProfil');
+        $this->map('GET', '/profil/update', 'ProfilController#updateProfil');
     }
 
     public function run()
     {
         $match = $this->match();
         if (false === $match) {
-            echo 'Erreur 404 ';
+            $this->errorController->errorNotFound();
         } else {
             list($controller, $action) = explode('#', $match['target']);
             $cname = '\\App\\Controller\\'.$controller;
@@ -33,9 +39,9 @@ class Router extends AltoRouter
             if (is_callable([$controllerName, $action])) {
                 call_user_func_array([$controllerName, $action], [$match['params']]);
             } else {
-                echo 'Error: can not call '.get_class($controllerName).'#'.$action;
-                // here your routes are wrong.
-                // Throw an exception in debug, send a 500 error in production
+                $this->errorController->errorNotFound();
+
+                throw new Exception('Error: can not call '.get_class($controllerName).'#'.$action);
             }
         }
     }
