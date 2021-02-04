@@ -19,12 +19,14 @@ class AuthController extends Controller
 
     private $validator;
     private $userManager;
+    private $errorController;
 
     public function __construct()
     {
         parent::__construct();
         $this->validator = new Validation();
         $this->userManager = new UserManager();
+        $this->errorController = new ErrorController();
     }
 
     public function signin()
@@ -127,17 +129,21 @@ class AuthController extends Controller
             }
 
             if ($user) {
-                if ('1' !== $user->getValid()) {
-                    $this->session->set('confirm_email_not_valid', "Votre adresse mail n'est pas encore confirmée, merci de consulter votre boite mail");
-                }
-
-                if ('1' === $user->getValid()) {
-                    $this->session->set('user', $user)
-                    ;
+                if ($user->getValid()) {
+                    $this->session->set(
+                        'user',
+                        [
+                            'id' => $user->getId(),
+                            'username' => $user->getUsername(),
+                            'email' => $user->getEmail(),
+                            'role' => $user->getRole_id(),
+                        ]
+                    );
                     header('Location: /');
 
                     exit;
                 }
+                $this->session->set('confirm_email_not_valid', "Votre adresse mail n'est pas encore confirmée, merci de consulter votre boite mail");
             }
         }
 
@@ -145,14 +151,12 @@ class AuthController extends Controller
             $errors['form_failed_login'] = 'Une erreur est survenue, merci de resaisir vos informations';
         }
 
-        if (!empty($this->get) && !isset($this->get['email'], $this->post['token'])) {
-            $this->session->set('confirm_email_fail', "Le lien d'activation n'est pas valide");
-        }
-
         if (!empty($this->get) && isset($this->get['email'], $this->get['token'])) {
             $errors = !$this->userManager->emailConfirmation($this->get['email'], $this->get['token']);
             if ($errors) {
-                $this->session->set('confirm_email_fail', "Le lien d'activation n'est pas valide, ou votre adresse email est déjà vérifiée");
+                $this->errorController->errorNotFound();
+
+                exit;
             }
 
             if (!$errors) {
