@@ -21,7 +21,6 @@ abstract class Controller
         $this->session = $request->getSession();
 
         $this->getTwig();
-        // $this->post = filter_input_array(INPUT_POST);
     }
 
     public function checkLoggedIn()
@@ -30,7 +29,9 @@ abstract class Controller
             return true;
         }
 
-        return false;
+        header('Location: /login');
+
+        exit;
     }
 
     public function getTwig()

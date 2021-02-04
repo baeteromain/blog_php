@@ -3,20 +3,33 @@
 namespace App\Controller;
 
 use App\core\Controller;
+use App\Manager\UserManager;
 
 class ProfilController extends Controller
 {
+    private $userManager;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->userManager = new UserManager();
+    }
+
     public function profil()
     {
-        if (!$this->checkLoggedIn()) {
-            header('Location: /login');
+        $this->checkLoggedIn();
 
-            exit;
+        return $this->render('profil/index.twig');
+    }
+
+    public function updateProfil()
+    {
+        $this->checkLoggedIn();
+        $user = $this->session->get('user');
+        if (!empty($this->post) && isset($this->post['username'])) {
+            $this->userManager->updateUser($user['id'], $this->post['username'], $this->post['email']);
         }
 
-        return $this->render('profil/index.twig', [
-            'errors' => $errors ?? null,
-            'post' => $this->post ?? null,
-        ]);
+        return $this->render('profil/update.twig');
     }
 }
