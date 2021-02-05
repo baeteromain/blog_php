@@ -63,6 +63,11 @@
                 <span class="i"> {{ session.show('confirm_email_not_valid') }}</span>
             </div>
         {% endif %}  
+        {% if session.get('update_email') %}
+            <div class="mt3 flex items-center justify-center pa4 bg-light-green">
+                <span class="i"> {{ session.show('update_email') }}</span>
+            </div>
+        {% endif %}  
     </main>
     
     <footer style=" background-image:url(https://media.giphy.com/media/1lvotGQwhzi6O0gQtV/giphy.gif);"

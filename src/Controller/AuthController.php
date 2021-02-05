@@ -14,18 +14,19 @@ class AuthController extends Controller
         'admin' => 2,
     ];
 
-    // const TEMPLATE = 'register';
     const TEMPLATE = [1 => 'register',
         2 => 'forgot_pwd', ];
 
     private $validator;
     private $userManager;
+    private $errorController;
 
     public function __construct()
     {
         parent::__construct();
         $this->validator = new Validation();
         $this->userManager = new UserManager();
+        $this->errorController = new ErrorController();
     }
 
     public function signin()
@@ -101,6 +102,9 @@ class AuthController extends Controller
             if (!$errors) {
                 $this->userManager->updatePassword($postPassword['password'], $this->post['email']);
                 $this->userManager->removeToken($this->post['email']);
+                if ($this->checkLoggedIn()) {
+                    $this->session->stop();
+                }
 
                 header('Location: /login');
 
@@ -125,19 +129,21 @@ class AuthController extends Controller
             }
 
             if ($user) {
-                if ('1' !== $user->getValid()) {
-                    $this->session->set('confirm_email_not_valid', "Votre adresse mail n'est pas encore confirmée, merci de consulter votre boite mail");
-                }
-
-                if ('1' === $user->getValid()) {
-                    $this->session->set('id', $user->getId())
-                        ->set('username', $user->getUsername())
-                        ->set('role', $user->getRole_id())
-                    ;
+                if ($user->getValid()) {
+                    $this->session->set(
+                        'user',
+                        [
+                            'id' => $user->getId(),
+                            'username' => $user->getUsername(),
+                            'email' => $user->getEmail(),
+                            'role' => $user->getRole_id(),
+                        ]
+                    );
                     header('Location: /');
 
                     exit;
                 }
+                $this->session->set('confirm_email_not_valid', "Votre adresse mail n'est pas encore confirmée, merci de consulter votre boite mail");
             }
         }
 
@@ -145,14 +151,12 @@ class AuthController extends Controller
             $errors['form_failed_login'] = 'Une erreur est survenue, merci de resaisir vos informations';
         }
 
-        if (!empty($this->get) && !isset($this->get['email'], $this->post['token'])) {
-            $this->session->set('confirm_email_fail', "Le lien d'activation n'est pas valide");
-        }
-
         if (!empty($this->get) && isset($this->get['email'], $this->get['token'])) {
             $errors = !$this->userManager->emailConfirmation($this->get['email'], $this->get['token']);
             if ($errors) {
-                $this->session->set('confirm_email_fail', "Le lien d'activation n'est pas valide, ou votre adresse email est déjà vérifiée");
+                $this->errorController->errorNotFound();
+
+                exit;
             }
 
             if (!$errors) {
@@ -167,5 +171,16 @@ class AuthController extends Controller
             'errors' => $errors ?? null,
             'post' => $this->post ?? null,
         ]);
+    }
+
+    public function logout()
+    {
+        if ($this->checkLoggedIn()) {
+            $this->session->stop();
+
+            header('Location: /');
+
+            exit;
+        }
     }
 }

@@ -30,6 +30,9 @@ class Mailer extends PHPMailer
         if ('forgot_pwd' === $template) {
             $this->Subject = 'Changement mot de passe';
         }
+        if ('update' === $template) {
+            $this->Subject = 'Modification de vos informations';
+        }
     }
 
     public static function url()
