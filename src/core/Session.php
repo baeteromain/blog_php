@@ -44,6 +44,14 @@ class Session
         unset($_SESSION[$name]);
     }
 
+    public function update($name, $param, $value)
+    {
+        unset($_SESSION[$name][$param]);
+        $_SESSION[$name][$param] = $value;
+
+        return $this;
+    }
+
     public function start()
     {
         session_start();
