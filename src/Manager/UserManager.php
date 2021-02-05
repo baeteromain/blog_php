@@ -24,16 +24,29 @@ class UserManager extends Database
         );
     }
 
-    public function updateUser($id, $username, $email)
+    public function updateUsername($id, $username)
     {
         return $this->createQuery(
             '
-        UPDATE user SET username = :username , email = :email
+        UPDATE user SET username = :username 
         WHERE id = :id',
             [
                 'id' => $id,
                 'username' => $username,
+            ]
+        );
+    }
+
+    public function updateEmail($id, $email, $token)
+    {
+        return $this->createQuery(
+            '
+        UPDATE user SET email = :email, token = :token, valid = 0
+        WHERE id = :id',
+            [
+                'id' => $id,
                 'email' => $email,
+                'token' => $token,
             ]
         );
     }
