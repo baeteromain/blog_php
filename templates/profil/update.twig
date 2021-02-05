@@ -16,17 +16,18 @@
                     <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
                         name="username" id="username" value="{{session ? session.get('user').username|e : ''}}">
                 </div>
+                {% if errors.username %}
+                    <div class="red pt1 i">{{ errors.username }}</div>
+                {% endif %}
                 <div class="mt3">
                     <label class="db fw6 lh-copy f6" for="email">Votre email</label>
-                    <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="email"
+                    <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
                         name="email" id="email" value="{{ session ? session.get('user').email|e : ''}}">
                 </div>
                 {% if errors.email %}
                     <div class="red pt1 i">{{ errors.email }}</div>
                 {% endif %}
-                {% if errors.username %}
-                    <div class="red pt1 i">{{ errors.username }}</div>
-                {% endif %}
+                
             </fieldset>
             <div class="">
                 <input

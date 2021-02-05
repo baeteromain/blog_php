@@ -22,7 +22,7 @@
                 <dd class="dib ml0 gray">{% if session.get('user').role == 1 %} Abonné {% endif %}</dd>
             </dl>
             <div class="flex flex-column">
-                <a href="#" class="link i black pv2 ">Modifier mes informations</a>
+                <a href="/profil/update" class="link i black pv2 ">Modifier mes informations</a>
                 <a href="/changePassword?email={{ session.get('user').email }}" class="link i black">Changer mon mot de passe</a>
             </div>
         </div>
