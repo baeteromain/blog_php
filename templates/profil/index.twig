@@ -8,7 +8,7 @@
 
 <main class="flex flex-column min-vh-100  pt5 ">
     <h1 class="nes tc pv3">Mon profil</h1>
-    <div class="flex-auto center">
+    <div class="db center">
         <dl class="f4 lh-title mv2">
             <dt class="dib b">Nom d'utilisateur:</dt>
             <dd class="dib ml0 gray">{{ session.get('user').username }}</dd>
@@ -19,13 +19,23 @@
         </dl>
         <dl class="f4 lh-title mv2">
             <dt class="dib b">Role:</dt>
-            <dd class="dib ml0 gray">{% if session.get('user').role == 1 %} Abonné {% endif %}</dd>
+            <dd class="dib ml0 gray">
+                {% if session.get('user').role == 1 %} Abonné {% endif %}
+                {% if session.get('user').role == 2 %} Administrateur {% endif %}
+            </dd>
         </dl>
         <div class="flex flex-column">
             <a href="/profil/update" class="link i black pv2 ">Modifier mes informations</a>
             <a href="/changePassword?email={{ session.get('user').email }}" class="link i black">Changer mon mot de passe</a>
         </div>
+        
     </div>
+    {% if session.get('notAdmin') %}
+        <div class="mt3 flex items-center justify-center pa4 bg-light-red ">
+            <span class="i"> {{ session.show('notAdmin') }}</span>
+        </div>
+    {% endif %} 
+    
 </main>
 
 {% endblock %}
