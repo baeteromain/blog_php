@@ -1,0 +1,116 @@
+{% extends 'layouts/default.twig' %}
+
+{% block title %}
+    <title>Administration</title>
+{% endblock %}
+
+{% block content %}
+
+<main class="mw8 pa3 center flex flex-column min-vh-100  ">
+    <h1 class="nes pv2 tc">Gestion du blog</h1>
+    <section>
+        <h3 class="underline ">Liste des articles</h3>
+        <div class="tc pv2">
+            <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes" href="add_post.html"><i
+                    class="fas fa-plus-circle"></i> Ajouter un article</a>
+        </div>
+
+        <table class="w-100 collapse">
+            <thead>
+                <tr class="bb b--silver">
+                    <th class="tl pv3">id</th>
+                    <th class="tl pv3 ph3">Title</th>
+                    <th class="tl pv3">Auteur</th>
+                    <th class="tl pv3 tc ">Administration</th>
+                    <th class="tl pv3  tc">Commentaires en attente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bb b--moon-gray hover-bg-lightest-blue">
+                    <th class="tl ph2">1</th>
+                    <td class="pv3 ph3">Titre du post</td>
+                    <td class="pv3">BAETE Romain</td>
+                    <td class="flex flex-column flex-row-l tc-m w-100">
+                        <a href="post.html"
+                            class="link br2 ba b--dark-blue bg-blue white pa2 ml1 mv1 bg-animate hover-bg-dark-blue border-box center">Voir
+                        </a>
+                        <a href="#"
+                            class="link br2 ba b--orange bg-gold white pa2 ml1 mv1 bg-animate hover-bg-orange border-box  center">Modifier
+                        </a>
+                        <a href="#"
+                            class="link br2 ba b--dark-red bg-red white pa2 ml1 mv1 bg-animate hover-bg-dark-red border-box center">Supprimer
+                        </a>
+                    </td>
+                    <td class="tc">
+                        <a href='#' class="link bg-black-90 white pa2 tracked-tight nes">25</a>
+                    </td>
+                </tr>
+                <tr class="hover-bg-lightest-blue">
+                    <th class="tl ph2">2</th>
+                    <td class="pv3 ph3 mr4">Titre du post 2</td>
+                    <td class="pv3">Florent ROUYAT</td>
+                    <td class=" flex flex-column tc-m flex-row-l ">
+                        <a href="post.html"
+                            class="link  br2 ba b--dark-blue bg-blue white pa2 ml1 mv1 bg-animate hover-bg-dark-blue border-box center">Voir
+                        </a>
+                        <a href="#"
+                            class="link br2 ba b--orange bg-gold white pa2 ml1 mv1 bg-animate hover-bg-orange border-box center">Modifier
+                        </a>
+                        <a href="#"
+                            class="link br2 ba b--dark-red bg-red white pa2 ml1 mv1 bg-animate hover-bg-dark-red border-box center">Supprimer
+                        </a>
+                    </td>
+                    <td class="tc">
+                        <a href="#" class=" link bg-black-90 white pa2 tracked-tight nes">10</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h3 class="underline ">Liste des catégories</h3>
+        <div class="tc pv2">
+            <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes"
+                href="add_category.html"><i class="fas fa-plus-circle"></i> Ajouter une catégorie</a>
+        </div>
+        <table class="w-100 collapse ph2">
+            <thead>
+                <tr class="bb b--silver">
+                    <th class="tl pv3 ph2">#</th>
+                    <th class="tc pv3">Catégorie</th>
+                    <th class="tc pv3">Administration</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bb b--moon-gray hover-bg-lightest-blue">
+                    <th class="tl ph2">1</th>
+                    <td class="pv3 tc">Technologie</td>
+                    <td class="flex flex-column flex-row-l tc-m w-100">
+                        <a href="#"
+                            class="link br2 ba b--orange bg-gold white pa2 ml1 mv1 bg-animate hover-bg-orange border-box  center">Modifier
+                        </a>
+                        <a href="#"
+                            class="link br2 ba b--dark-red bg-red white pa2 ml1 mv1 bg-animate hover-bg-dark-red border-box center">Supprimer
+                        </a>
+                    </td>
+
+                </tr>
+                <tr class="bb b--moon-gray hover-bg-lightest-blue">
+                    <th class="tl ph2">2</th>
+                    <td class="pv3 tc">PHP</td>
+                    <td class="flex flex-column flex-row-l tc-m w-100">
+                        <a href="#"
+                            class="link br2 ba b--orange bg-gold white pa2 ml1 mv1 bg-animate hover-bg-orange border-box  center">Modifier
+                        </a>
+                        <a href="#"
+                            class="link br2 ba b--dark-red bg-red white pa2 ml1 mv1 bg-animate hover-bg-dark-red border-box center">Supprimer
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+{% endblock %}
