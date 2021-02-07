@@ -34,6 +34,26 @@ abstract class Controller
         exit;
     }
 
+    public function checkAdmin()
+    {
+        if ($this->checkLoggedIn()) {
+            $user = $this->session->get('user');
+            if ('2' === $user['role']) {
+                return true;
+            }
+
+            $this->session->set('notAdmin', 'Vous ne pouvez pas accéder à cette page sans être administateur du blog');
+
+            header('Location: /profil');
+
+            exit;
+        }
+
+        header('Location: /login');
+
+        exit;
+    }
+
     public function getTwig()
     {
         $loader = new FilesystemLoader('../templates');
