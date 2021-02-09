@@ -53,3 +53,14 @@
 .main_register {
     min-height: 600px;
 }
+
+/* MENU ADMIN  */
+
+@media screen and (min-width: 960px) and (max-width: 1465px) {
+    .main_admin {
+        margin-left: 250px;
+    }
+}
+.sidenav {
+    width: 160px;
+}
