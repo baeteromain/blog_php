@@ -8,6 +8,41 @@ use PDO;
 
 class UserManager extends Database
 {
+    public function getUserById($id)
+    {
+        $query = $this->createQuery(
+            '
+            SELECT * FROM user
+            WHERE id = :id
+            ',
+            [
+                'id' => $id,
+            ]
+        );
+
+        $query->setFetchMode(PDO::FETCH_CLASS, User::class);
+        $user = $query->fetch();
+        if ($user) {
+            return $user;
+        }
+
+        return false;
+    }
+
+    public function getUsers()
+    {
+        $query = $this->createQuery(
+            '
+        SELECT user.id, user.username, user.email, role.name as role 
+        FROM user 
+        INNER JOIN role ON user.role_id = role.id 
+        ORDER BY user.id DESC'
+        );
+        $query->setFetchMode(PDO::FETCH_CLASS, User::class);
+
+        return $query->fetchAll();
+    }
+
     public function createUser($username, $email, $password, $role, $token)
     {
         return $this->createQuery(
@@ -20,6 +55,31 @@ class UserManager extends Database
                 'password' => password_hash($password, PASSWORD_BCRYPT),
                 'role' => $role,
                 'token' => $token,
+            ]
+        );
+    }
+
+    public function upgradeRole($id, $role)
+    {
+        return $this->createQuery(
+            '
+         UPDATE user SET role_id = :role_id 
+        WHERE id = :id',
+            [
+                'id' => $id,
+                'role_id' => $role,
+            ]
+        );
+    }
+
+    public function deleteUser($id)
+    {
+        return $this->createQuery(
+            '
+        DELETE FROM user 
+        WHERE id = :id',
+            [
+                'id' => $id,
             ]
         );
     }
