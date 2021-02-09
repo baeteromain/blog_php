@@ -25,6 +25,10 @@ class Router extends AltoRouter
         $this->map('GET', '/profil', 'ProfilController#profil');
         $this->map('POST', '/profil/update', 'ProfilController#updateProfil');
         $this->map('GET', '/profil/update', 'ProfilController#updateProfil');
+        $this->map('GET', '/admin', 'AdminController#index');
+        $this->map('GET', '/admin/users', 'AdminController#adminUsers');
+        $this->map('GET', '/admin/users/upgrade', 'AdminController#upgradeUser');
+        $this->map('GET', '/admin/users/delete', 'AdminController#deleteUsers');
     }
 
     public function run()
