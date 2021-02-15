@@ -72,6 +72,19 @@ class UserManager extends Database
         );
     }
 
+    public function updateRole($id, $role)
+    {
+        return $this->createQuery(
+            '
+         UPDATE user SET role_id = :role_id 
+        WHERE id = :id',
+            [
+                'id' => $id,
+                'role_id' => $role,
+            ]
+        );
+    }
+
     public function deleteUser($id)
     {
         return $this->createQuery(
@@ -84,32 +97,48 @@ class UserManager extends Database
         );
     }
 
-    public function updateUsername($id, $username)
+    public function updateUser($id, $username, $email, $token = null, $valid = '1')
     {
         return $this->createQuery(
             '
-        UPDATE user SET username = :username 
+        UPDATE user SET username = :username, email = :email, token = :token, valid = :valid 
         WHERE id = :id',
             [
                 'id' => $id,
                 'username' => $username,
+                'email' => $email,
+                'token' => $token,
+                'valid' => $valid,
             ]
         );
     }
 
-    public function updateEmail($id, $email, $token)
-    {
-        return $this->createQuery(
-            '
-        UPDATE user SET email = :email, token = :token, valid = 0
-        WHERE id = :id',
-            [
-                'id' => $id,
-                'email' => $email,
-                'token' => $token,
-            ]
-        );
-    }
+    // public function updateUsername($id, $username)
+    // {
+    //     return $this->createQuery(
+    //         '
+    //     UPDATE user SET username = :username
+    //     WHERE id = :id',
+    //         [
+    //             'id' => $id,
+    //             'username' => $username,
+    //         ]
+    //     );
+    // }
+
+    // public function updateEmail($id, $email, $token)
+    // {
+    //     return $this->createQuery(
+    //         '
+    //     UPDATE user SET email = :email, token = :token, valid = 0
+    //     WHERE id = :id',
+    //         [
+    //             'id' => $id,
+    //             'email' => $email,
+    //             'token' => $token,
+    //         ]
+    //     );
+    // }
 
     public function removeToken($email)
     {
@@ -136,15 +165,16 @@ class UserManager extends Database
         );
     }
 
-    public function updatePassword($password, $email)
+    public function updatePassword($password, $email, $valid = '1')
     {
         return $this->createQuery(
             '
-            UPDATE user SET password = :password, valid = 1 
+            UPDATE user SET password = :password, valid = :valid 
             WHERE email = :email',
             [
                 'password' => password_hash($password, PASSWORD_BCRYPT),
                 'email' => $email,
+                'valid' => $valid,
             ]
         );
     }

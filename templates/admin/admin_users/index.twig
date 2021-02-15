@@ -35,22 +35,24 @@
             {% for user in users %}
                 <tr class="bb b--moon-gray hover-bg-lightest-blue">
                     <th class="tl ph2">{{ user.id|e }}</th>
-                    <td class="pv3 tc">{{ user.username|e }}</td>
-                    <td class="pv3 tc">{{ user.email|e }}</td>
-                    <td class="pv3 tc">{{ user.role|e }}</td>
+                    <td class="pv3 tc ph2">{{ user.username|e }}</td>
+                    <td class="pv3 tc ph2">{{ user.email|e }}</td>
+                    <td class="pv3 tc ph2">{{ user.role|e }}</td>
                     <td class="flex flex-column flex-row-l tc-m w-100">
             
                     {% if user.role == 'admin' %}
-                        <a href="/admin/users/upgrade?id={{ user.id|e }}"
-                            class="link br2 ba b--dark-green bg-green white pa2 ml1 mv1 bg-animate hover-bg-dark-green border-box center">Passer Abonné
+                        <a href="/admin/users/update?id={{ user.id|e }}&role=subscriber"
+                            class="tc link br2 ba b--dark-green bg-green white pa2 ml1 mv1 bg-animate hover-bg-dark-green border-box center">Passer Abonné
                         </a>
                     {% endif %}
                     {% if user.role == 'subscriber' %}
-                        <a href="/admin/users/upgrade?id={{ user.id|e }}"
-                            class="link br2 ba b--dark-green bg-green white pa2 ml1 mv1 bg-animate hover-bg-dark-green border-box center">Passer Administrateur
+                        <a href="/admin/users/update?id={{ user.id|e }}&role=admin"
+                            class="tc link br2 ba b--dark-green bg-green white pa2 ml1 mv1 bg-animate hover-bg-dark-green border-box center">Passer Administrateur
                         </a>
                     {% endif %}
-            
+                        <a href="/admin/users/reset?id={{ user.id|e }}"
+                            class="link br2 ba b--dark-orange bg-orange white pa2 ml1 mv1 mh4-l bg-animate hover-bg-dark-orange border-box ">Modifier
+                        </a>
                         <a href="/admin/users/delete?id={{ user.id|e }}"
                             class="link br2 ba b--dark-red bg-red white pa2 ml1 mv1 bg-animate hover-bg-dark-red border-box ">Supprimer
                         </a>
@@ -59,6 +61,7 @@
             {% endfor %} 
             </tbody>
         </table>
+
          {% if session.get('delete_user') %}
             <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
                 <span class="i"> {{ session.show('delete_user') }}</span>
