@@ -33,6 +33,9 @@ class Mailer extends PHPMailer
         if ('update' === $template) {
             $this->Subject = 'Modification de vos informations';
         }
+        if ('resetPassword' === $template) {
+            $this->Subject = 'Réinitialisation de votre mot de passe';
+        }
     }
 
     public static function url()
