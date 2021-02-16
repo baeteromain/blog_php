@@ -59,18 +59,18 @@ class UserManager extends Database
         );
     }
 
-    public function upgradeRole($id, $role)
-    {
-        return $this->createQuery(
-            '
-         UPDATE user SET role_id = :role_id 
-        WHERE id = :id',
-            [
-                'id' => $id,
-                'role_id' => $role,
-            ]
-        );
-    }
+    // public function upgradeRole($id, $role)
+    // {
+    //     return $this->createQuery(
+    //         '
+    //      UPDATE user SET role_id = :role_id
+    //     WHERE id = :id',
+    //         [
+    //             'id' => $id,
+    //             'role_id' => $role,
+    //         ]
+    //     );
+    // }
 
     public function updateRole($id, $role)
     {
