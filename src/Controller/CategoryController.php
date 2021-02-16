@@ -32,15 +32,22 @@ class CategoryController extends Controller
     public function addCategory()
     {
         if (!empty($this->get) && isset($this->get['name'], $this->get['slug'])) {
-            $this->categoryManager->createCategory($this->get['name'], $this->get['slug']);
+            $errors = $this->validator->validate($this->get, 'Category');
 
-            header('Location: /admin/categories');
+            if (!$errors) {
+                $this->categoryManager->createCategory($this->get['name'], $this->get['slug']);
 
-            exit();
+                $this->session->set('add_category', 'La catégorie a bien été ajoutée');
+
+                header('Location: /admin/categories');
+
+                exit();
+            }
         }
 
         return $this->render('admin/admin_categories/add_category.twig', [
             'errors' => $errors ?? null,
+            'get' => $this->get ?? null,
         ]);
     }
 }
