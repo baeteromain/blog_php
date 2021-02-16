@@ -246,8 +246,8 @@ class UserManager extends Database
                 'username' => $username,
             ]
         );
-        $isUnique = $result->fetchColumn();
-        if ($isUnique) {
+        $exist = $result->fetchColumn();
+        if ($exist) {
             return true;
         }
 
@@ -264,8 +264,8 @@ class UserManager extends Database
                 'email' => $email,
             ]
         );
-        $isUnique = $result->fetchColumn();
-        if ($isUnique) {
+        $exist = $result->fetchColumn();
+        if ($exist) {
             return true;
         }
 
