@@ -1,0 +1,50 @@
+{% extends 'layouts/default.twig' %}
+
+{% block title %}
+    <title>Liste des catégories</title>
+{% endblock %}
+
+{% block content %}
+
+<main class="mw8 pa3 center flex flex-column min-vh-100 main_admin pr4">
+    <h1 class="nes pv2 tc">Gestion du blog</h1>
+    <div class="nes dt center ml2-l mt6-l sidenav fixed-l z-1 top-1 left-0 overflow-x-hidden pa3 bg-near-black f6 no-underline  ">
+        <a class="db-l pa2 link white hover-blue " href="/admin/users">Utilisateurs</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/posts">Articles</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/categories">Catégories</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/comments">Commentaires</a>
+    </div>
+    <section>
+        <form class="measure center" method="get" action="/admin/categories/add" >
+        <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
+            <legend class="f4 fw6 ph0 mh0 nes">Ajout d'une catégorie</legend>
+            <div class="mt3">
+                <label class="db fw6  lh-copy f6" for="pseudo">Nom de la catégories</label>
+                <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
+                    name="name" id="name" value="{{ get ? get.name|e : '' }}">
+            </div>
+            {% if errors.name %}
+                <div class="red pt1 i">{{ errors.name }}</div>
+            {% endif %}
+            <div class="mt3">
+                <label class="db fw6 lh-copy f6" for="email-address">Slug</label>
+                <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
+                    name="slug" id="slug" value="{{ get ? get.slug|e : '' }}">
+            </div>
+            {% if errors.slug %}
+                <div class="red pt1 i">{{ errors.slug }}</div>
+            {% endif %}
+        </fieldset>
+        <div class="">
+            <input
+                class="ph3 pv2 input-reset b--black bg-transparent pointer f6 dib no-underline black bg-animate hover-bg-black hover-white nes"
+                type="submit" value="Ajouter" name"submit">
+        </div>
+        </form>
+    </section>
+</main>
+
+{% endblock %}
