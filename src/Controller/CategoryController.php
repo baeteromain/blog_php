@@ -84,4 +84,28 @@ class CategoryController extends Controller
             'category' => $category ?? null,
         ]);
     }
+
+    public function deleteCategory()
+    {
+        $this->checkAdmin();
+
+        $category = $this->categoryManager->getCategoryById($this->get['id']);
+
+        if (!empty($this->get) && isset($this->get['id']) && $category) {
+            $this->categoryManager->deleteCategory($this->get['id']);
+            $this->session->set('delete_category', 'La catégorie a bien été supprimée');
+
+            header('Location: /admin/categories');
+
+            exit();
+        }
+
+        $this->session->set('error_delete_category', 'Un problème est survenu lors de la suppression de l\'utilisateur');
+
+        $categories = $this->categoryManager->getCategories();
+
+        return $this->render('admin/admin_categories/index.twig', [
+            'categories' => $categories,
+        ]);
+    }
 }
