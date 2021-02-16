@@ -24,6 +24,12 @@
         </div>
 
         <h3 class="underline ">Liste des catégories</h3>
+
+        {% if session.get('add_category') %}
+        <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+            <span class="i"> {{ session.show('add_category') }}</span>
+        </div>
+        {% endif %}
         
         <table class="w-100 collapse ph2 ">
             <thead>
