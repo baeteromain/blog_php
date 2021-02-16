@@ -64,6 +64,16 @@
             {% endfor %} 
             </tbody>
         </table>
+        {% if session.get('delete_category') %}
+            <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+                <span class="i"> {{ session.show('delete_category') }}</span>
+            </div>
+        {% endif %}
+        {% if session.get('error_delete_category') %}
+            <div class="mt3 flex items-center justify-center pa4 bg-light-red ">
+                <span class="i"> {{ session.show('error_delete_category') }}</span>
+            </div>
+        {% endif %}
     </section>
 </main>
 
