@@ -33,8 +33,10 @@ class CategoryValidation
         } elseif ('slug' === $name) {
             $error = $this->checkSlug($name, $value);
             $this->addError($name, $error);
+        } elseif ('id' === $name) {
+            return null;
         } else {
-            $this->addError('form_failed_register', 'Une erreur est survenue lors de votre inscription, merci de resaisir vos informations');
+            $this->addError('form_failed_update_category', 'Une erreur est survenue, merci de resaisir vos informations');
         }
     }
 

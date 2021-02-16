@@ -35,7 +35,6 @@ class CategoryController extends Controller
 
         if (!empty($this->get) && isset($this->get['name'], $this->get['slug'])) {
             $errors = $this->validator->validate($this->get, 'Category');
-            dump($errors);
 
             if (!$errors) {
                 $this->categoryManager->createCategory($this->get['name'], $this->get['slug']);
@@ -51,6 +50,38 @@ class CategoryController extends Controller
         return $this->render('admin/admin_categories/add_category.twig', [
             'errors' => $errors ?? null,
             'get' => $this->get ?? null,
+        ]);
+    }
+
+    public function updateCategory()
+    {
+        $this->checkAdmin();
+
+        $category = $this->categoryManager->getCategoryById($this->get['id']);
+
+        if (!empty($this->get) && isset($this->get['name'], $this->get['slug'])) {
+            $errors = $this->validator->validate($this->get, 'Category');
+            if ($category->getName() === $this->get['name']) {
+                unset($errors['name']);
+            }
+
+            if ($category->getSlug() === $this->get['slug']) {
+                unset($errors['slug']);
+            }
+            if (!$errors) {
+                $this->categoryManager->updateCategory($category->getId(), $this->get['name'], $this->get['slug']);
+
+                $this->session->set('update_category', 'La catégorie a bien été modifiée');
+
+                header('Location: /admin/categories');
+
+                exit();
+            }
+        }
+
+        return $this->render('admin/admin_categories/update_category.twig', [
+            'errors' => $errors ?? null,
+            'category' => $category ?? null,
         ]);
     }
 }
