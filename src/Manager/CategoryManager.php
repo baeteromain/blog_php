@@ -8,6 +8,27 @@ use PDO;
 
 class CategoryManager extends Database
 {
+    public function getCategoryById($id)
+    {
+        $query = $this->createQuery(
+            '
+            SELECT * FROM category
+            WHERE id = :id
+            ',
+            [
+                'id' => $id,
+            ]
+        );
+
+        $query->setFetchMode(PDO::FETCH_CLASS, Category::class);
+        $category = $query->fetch();
+        if ($category) {
+            return $category;
+        }
+
+        return false;
+    }
+
     public function getCategories()
     {
         $query = $this->createQuery(
@@ -26,6 +47,20 @@ class CategoryManager extends Database
         VALUES (:name, :slug)
         ',
             [
+                'name' => $name,
+                'slug' => $slug,
+            ]
+        );
+    }
+
+    public function updateCategory($id, $name, $slug)
+    {
+        return $this->createQuery(
+            '
+        UPDATE category SET id = :id, name = :name, slug = :slug
+        WHERE id = :id',
+            [
+                'id' => $id,
                 'name' => $name,
                 'slug' => $slug,
             ]
