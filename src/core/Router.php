@@ -34,6 +34,7 @@ class Router extends AltoRouter
         $this->map('GET', '/admin/users/reset/password', 'AdminController#resetPassword');
         $this->map('GET', '/admin/categories', 'CategoryController#index');
         $this->map('GET', '/admin/categories/add', 'CategoryController#addCategory');
+        $this->map('GET', '/admin/categories/update', 'CategoryController#updateCategory');
     }
 
     public function run()
