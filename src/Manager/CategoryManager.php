@@ -67,6 +67,18 @@ class CategoryManager extends Database
         );
     }
 
+    public function deleteCategory($id)
+    {
+        return $this->createQuery(
+            '
+        DELETE FROM category 
+        WHERE id = :id',
+            [
+                'id' => $id,
+            ]
+        );
+    }
+
     public function checkNameUnique($name)
     {
         $result = $this->createQuery(
