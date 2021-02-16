@@ -7,7 +7,7 @@
 {% block content %}
 
 <main class="mw8 pa3 center flex flex-column min-vh-100 main_admin pr4">
-    <h1 class="nes pv2 tc">Gestion du blog</h1>
+    <h1 class="nes pv2 tc">Gestion des catégories</h1>
     <div class="nes dt center ml2-l mt6-l sidenav fixed-l z-1 top-1 left-0 overflow-x-hidden pa3 bg-near-black f6 no-underline  ">
         <a class="db-l pa2 link white hover-blue " href="/admin/users">Utilisateurs</a>
         <hr class="bt-1-l dn-m mv2">
@@ -30,6 +30,11 @@
             <span class="i"> {{ session.show('add_category') }}</span>
         </div>
         {% endif %}
+        {% if session.get('update_category') %}
+        <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+            <span class="i"> {{ session.show('update_category') }}</span>
+        </div>
+        {% endif %}
         
         <table class="w-100 collapse ph2 ">
             <thead>
@@ -48,10 +53,10 @@
                     <td class="pv3 tc ph2">{{ category.name|e }}</td>
                     <td class="pv3 tc ph2">{{ category.slug|e }}</td>
                     <td class="flex flex-column flex-row-l tc-m w-100 justify-center">
-                        <a href="/admin/category/update"
+                        <a href="/admin/categories/update?id={{ category.id|e }}"
                             class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Modifier
                         </a>
-                        <a href="/admin/category/delete"
+                        <a href="/admin/categories/delete?id={{ category.id|e }}"
                             class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer
                         </a>
                     </td>
