@@ -31,8 +31,11 @@ class CategoryController extends Controller
 
     public function addCategory()
     {
+        $this->checkAdmin();
+
         if (!empty($this->get) && isset($this->get['name'], $this->get['slug'])) {
             $errors = $this->validator->validate($this->get, 'Category');
+            dump($errors);
 
             if (!$errors) {
                 $this->categoryManager->createCategory($this->get['name'], $this->get['slug']);

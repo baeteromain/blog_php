@@ -31,4 +31,46 @@ class CategoryManager extends Database
             ]
         );
     }
+
+    public function checkNameUnique($name)
+    {
+        $result = $this->createQuery(
+            '
+            SELECT COUNT(name)
+            FROM category
+            WHERE name = :name
+            ',
+            [
+                'name' => $name,
+            ]
+        );
+
+        $exist = $result->fetchColumn();
+        if ($exist) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function checkSlugUnique($slug)
+    {
+        $result = $this->createQuery(
+            '
+            SELECT COUNT(slug)
+            FROM category
+            WHERE slug = :slug
+            ',
+            [
+                'slug' => $slug,
+            ]
+        );
+
+        $exist = $result->fetchColumn();
+        if ($exist) {
+            return true;
+        }
+
+        return false;
+    }
 }

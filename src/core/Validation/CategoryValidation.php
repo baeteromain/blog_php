@@ -2,16 +2,18 @@
 
 namespace App\core\Validation;
 
+use App\Manager\CategoryManager;
+
 class CategoryValidation
 {
     private $errors = [];
     private $constraint;
-    // private $get;
+    private $categoryManager;
 
-    public function __construct($get)
+    public function __construct()
     {
         $this->constraint = new Constraint();
-        // $this->get = $get;
+        $this->categoryManager = new CategoryManager();
     }
 
     public function check($get)
@@ -56,9 +58,9 @@ class CategoryValidation
         if ($this->constraint->maxLength($name, $value, 255)) {
             return $this->constraint->maxLength('nom', $value, 30);
         }
-        // if ($this->userManager->checkname($value)) {
-        //     return "Ce nom d'utilisateur exite déja ";
-        // }
+        if ($this->categoryManager->checkNameUnique($value)) {
+            return 'Ce nom de catégorie exite déja ';
+        }
     }
 
     private function checkSlug($name, $value)
@@ -74,6 +76,9 @@ class CategoryValidation
         }
         if ($this->constraint->validSlug($name, $value)) {
             return $this->constraint->validSlug('slug', $value);
+        }
+        if ($this->categoryManager->checkSlugUnique($value)) {
+            return 'Ce slug exite déja ';
         }
     }
 }
