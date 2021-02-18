@@ -32,6 +32,10 @@ class Router extends AltoRouter
         $this->map('GET', '/admin/users/reset', 'AdminController#reset');
         $this->map('POST', '/admin/users/reset', 'AdminController#reset');
         $this->map('GET', '/admin/users/reset/password', 'AdminController#resetPassword');
+        $this->map('GET', '/admin/categories', 'CategoryController#index');
+        $this->map('GET', '/admin/categories/add', 'CategoryController#addCategory');
+        $this->map('GET', '/admin/categories/update', 'CategoryController#updateCategory');
+        $this->map('GET', '/admin/categories/delete', 'CategoryController#deleteCategory');
     }
 
     public function run()

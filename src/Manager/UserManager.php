@@ -59,18 +59,18 @@ class UserManager extends Database
         );
     }
 
-    public function upgradeRole($id, $role)
-    {
-        return $this->createQuery(
-            '
-         UPDATE user SET role_id = :role_id 
-        WHERE id = :id',
-            [
-                'id' => $id,
-                'role_id' => $role,
-            ]
-        );
-    }
+    // public function upgradeRole($id, $role)
+    // {
+    //     return $this->createQuery(
+    //         '
+    //      UPDATE user SET role_id = :role_id
+    //     WHERE id = :id',
+    //         [
+    //             'id' => $id,
+    //             'role_id' => $role,
+    //         ]
+    //     );
+    // }
 
     public function updateRole($id, $role)
     {
@@ -246,8 +246,8 @@ class UserManager extends Database
                 'username' => $username,
             ]
         );
-        $isUnique = $result->fetchColumn();
-        if ($isUnique) {
+        $exist = $result->fetchColumn();
+        if ($exist) {
             return true;
         }
 
@@ -264,8 +264,8 @@ class UserManager extends Database
                 'email' => $email,
             ]
         );
-        $isUnique = $result->fetchColumn();
-        if ($isUnique) {
+        $exist = $result->fetchColumn();
+        if ($exist) {
             return true;
         }
 
