@@ -11,10 +11,7 @@ class CategoryManager extends Database
     public function getCategoryById($id)
     {
         $query = $this->createQuery(
-            '
-            SELECT * FROM category
-            WHERE id = :id
-            ',
+            ' SELECT * FROM category WHERE id = :id',
             [
                 'id' => $id,
             ]
@@ -42,10 +39,8 @@ class CategoryManager extends Database
     public function createCategory($name, $slug)
     {
         return $this->createQuery(
-            '
-        INSERT INTO category (name, slug ) 
-        VALUES (:name, :slug)
-        ',
+            'INSERT INTO category (name, slug) 
+            VALUES (:name, :slug)',
             [
                 'name' => $name,
                 'slug' => $slug,
@@ -70,9 +65,7 @@ class CategoryManager extends Database
     public function deleteCategory($id)
     {
         return $this->createQuery(
-            '
-        DELETE FROM category 
-        WHERE id = :id',
+            ' DELETE FROM category WHERE id = :id',
             [
                 'id' => $id,
             ]
