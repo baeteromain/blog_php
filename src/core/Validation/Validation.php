@@ -11,6 +11,11 @@ class Validation
 
             return $userValidation->check($data);
         }
+        if ('Category' === $name) {
+            $categoryValidation = new CategoryValidation($data);
+
+            return $categoryValidation->check($data);
+        }
 
         // if ('Article' === $name) {
         //     $articleValidation = new ArticleValidation();

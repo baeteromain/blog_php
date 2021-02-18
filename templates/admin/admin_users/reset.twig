@@ -6,12 +6,21 @@
 
 {% block content %}
 
-<main class="flex flex-column min-vh-100  pt5">
-    <h1 class="nes tc pv3">Modifier les informations de l'utilisateur</h1>
+<main class="flex flex-column min-vh-100 pt5 main_admin">
+    <h1 class="nes tc pv3">Informations de l'utilisateur</h1>
+    <div class="nes dt center ml2-l mt6-l sidenav fixed-l z-1 top-1 left-0 overflow-x-hidden pa3 bg-near-black f6 no-underline  ">
+        <a class="db-l pa2 link white hover-blue " href="/admin/users">Utilisateurs</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/posts">Articles</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/categories">Catégories</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/comments">Commentaires</a>
+    </div>
     <div class="flex-auto center">
         <form class="measure center" method="get" action="/admin/users/reset" >
         <fieldset id="update" class="ba b--transparent ph0 mh0">
-        <div class="mt3">
+            <div class="mt3">
                 <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="hidden"
                     name="id" id="id" value="{{ user.id|e }}">
             </div>

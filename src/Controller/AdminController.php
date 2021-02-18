@@ -82,8 +82,7 @@ class AdminController extends Controller
 
         if (!empty($this->get) & isset($this->get['email'])) {
             $errors = $this->validator->validate($this->get, 'User');
-
-            if (!$errors) {
+            if (!$errors['email']) {
                 $this->resetEmail($user->getId(), $user->getUsername());
             }
         }
