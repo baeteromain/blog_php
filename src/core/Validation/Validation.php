@@ -17,11 +17,11 @@ class Validation
             return $categoryValidation->check($data);
         }
 
-        // if ('Article' === $name) {
-        //     $articleValidation = new ArticleValidation();
+        if ('Post' === $name) {
+            $postValidation = new PostValidation($data);
 
-        //     return $articleValidation->check($data);
-        // }
+            return $postValidation->check($data);
+        }
         // if ('Comment' === $name) {
         //     $commentValidation = new CommentValidation();
 
