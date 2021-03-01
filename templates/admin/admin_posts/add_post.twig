@@ -40,7 +40,7 @@
                     <label class="db fw6 lh-copy f6" for="title">Catégories</label>
                     {% for category in categories %}
                     <div class="inline-flex-l flex items-center mb2">
-                        <input class="mr2" type="checkbox" name="category" value="{{category.id}}">
+                        <input class="mr2" type="checkbox" name="category" value="{{category.id}}" {% if post.category and post.category == category.id %} checked="checked" {% endif %}>
                         <label for="spacejam" class="lh-copy pr2">{{category.name}}</label>
                     </div>
                     {% endfor %}
