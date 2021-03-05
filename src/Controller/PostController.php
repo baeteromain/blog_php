@@ -11,6 +11,7 @@ use App\Manager\UserManager;
 class PostController extends Controller
 {
     const BASEIMAGEPOST = 'baseimagepost.jpg';
+    const OUTPUT_DIR = './uploads';
 
     private $postManager;
 
@@ -49,7 +50,7 @@ class PostController extends Controller
             if (!empty($_FILES['file_upload']['tmp_name'])) {
                 $success_upload = 1;
 
-                $output_dir = './uploads'; //Path for file upload
+                $output_dir = self::OUTPUT_DIR; //Path for file upload
                 $RandomNum = time();
                 $file_name = str_replace(' ', '-', strtolower($_FILES['file_upload']['name']));
 
@@ -136,7 +137,7 @@ class PostController extends Controller
             if (!empty($_FILES['file_upload']['tmp_name'])) {
                 $success_upload = 1;
 
-                $output_dir = './uploads';
+                $output_dir = self::OUTPUT_DIR;
                 $RandomNum = time();
                 $file_name = str_replace(' ', '-', strtolower($_FILES['file_upload']['name']));
 
@@ -211,6 +212,39 @@ class PostController extends Controller
             'post' => $post ?? null,
             'get' => $this->get ?? null,
             'categoriesOfPost' => $categoriesOfPost ?? null,
+        ]);
+    }
+
+    public function deletePost()
+    {
+        $this->checkAdmin();
+        if (!empty($this->get['id'])) {
+            $post = $this->postManager->getPostById($this->get['id']);
+            $categoriesOfPost = $this->postManager->getCategoryByPost($this->get['id']);
+
+            if ($post) {
+                foreach ($categoriesOfPost as $categoryOfPost) {
+                    $this->postManager->deleteCategoryOfPost($categoryOfPost->getId(), $post->getId());
+                }
+                if (self::BASEIMAGEPOST != $post->getFilename()) {
+                    unlink(self::OUTPUT_DIR.'/'.$post->getFilename());
+                }
+
+                $this->postManager->deletePost($post->getId());
+
+                $this->session->set('delete_post', "L'article a bien été supprimé");
+
+                header('Location: /admin/posts');
+
+                exit();
+            }
+            $this->session->set('error_delete_post', "Un problème est survenu lors de la suppression de l'article");
+        }
+
+        $posts = $this->postManager->getPosts();
+
+        return $this->render('admin/admin_posts/index.twig', [
+            'posts' => $posts,
         ]);
     }
 }
