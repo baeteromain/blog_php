@@ -129,6 +129,16 @@ class PostManager extends Database
         );
     }
 
+    public function deletePost($id)
+    {
+        return $this->createQuery(
+            ' DELETE FROM post WHERE id = :id',
+            [
+                'id' => $id,
+            ]
+        );
+    }
+
     public function checkTitleUnique($title)
     {
         $result = $this->createQuery(
