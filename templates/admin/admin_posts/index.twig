@@ -42,6 +42,8 @@
                     <th class="tl pv3 ph2">id</th>
                     <th class="tc pv3">Titre</th>
                     <th class="tc pv3">Date de création</th>
+                    <th class="tc pv3">Date de modification</th>
+
                     <th class="tc pv3">Auteur</th>
                     <th class="tc pv3">Administration</th>
                 </tr>
@@ -52,12 +54,13 @@
                     <th class="tl ph2">{{ post.id|e }}</th>
                     <td class="pv3 tc ph2">{{ post.title|e }}</td>
                     <td class="pv3 tc ph2">{{ post.created_at|e }}</td>
+                    <td class="pv3 tc ph2">{{ post.update_at|e }}</td>
                     <td class="pv3 tc ph2">{{ post.autor|e }}</td>
                     <td class="flex flex-column flex-row-l tc-m w-100 justify-center">
-                        <a href="/admin/categories/update?id={{ post.id|e }}"
+                        <a href="/admin/posts/update?id={{ post.id|e }}"
                             class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Modifier
                         </a>
-                        <a href="/admin/categories/delete?id={{ post.id|e }}"
+                        <a href="/admin/posts/delete?id={{ post.id|e }}"
                             class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer
                         </a>
                     </td>
@@ -68,6 +71,11 @@
         {% if session.get('add_post') %}
             <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
                 <span class="i"> {{ session.show('add_post') }}</span>
+            </div>
+        {% endif %}
+        {% if session.get('update_post') %}
+            <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+                <span class="i"> {{ session.show('update_post') }}</span>
             </div>
         {% endif %}
         {% if session.get('delete_post') %}
