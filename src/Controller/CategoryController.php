@@ -100,7 +100,7 @@ class CategoryController extends Controller
             exit();
         }
 
-        $this->session->set('error_delete_category', 'Un problème est survenu lors de la suppression de l\'utilisateur');
+        $this->session->set('error_delete_category', 'Un problème est survenu lors de la suppression de la catégorie');
 
         $categories = $this->categoryManager->getCategories();
 

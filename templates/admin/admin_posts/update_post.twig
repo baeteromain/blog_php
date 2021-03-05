@@ -1,0 +1,91 @@
+{% extends 'layouts/default.twig' %}
+
+{% block title %}
+    <title>Modification d'un article</title>
+{% endblock %}
+
+{% block content %}
+
+<main class="mw8 pa3 center flex flex-column min-vh-100 main_admin pr4">
+    <div class="nes dt center ml2-l mt6-l sidenav fixed-l z-1 top-1 left-0 overflow-x-hidden pa3 bg-near-black f6 no-underline  ">
+        <a class="db-l pa2 link white hover-blue " href="/admin/users">Utilisateurs</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/posts">Articles</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/categories">Catégories</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/comments">Commentaires</a>
+    </div>
+    <section>
+        <form class="mw8 center" method="post" action="/admin/posts/update" enctype="multipart/form-data">
+            <fieldset id="add_post" class="ba b--transparent ph0 mh0">
+                <legend class="f4 fw6 ph0 mh0 nes tc">Modifier l'article</legend>
+                <div class="mt3">
+                <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="hidden"
+                    name="id" id="id" value="{{post ? post.id|e : ''}}">
+                </div>
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="title">Titre</label>
+                    <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" name="title"
+                        id="title" value="{{post ? post.title|e : ''}}">
+                </div>
+                {% if errors.title %}
+                <div class="red pt1 i">{{ errors.title }}</div>
+                {% endif %}
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="title">Slug</label>
+                    <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100 i" type="text" name="slug"
+                        value="{{post ? post.slug|e : ''}}">
+                </div>
+                {% if errors.slug %}
+                <div class="red pt1 i">{{ errors.slug }}</div>
+                {% endif %}
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="title">Catégories</label>
+                    {% for category in categories %}
+                    <div class="inline-flex-l flex items-center mb2">
+                        <input class="mr2" type="checkbox" name="category[]" value="{{category.id}}" 
+                        {% for categoryOfPost in categoriesOfPost %}
+                            {% if categoryOfPost.id and categoryOfPost.id == category.id %} checked="checked" {% endif %}
+                        {% endfor %} >
+                        <label for="spacejam" class="lh-copy pr2">{{category.name}}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="file_upload">Image de l'article</label>
+                    <img src="/uploads/{{ post.filename }}" alt="post_picture" class='mv2'>
+                    <input class="input-reset pt2" type="file" name="file_upload" id="file_upload">
+                </div>
+                {% if errors.upload %}
+                <div class="red pt1 i">{{ errors.upload }}</div>
+                {% endif %}
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="chapo">Chapô</label>
+                    <textarea class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" rows="4"
+                        name="chapo" id="chapo">{{post ? post.chapo|e : ''}}</textarea>
+                </div>
+                {% if errors.chapo %}
+                <div class="red pt1 i">{{ errors.chapo }}</div>
+                {% endif %}
+                <div class="mv3">
+                    <label class="db fw6 lh-copy f6" for="contenu">Contenu</label>
+                    <textarea class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
+                        rows="10" name="content">{{post ? post.content|e : ''}}</textarea>
+                </div>
+                {% if errors.content %}
+                <div class="red pt1 i">{{ errors.content }}</div>
+                {% endif %}
+            </fieldset>
+            <div class="">
+                <input class="db center no-underline black bg-animate hover-bg-black hover-white grow-large pa3 ba nes"
+                    type="submit" value="Modifier">
+            </div>
+            {% if errors.form_failed_post %}
+                <div class="red pt1 i">{{ errors.form_failed_post }}</div>
+            {% endif %}
+        </form>
+    </section>
+</main>
+
+{% endblock %}
