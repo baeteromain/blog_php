@@ -1,0 +1,94 @@
+{% extends 'layouts/default.twig' %}
+
+{% block title %}
+    <title>Liste des articles</title>
+{% endblock %}
+
+{% block content %}
+
+<main class="mw8 pa3 center flex flex-column min-vh-100 main_admin pr4">
+    <h1 class="nes pv2 tc">Gestion des articles</h1>
+    <div class="nes dt center ml2-l mt6-l sidenav fixed-l z-1 top-1 left-0 overflow-x-hidden pa3 bg-near-black f6 no-underline  ">
+        <a class="db-l pa2 link white hover-blue " href="/admin/users">Utilisateurs</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/posts">Articles</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/categories">Catégories</a>
+        <hr class="bt-1-l dn-m mv2">
+        <a class="db-l pa2 link white hover-blue" href="/admin/comments">Commentaires</a>
+    </div>
+    <section>
+        <div class="tc pv2">
+            <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes" href="/admin/posts/add"><i
+                    class="fas fa-plus-circle"></i> Ajouter un article</a>
+        </div>
+        
+        {% if session.get('add_post') %}
+            <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+                <span class="i"> {{ session.show('add_post') }}</span>
+            </div>
+        {% endif %}
+        {% if session.get('update_post') %}
+            <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+                <span class="i"> {{ session.show('update_post') }}</span>
+            </div>
+        {% endif %}
+        {% if session.get('delete_post') %}
+            <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+                <span class="i"> {{ session.show('delete_post') }}</span>
+            </div>
+        {% endif %}
+        {% if session.get('error_delete_post') %}
+            <div class="mt3 flex items-center justify-center pa4 bg-light-red ">
+                <span class="i"> {{ session.show('error_delete_post') }}</span>
+            </div>
+        {% endif %}
+
+        <h3 class="underline ">Liste des articles</h3>
+
+        {% if session.get('add_post') %}
+        <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+            <span class="i"> {{ session.show('add_post') }}</span>
+        </div>
+        {% endif %}
+        {% if session.get('update_post') %}
+        <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+            <span class="i"> {{ session.show('update_post') }}</span>
+        </div>
+        {% endif %}
+        
+        <table class="w-100 collapse ph2 ">
+            <thead>
+                <tr class="bb b--silver">
+                    <th class="tl pv3 ph2">id</th>
+                    <th class="tc pv3">Titre</th>
+                    <th class="tc pv3">Date de création</th>
+                    <th class="tc pv3">Date de modification</th>
+                    <th class="tc pv3">Auteur</th>
+                    <th class="tc pv3">Administration</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for post in posts %}
+                <tr class="bb b--moon-gray hover-bg-lightest-blue">
+                    <th class="tl ph2">{{ post.id|e }}</th>
+                    <td class="pv3 tc ph2">{{ post.title|e }}</td>
+                    <td class="pv3 tc ph2">{{ post.created_at|e }}</td>
+                    <td class="pv3 tc ph2">{{ post.update_at|e }}</td>
+                    <td class="pv3 tc ph2">{{ post.autor|e }}</td>
+                    <td class="flex flex-column flex-row-l tc-m w-100 justify-center">
+                        <a href="/admin/posts/update?id={{ post.id|e }}"
+                            class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Modifier
+                        </a>
+                        <a href="/admin/posts/delete?id={{ post.id|e }}"
+                            class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %} 
+            </tbody>
+        </table>
+    </section>
+</main>
+
+{% endblock %}
