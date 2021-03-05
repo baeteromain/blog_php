@@ -39,7 +39,7 @@ class PostValidation
         } elseif ('slug' === $name) {
             $error = $this->checkSlug($name, $value);
             $this->addError($name, $error);
-        } elseif ('category' === $name) {
+        } elseif ('category' === $name || 'id' === $name) {
             return null;
         } else {
             $this->addError('form_failed_post', 'Une erreur est survenue, merci de resaisir vos informations');
