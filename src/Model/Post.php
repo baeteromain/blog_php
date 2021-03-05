@@ -6,7 +6,7 @@ class Post
 {
     private $id;
 
-    private $tile;
+    private $title;
 
     private $slug;
 
@@ -47,21 +47,22 @@ class Post
     /**
      * Get the value of tile.
      */
-    public function getTile()
+    public function getTitle()
     {
-        return $this->tile;
+        return $this->title;
     }
 
     /**
      * Set the value of tile.
      *
      * @param mixed $tile
+     * @param mixed $title
      *
      * @return self
      */
-    public function setTile($tile)
+    public function setTitle($title)
     {
-        $this->tile = $tile;
+        $this->title = $title;
 
         return $this;
     }
