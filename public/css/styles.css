@@ -64,3 +64,14 @@
 .sidenav {
     width: 160px;
 }
+
+/* HOME */
+
+.imgpost {
+    object-fit: cover;
+}
+
+.last_article {
+    min-height: 550px;
+    /* min-width: 350px; */
+}
