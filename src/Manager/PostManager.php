@@ -11,15 +11,19 @@ use PDO;
 
 class PostManager extends Database
 {
-    public function getPosts()
+    public function getPosts($limit = null, $start = null)
     {
-        $query = $this->createQuery(
-            'SELECT post.id, post.title, post.slug, post.filename, post.content, post.created_at, post.update_at, user.username as autor 
+        $sql = 'SELECT post.id, post.title, post.slug, post.chapo, post.filename, post.content, post.created_at, post.update_at, user_id, user.username as autor 
             FROM post
             INNER JOIN user ON post.user_id = user.id 
             ORDER BY post.created_at DESC
-            '
-        );
+            ';
+
+        if ($limit) {
+            $sql .= ' LIMIT '.$limit.' OFFSET '.$start;
+        }
+        $query = $this->createQuery($sql);
+
         $query->setFetchMode(PDO::FETCH_CLASS, Post::class);
 
         return $query->fetchAll();
