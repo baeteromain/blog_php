@@ -3,11 +3,26 @@
 namespace App\Controller;
 
 use App\core\Controller;
+use App\Manager\PostManager;
 
 class HomeController extends Controller
 {
+    private $postManager;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->postManager = new PostManager();
+    }
+
     public function Home()
     {
-        return $this->render('home/index.twig');
+        $posts = $this->postManager->getPosts(3, 0);
+
+        return $this->render(
+            'home/index.twig',
+            ['posts' => $posts]
+        );
     }
 }
