@@ -19,51 +19,23 @@
         <section class="pa4">
             <h1 class="tc ttu nes">Derniers articles</h1>
             <div class="flex-l w-100 tc justify-center">
-                <article class="fl w-100 pb3 bg-white  measure-narrow-l ba b--black-10 mv4 mh4-l ">
+            {% for post in posts %}
+                <article class="fl w-100 pb3 bg-white  measure-narrow-l ba b--black-10 mv4 mh4-l relative h-100 last_article">
                     <div class="pv2 ph3">
-                        <h1 class="f6 ttu tracked">Daily News Co.</h1>
+                        <h1 class="f6 ttu tracked ba b--black pa1">Article les + récents</h1>
                     </div>
-                    <img src="http://tachyons.io/img/cat-720.jpg" class="w-100 db"
-                        alt="Closeup photo of a tabby cat yawning.">
+                    <img src="/uploads/{{ post.filename }}" class="w-100 db h-50-l imgpost" alt="article_image">
                     <div class="pa3">
-                        <a href="post.html" class="link dim lh-title black b ">Title : 15 things every cat owner should
-                            know</a>
-                        <p class="pv2 f6 lh-copy measure">Chapo : Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Cum consequatur sint autem? Enim, quaerat perferendis!</p>
-                        <small class="blue db pv2">Mis à jour le ## - ## - ### à 12h05</small>
+                        <a href="/post/{{ post.slug }}/{{ post.id }}" class="link dim lh-title black b ">{{ post.title }}</a>
+                        <p class="pv2 f6 lh-copy measure center">{{ post.chapo|slice(0, 500)|nl2br }} ...</p>
+                        <small class="blue db pv2 absolute bottom-0 left-0 right-0 ">{{post.update_at ? post.update_at : post.created_at }}</small>
                     </div>
                 </article>
-                <article class="fl w-100  bg-white measure-narrow-l ba b--black-10 mv4 mh4-l ">
-                    <div class="pv2 ph3">
-                        <h1 class="f6 ttu tracked">Daily News Co.</h1>
-                    </div>
-                    <img src="http://tachyons.io/img/cat-720.jpg" class="w-100 db"
-                        alt="Closeup photo of a tabby cat yawning.">
-                    <div class="pa3">
-                        <a href="#" class="link dim lh-title black b ">Title : 15 things every cat owner should know</a>
-                        <p class="pv2 f6 lh-copy measure">Chapo : Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Cum consequatur sint autem? Enim, quaerat perferendis!</p>
-                        <small class="blue db pv2">Mis à jour le ## - ## - ### à 12h05</small>
-                    </div>
-                </article>
-                <article class="fl w-100  pb3 bg-white  measure-narrow-l  ba b--black-10 mv4 mh4-l ">
-                    <div class="pv2 ph3">
-                        <h1 class="f6 ttu tracked">Daily News Co.</h1>
-                    </div>
-                    <img src="http://tachyons.io/img/cat-720.jpg" class="w-100 db"
-                        alt="Closeup photo of a tabby cat yawning.">
-                    <div class="pa3">
-                        <a href="#" class="link dim lh-title black b ">Title : 15 things every cat owner should know</a>
-                        <p class="pv2 f6 lh-copy measure">Chapo : Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Cum consequatur sint autem? Enim, quaerat perferendis!</p>
-                        <small class="blue db pv2">Mis à jour le ## - ## - ### à 12h05</small>
-                    </div>
-                </article>
+            {% endfor %}               
             </div>
             <div class="tc">
                 <a class="f5 no-underline black bg-animate hover-bg-black hover-white grow-large inline-flex items-center pa3 ba border-box nes"
-                    href="posts.html">Tous les
-                    articles</a>
+                    href="/blog">Tous les articles</a>
             </div>
         </section>     
     </main>
