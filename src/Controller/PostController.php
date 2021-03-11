@@ -12,6 +12,7 @@ class PostController extends Controller
 {
     const BASEIMAGEPOST = 'baseimagepost.jpg';
     const OUTPUT_DIR = './uploads';
+    const IMAGE_EXT = ['jpg', 'png', 'jpeg'];
 
     private $postManager;
 
@@ -40,43 +41,16 @@ class PostController extends Controller
     {
         $this->checkAdmin();
 
-        $user = $this->session->get('user');
-
         $categories = $this->categoryManager->getCategories();
 
         if (!empty($this->post)) {
+            $user = $this->session->get('user');
+
             $errors = $this->validator->validate($this->post, 'Post');
 
             if (!empty($_FILES['file_upload']['tmp_name'])) {
-                $success_upload = 1;
-
-                $output_dir = self::OUTPUT_DIR; //Path for file upload
-                $RandomNum = time();
-                $file_name = str_replace(' ', '-', strtolower($_FILES['file_upload']['name']));
-
-                $ImageExt = substr($file_name, strrpos($file_name, '.'));
-                $ImageExt = str_replace('.', '', $ImageExt);
-                $file_name = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file_name);
-                $NewImageName = $file_name.'-'.$RandomNum.'.'.$ImageExt;
-                $ret[$NewImageName] = $output_dir.$NewImageName;
-
-                if ($_FILES['file_upload']['size'] > 500000) {
-                    $errors['upload'] = "La taille de l'image ne doit pas dépasser 5 MO";
-                    $success_upload = 0;
-                }
-
-                if ('jpg' != $ImageExt && 'png' != $ImageExt && 'jpeg' != $ImageExt) {
-                    $errors['upload'] = 'Seulement les fichiers jpg, jpeg, png sont autorisés';
-                    $success_upload = 0;
-                }
-
-                if (0 == $success_upload) {
-                    $errors['upload'] = "Aucune image n'a été ajoutée";
-                }
-
-                $data = [
-                    'image' => $NewImageName,
-                ];
+                $uploadfile = $this->uploadfile($_FILES['file_upload'], self::OUTPUT_DIR);
+                $data = $uploadfile;
             } else {
                 $data = [
                     'image' => self::BASEIMAGEPOST,
@@ -84,7 +58,7 @@ class PostController extends Controller
             }
 
             if (!$errors) {
-                move_uploaded_file($_FILES['file_upload']['tmp_name'], $output_dir.'/'.$NewImageName);
+                move_uploaded_file($_FILES['file_upload']['tmp_name'], self::OUTPUT_DIR.'/'.$data['image']);
 
                 $this->postManager->createPost($this->post['title'], $this->post['slug'], $data['image'], $this->post['chapo'], $this->post['content'], $user['id']);
                 if (isset($this->post['category'])) {
@@ -120,7 +94,6 @@ class PostController extends Controller
         }
 
         if (!empty($this->post)) {
-            // $cat = [];
             $post = $this->postManager->getPostById($this->post['id']);
             $categoriesOfPost = $this->postManager->getCategoryByPost($this->post['id']);
 
@@ -135,35 +108,14 @@ class PostController extends Controller
             }
 
             if (!empty($_FILES['file_upload']['tmp_name'])) {
-                $success_upload = 1;
-
-                $output_dir = self::OUTPUT_DIR;
-                $RandomNum = time();
-                $file_name = str_replace(' ', '-', strtolower($_FILES['file_upload']['name']));
-
-                $ImageExt = substr($file_name, strrpos($file_name, '.'));
-                $ImageExt = str_replace('.', '', $ImageExt);
-                $file_name = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file_name);
-                $NewImageName = $file_name.'-'.$RandomNum.'.'.$ImageExt;
-                $ret[$NewImageName] = $output_dir.$NewImageName;
-
-                if ($_FILES['file_upload']['size'] > 500000) {
-                    $errors['upload'] = "La taille de l'image ne doit pas dépasser 5 MO";
-                    $success_upload = 0;
+                if (self::BASEIMAGEPOST === $_FILES['file_upload']['name']) {
+                    $data = [
+                        'image' => self::BASEIMAGEPOST,
+                    ];
+                } else {
+                    $uploadfile = $this->uploadfile($_FILES['file_upload'], self::OUTPUT_DIR);
+                    $data = $uploadfile;
                 }
-
-                if ('jpg' != $ImageExt && 'png' != $ImageExt && 'jpeg' != $ImageExt) {
-                    $errors['upload'] = 'Seulement les fichiers jpg, jpeg, png sont autorisés';
-                    $success_upload = 0;
-                }
-
-                if (0 == $success_upload) {
-                    $errors['upload'] = "Aucune image n'a été ajoutée";
-                }
-
-                $data = [
-                    'image' => $NewImageName,
-                ];
             } else {
                 $data = [
                     'image' => $post->getFilename(),
@@ -172,7 +124,7 @@ class PostController extends Controller
 
             if (!$errors) {
                 if ($data['image'] != $post->getFilename()) {
-                    move_uploaded_file($_FILES['file_upload']['tmp_name'], $output_dir.'/'.$NewImageName);
+                    move_uploaded_file($_FILES['file_upload']['tmp_name'], self::OUTPUT_DIR.'/'.$data['image']);
                 }
 
                 foreach ($categoriesOfPost as $categoryOfPost) {
@@ -246,5 +198,37 @@ class PostController extends Controller
         return $this->render('admin/admin_posts/index.twig', [
             'posts' => $posts,
         ]);
+    }
+
+    private function uploadfile($file, $output_dir)
+    {
+        $success_upload = 1;
+
+        $RandomNum = time();
+        $file_name = str_replace(' ', '-', strtolower($file['name']));
+
+        $ImageExt = substr($file_name, strrpos($file_name, '.'));
+        $ImageExt = str_replace('.', '', $ImageExt);
+        $file_name = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file_name);
+        $NewImageName = $file_name.'-'.$RandomNum.'.'.$ImageExt;
+        $ret[$NewImageName] = $output_dir.$NewImageName;
+
+        if ($file['size'] > 500000) {
+            $errors['upload'] = "La taille de l'image ne doit pas dépasser 5 MO";
+            $success_upload = 0;
+        }
+
+        if (!in_array($ImageExt, self::IMAGE_EXT)) {
+            $errors['upload'] = 'Seulement les fichiers jpg, jpeg, png sont autorisés';
+            $success_upload = 0;
+        }
+
+        if (0 == $success_upload) {
+            $errors['upload'];
+        }
+
+        return [
+            'image' => $NewImageName,
+        ];
     }
 }
