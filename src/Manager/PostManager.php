@@ -11,6 +11,11 @@ use PDO;
 
 class PostManager extends Database
 {
+    public function total()
+    {
+        return $this->createQuery('SELECT COUNT(*) FROM post')->fetchColumn();
+    }
+
     public function getPosts($limit = null, $start = null)
     {
         $sql = 'SELECT post.id, post.title, post.slug, post.chapo, post.filename, post.content, post.created_at, post.update_at, user_id, user.username as autor 

@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\core\Controller;
 use App\Manager\CategoryManager;
 use App\Manager\PostManager;
+use App\Model\Pagination;
 
 class BlogController extends Controller
 {
     private $postManager;
     private $categoryManager;
+    private $pagination;
 
     public function __construct()
     {
@@ -17,11 +19,16 @@ class BlogController extends Controller
 
         $this->postManager = new PostManager();
         $this->categoryManager = new CategoryManager();
+        $this->pagination = new Pagination();
     }
 
     public function listPosts()
     {
-        $posts = $this->postManager->getPosts();
+        if (empty($this->get['page'])) {
+            $this->get['page'] = 1;
+        }
+        $pagination = $this->pagination->paginate(5, $this->get['page'], $this->postManager->total());
+        $posts = $this->postManager->getPosts($pagination->getLimit(), $this->pagination->getStart());
 
         foreach ($posts as $post) {
             $categoriesofposts[$post->getId()] = $this->postManager->getCategoryByPost($post->getId());
@@ -33,6 +40,7 @@ class BlogController extends Controller
             'posts' => $posts ?? null,
             'categories' => $categories ?? null,
             'categoriesofposts' => $categoriesofposts,
+            'pagination' => $pagination,
         ]);
     }
 }
