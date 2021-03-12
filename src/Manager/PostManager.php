@@ -50,9 +50,10 @@ class PostManager extends Database
     public function getPostById($id)
     {
         $query = $this->createQuery(
-            'SELECT post.id, post.title, post.chapo, post.slug, post.filename, post.content, post.created_at, post.update_at, post.user_id, post.update_at, category_id
+            'SELECT post.id, post.title, post.chapo, post.slug, post.filename, post.content, post.created_at, post.update_at, post.user_id, post.update_at, category_id, user.username as autor
             FROM post LEFT OUTER JOIN post_category ON post.id = post_category.post_id
-            WHERE id = :id',
+            INNER JOIN user ON post.user_id = user.id 
+            WHERE post.id = :id',
             [
                 'id' => $id,
             ]

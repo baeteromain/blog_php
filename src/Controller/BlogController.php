@@ -43,4 +43,19 @@ class BlogController extends Controller
             'pagination' => $pagination,
         ]);
     }
+
+    public function singlePost()
+    {
+        if (!empty($this->get['id'])) {
+            $post = $this->postManager->getPostById($this->get['id']);
+            $categoriesOfPost = $this->postManager->getCategoryByPost($this->get['id']);
+        }
+
+        return $this->render('blog/single/index.twig', [
+            'post' => $post ?? null,
+            'categoriesOfPost' => $categoriesOfPost ?? null,
+            // 'categoriesofposts' => $categoriesofposts,
+            // 'pagination' => $pagination,
+        ]);
+    }
 }
