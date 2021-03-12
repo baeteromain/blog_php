@@ -43,6 +43,7 @@ class Router extends AltoRouter
         $this->map('POST', '/admin/posts/update', 'PostController#updatePost');
         $this->map('GET', '/admin/posts/delete', 'PostController#deletePost');
         $this->map('GET', '/articles', 'BlogController#listPosts');
+        $this->map('GET', '/articles/[*:slug]-[i:id]', 'BlogController#singlePost');
     }
 
     public function run()
