@@ -39,7 +39,7 @@ class BlogController extends Controller
         return $this->render('blog/index.twig', [
             'posts' => $posts ?? null,
             'categories' => $categories ?? null,
-            'categoriesofposts' => $categoriesofposts,
+            'categoriesofposts' => $categoriesofposts ?? null,
             'pagination' => $pagination,
         ]);
     }
@@ -54,8 +54,37 @@ class BlogController extends Controller
         return $this->render('blog/single/index.twig', [
             'post' => $post ?? null,
             'categoriesOfPost' => $categoriesOfPost ?? null,
-            // 'categoriesofposts' => $categoriesofposts,
-            // 'pagination' => $pagination,
+        ]);
+    }
+
+    public function listPostsByCategories()
+    {
+        if (empty($this->get['page'])) {
+            $this->get['page'] = 1;
+        }
+
+        if (!empty($this->get['id'])) {
+            $pagination = $this->pagination->paginate(2, $this->get['page'], $this->postManager->totatByCategory($this->get['id']));
+
+            $posts = $this->postManager->getPostByCategories($pagination->getLimit(), $this->pagination->getStart(), $this->get['id']);
+        }
+
+        foreach ($posts as $post) {
+            $categoriesofposts[$post->getId()] = $this->postManager->getCategoryByPost($post->getId());
+        }
+
+        $categories = $this->categoryManager->getCategories();
+
+        $cat = $this->categoryManager->getCategoryById($this->get['id']);
+
+        return $this->render('blog/postsByCategories.twig', [
+            'posts' => $posts ?? null,
+            'pagination' => $pagination,
+            'categories' => $categories ?? null,
+            'categoriesofposts' => $categoriesofposts ?? null,
+            'categories_id' => $this->get['id'] ?? null,
+            'categories_slug' => $this->get['slug'] ?? null,
+            'category_name' => $cat->getName(),
         ]);
     }
 }

@@ -16,6 +16,18 @@ class PostManager extends Database
         return $this->createQuery('SELECT COUNT(*) FROM post')->fetchColumn();
     }
 
+    public function totatByCategory($category_id)
+    {
+        return $this->createQuery(
+            '
+            SELECT COUNT(*) FROM post LEFT OUTER JOIN post_category ON post.id = post_category.post_id
+            WHERE post_category.category_id = :category_id',
+            [
+                'category_id' => $category_id,
+            ]
+        )->fetchColumn();
+    }
+
     public function getPosts($limit = null, $start = null)
     {
         $sql = 'SELECT post.id, post.title, post.slug, post.chapo, post.filename, post.content, post.created_at, post.update_at, user_id, user.username as autor 
@@ -63,6 +75,32 @@ class PostManager extends Database
         $post = $query->fetch();
         if ($post) {
             return $post;
+        }
+
+        return false;
+    }
+
+    public function getPostByCategories($limit = null, $start = null, $category_id)
+    {
+        $sql = 'SELECT post.id, post.title, post.chapo, post.slug, post.filename, post.content, post.created_at, post.update_at, post.user_id, post.update_at, category_id, user.username as autor
+            FROM post LEFT OUTER JOIN post_category ON post.id = post_category.post_id
+            INNER JOIN user ON post.user_id = user.id 
+            WHERE  post_category.category_id = :category_id';
+
+        if ($limit) {
+            $sql .= ' LIMIT '.$limit.' OFFSET '.$start;
+        }
+        $query = $this->createQuery(
+            $sql,
+            [
+                'category_id' => $category_id,
+            ]
+        );
+
+        $query->setFetchMode(PDO::FETCH_CLASS, Post::class);
+        $posts = $query->fetchAll();
+        if ($posts) {
+            return $posts;
         }
 
         return false;
