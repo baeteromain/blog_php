@@ -105,8 +105,7 @@ class PostController extends Controller
 
             if ($post->getSlug() === $this->post['slug']) {
                 unset($errors['slug']);
-            }
-
+            }//getFile pas de superglobales
             if (!empty($_FILES['file_upload']['tmp_name'])) {
                 if (self::BASEIMAGEPOST === $_FILES['file_upload']['name']) {
                     $data = [
