@@ -53,6 +53,7 @@ class BlogController extends Controller
     {
         if (!empty($this->get['id'])) {
             $user = $this->session->get('user');
+            $comments = $this->commentManager->getCommentsByPost($this->get['id']);
 
             $post = $this->postManager->getPostById($this->get['id']);
             $categoriesOfPost = $this->postManager->getCategoryByPost($this->get['id']);
@@ -63,10 +64,12 @@ class BlogController extends Controller
             if (!$errors) {
                 $this->addComment($user['id'], $this->post['content'], $this->post['post_id']);
             }
+            $comments = $this->commentManager->getCommentsByPost($this->get['id']);
         }
 
         return $this->render('blog/single/index.twig', [
             'errors' => $errors ?? null,
+            'comments' => $comments ?? null,
             'user' => $user ?? null,
             'post' => $post ?? null,
             'categoriesOfPost' => $categoriesOfPost ?? null,
