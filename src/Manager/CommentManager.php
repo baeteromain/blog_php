@@ -13,7 +13,8 @@ class CommentManager extends Database
     public function getComments()
     {
         $query = $this->createQuery(
-            'SELECT comment.*, post.title as title_post FROM comment 
+            'SELECT comment.*, post.title as title_post, user.username FROM comment 
+            INNER JOIN user ON user.id = comment.user_id 
             INNER JOIN post ON post.id = comment.post_id 
             ORDER BY created_at DESC'
         );
@@ -28,6 +29,23 @@ class CommentManager extends Database
             'SELECT * FROM comment WHERE publish = :publish ORDER BY created_at DESC',
             [
                 'publish' => $filtre,
+            ]
+        );
+        $query->setFetchMode(PDO::FETCH_CLASS, Comment::class);
+
+        return $query->fetchAll();
+    }
+
+    public function getCommentsByPost($post_id)
+    {
+        $query = $this->createQuery(
+            'SELECT comment.*, post.title as title_post, user.username FROM comment 
+            INNER JOIN user ON user.id = comment.user_id 
+            INNER JOIN post ON post.id = comment.post_id
+            WHERE post.id = :id 
+            ORDER BY created_at DESC',
+            [
+                'id' => $post_id,
             ]
         );
         $query->setFetchMode(PDO::FETCH_CLASS, Comment::class);
