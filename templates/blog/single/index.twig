@@ -40,56 +40,9 @@
                         {% endif %}                   
                 </form>
                 <ul class="list">
-                    <div>
-                        <li class="f5 b lh-title pb2 ">Romain BAETE, <small class="black-60 i f6">le 21/12/2020 à
-                                12h53</small></li>
-                        <li class="f6 pl5 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-                            aspernatur
-                            laboriosam hic quae vel nulla ullam eos natus at nemo, optio ipsa error aut libero fugiat
-                            harum aliquid totam officia voluptate! Pariatur natus, ipsum facere illum assumenda sint
-                            dignissimos porro quas doloribus quam dolorem quibusdam explicabo inventore. At, nam
-                            eveniet?.. ... ...</li>
-                        <a href="#" class="dib mt2 pa2 ml5 no-underline i blue hover-white hover-bg-blue br-pill "><i
-                                class="ph2 fas fa-reply fa-rotate-180"></i>Répondre</a>
-                        <div class="ml5 mv3  br4 pa3 bg-white">
-                            <li class=" f5 b lh-title pb2"><i class="fas fa-comment-dots blue"></i> Alan BADIER, <small
-                                    class=" black-60 i f6">le 21/12/2020 à
-                                    14h09</small></li>
-                            <li class="f6 pl5 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-                                aspernatur !!
-                            </li>
-                            <hr class="bt-0  b--black w-60 mv3 ">
-                        </div>
-                        <hr class="bt-0  b--light-blue w-60 mv3 ">
-                    </div>
-
-                    <div>
-                        <li class="f5 b lh-title pb2 ">Florent ROUYAT, <small class="black-60 i f6">le 21/12/2020 à
-                                15h53</small></li>
-                        <li class="f6 pl5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore aspernatur
-                            laboriosam hic quae vel nulla ullam eos natus at nemo, optio ipsa error aut libero fugiat
-                            harum aliquid totam officia voluptate! Pariatur natus, ipsum facere illum assumenda sint
-                            dignissimos porro quas doloribus quam dolorem quibusdam explicabo inventore. At, nam
-                            eveniet?.. ... ...</li>
-                        <a href="#" class="dib mt2 pa2 ml5 no-underline i blue hover-white hover-bg-blue br-pill "><i
-                                class="ph2 fas fa-reply fa-rotate-180"></i>Répondre</a>
-                        <div class="ml5  pa3">
-                            <form class="">
-                                <fieldset id="add_post" class="ba b--transparent ph0 mh0">
-                                    <div class="mv2">
-                                        <textarea
-                                            class="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                                            type="text" rows="3" name="contenu" id="contenu"></textarea>
-                                    </div>
-                                </fieldset>
-                                <div class="">
-                                    <input class="f7 no-underline black hover-bg-black hover-white pa2 nes"
-                                        type="submit" value="Commenter">
-                                </div>
-                            </form>
-                        </div>
-                        <hr class="bt-0  b--light-blue w-60  mv3">
-                    </div>
+                {% for comment in comments %}
+                    {{ include('blog/single/comment.html.twig') }}
+                {% endfor %}
                 </ul>
 
             </article>
