@@ -26,7 +26,10 @@ class CommentManager extends Database
     public function getCommentsFilter($filtre)
     {
         $query = $this->createQuery(
-            'SELECT * FROM comment WHERE publish = :publish ORDER BY created_at DESC',
+            'SELECT comment.*, post.title as title_post, user.username FROM comment 
+            INNER JOIN user ON user.id = comment.user_id 
+            INNER JOIN post ON post.id = comment.post_id
+            WHERE publish = :publish ORDER BY created_at DESC',
             [
                 'publish' => $filtre,
             ]
@@ -75,6 +78,16 @@ class CommentManager extends Database
     {
         return $this->createQuery(
             'UPDATE comment SET publish = 1 WHERE id = :id',
+            [
+                'id' => $id,
+            ]
+        );
+    }
+
+    public function deleteComment($id)
+    {
+        return $this->createQuery(
+            ' DELETE FROM comment WHERE id = :id',
             [
                 'id' => $id,
             ]
