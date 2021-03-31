@@ -58,4 +58,26 @@ class CommentController extends Controller
             'comments' => $comments,
         ]);
     }
+
+    public function deleteComment()
+    {
+        $this->checkAdmin();
+
+        if (!empty($this->get['id'])) {
+            $this->commentManager->deleteComment($this->get['id']);
+
+            $this->session->set('delete_comment', 'Le commentaire a bien été supprimé');
+
+            header('Location: /admin/comments');
+
+            exit();
+        }
+        $this->session->set('error_delete_comment', 'Un problème est survenu lors de la suppression du commentaire');
+
+        $comments = $this->commentManager->getComments();
+
+        return $this->render('admin/admin_comments/index.twig', [
+            'comments' => $comments,
+        ]);
+    }
 }
