@@ -21,24 +21,23 @@
                 <p class="lh-copy">{{ post.content|nl2br }}</p>
                 <p class="tc f6 lh-copy mb4">Auteur : {{ post.autor }} - Publié le : {{post.update_at ? post.update_at|date("d/m/Y H:i:s") : post.created_at|date("d/m/Y H:i:s")}}</p>
                 <hr class="bt bb b--black-10">
-                <form class="pa4 black-80" method="post" action="/comments/add?id={{ post.id }}">
-                    <div>
-                        <input name='post_id'  type="hidden" value="{{ post.id }}" >
-                        <label for="comment" class="f6 b db mb2 ">Laissez un commentaire</label>
-                        <textarea id="comment" name="content" rows="5"
-                            class="db  border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2"
-                            aria-describedby="comment-desc"></textarea>
-                            {% if errors.content %}
-                <div class="red pt1 i">{{ errors.content }}</div>
-                {% endif %}
-                        {% if user is empty %}
+                    {% if user is empty %}
                         <small id="comment-desc" class="f6 black-60">
                         Vous devez être connecté pour laisser un commentaire : <a href="/login" class="link underline black-80 hover-blue b">Cliquez ici pour vous connecter.</a></small>
-                        {% else %}   
-                        <button type="submit" class="f7  grow no-underline  br-pill br ph3 pv2 mt2 dib  black bg-animate hover-bg-black hover-white nes">
-                        Poster le commentaire</button>                    
-                        {% endif %}                   
-                </form>
+                    {% else %}   
+                        <form class="pa4 black-80" method="post" action="/comments/add?id={{ post.id }}">
+                            <input name='post_id'  type="hidden" value="{{ post.id }}" >
+                            <label for="comment" class="f6 b db mb2 ">Laissez un commentaire</label>
+                            <textarea id="comment" name="content" rows="5"
+                                class="db  border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2"
+                                aria-describedby="comment-desc"></textarea>
+                            {% if errors.content %}
+                                <div class="red pt1 i">{{ errors.content }}</div>
+                            {% endif %}
+                            <button type="submit" class="f7  grow no-underline  br-pill br ph3 pv2 mt2 dib  black bg-animate hover-bg-black hover-white nes">
+                            Poster le commentaire</button>   
+                        </form>                 
+                        {% endif %}                                   
                 <ul class="list">
                 {% for comment in comments %}
                     {{ include('blog/single/comment.html.twig') }}
