@@ -21,76 +21,42 @@
                 <p class="lh-copy">{{ post.content|nl2br }}</p>
                 <p class="tc f6 lh-copy mb4">Auteur : {{ post.autor }} - Publié le : {{post.update_at ? post.update_at|date("d/m/Y H:i:s") : post.created_at|date("d/m/Y H:i:s")}}</p>
                 <hr class="bt bb b--black-10">
-                <form class="pa4 black-80">
-                    <div>
-                        <label for="comment" class="f6 b db mb2 ">Laissez un commentaire</label>
-                        <textarea id="comment" name="comment" rows="5"
-                            class="db  border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2"
-                            aria-describedby="comment-desc"></textarea>
-                        <small id="comment-desc" class="f6 black-60">Vous devez être connecté pour laisser un
-                            commentaire : <a href="login.html" class="link underline black-80 hover-blue b">Cliquez ici
-                                pour vous connecter.</a></small>
-                    </div>
-                    <button type="submit"
-                        class="f7  grow no-underline  br-pill br ph3 pv2 mt2 dib  black bg-animate hover-bg-black hover-white nes">Valider
-                        le
-                        commentaire</button>
-                </form>
+                    {% if user is empty %}
+                        <small id="comment-desc" class="f6 black-60">
+                        Vous devez être connecté pour laisser un commentaire : <a href="/login" class="link underline black-80 hover-blue b">Cliquez ici pour vous connecter.</a></small>
+                    {% else %}   
+                        <form class="pa4 black-80" method="post" >
+                            <input name='post_id'  type="hidden" value="{{ post.id }}" >
+                            <label for="comment" class="f6 b db mb2 ">Laissez un commentaire</label>
+                            <textarea id="comment" name="content" rows="5"
+                                class="db  border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2"
+                                aria-describedby="comment-desc"></textarea>
+                            {% if errors.content %}
+                                <div class="red pt1 i">{{ errors.content }}</div>
+                            {% endif %}
+                            <button name="post_comment" value="" type="submit" class="f7  grow no-underline  br-pill br ph3 pv2 mt2 dib  black bg-animate hover-bg-black hover-white nes">
+                            Poster le commentaire</button>   
+                        </form>                 
+                        {% endif %}                                   
                 <ul class="list">
-                    <div>
-                        <li class="f5 b lh-title pb2 ">Romain BAETE, <small class="black-60 i f6">le 21/12/2020 à
-                                12h53</small></li>
-                        <li class="f6 pl5 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-                            aspernatur
-                            laboriosam hic quae vel nulla ullam eos natus at nemo, optio ipsa error aut libero fugiat
-                            harum aliquid totam officia voluptate! Pariatur natus, ipsum facere illum assumenda sint
-                            dignissimos porro quas doloribus quam dolorem quibusdam explicabo inventore. At, nam
-                            eveniet?.. ... ...</li>
-                        <a href="#" class="dib mt2 pa2 ml5 no-underline i blue hover-white hover-bg-blue br-pill "><i
-                                class="ph2 fas fa-reply fa-rotate-180"></i>Répondre</a>
-                        <div class="ml5 mv3  br4 pa3 bg-white">
-                            <li class=" f5 b lh-title pb2"><i class="fas fa-comment-dots blue"></i> Alan BADIER, <small
-                                    class=" black-60 i f6">le 21/12/2020 à
-                                    14h09</small></li>
-                            <li class="f6 pl5 ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-                                aspernatur !!
-                            </li>
-                            <hr class="bt-0  b--black w-60 mv3 ">
-                        </div>
-                        <hr class="bt-0  b--light-blue w-60 mv3 ">
-                    </div>
-
-                    <div>
-                        <li class="f5 b lh-title pb2 ">Florent ROUYAT, <small class="black-60 i f6">le 21/12/2020 à
-                                15h53</small></li>
-                        <li class="f6 pl5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore aspernatur
-                            laboriosam hic quae vel nulla ullam eos natus at nemo, optio ipsa error aut libero fugiat
-                            harum aliquid totam officia voluptate! Pariatur natus, ipsum facere illum assumenda sint
-                            dignissimos porro quas doloribus quam dolorem quibusdam explicabo inventore. At, nam
-                            eveniet?.. ... ...</li>
-                        <a href="#" class="dib mt2 pa2 ml5 no-underline i blue hover-white hover-bg-blue br-pill "><i
-                                class="ph2 fas fa-reply fa-rotate-180"></i>Répondre</a>
-                        <div class="ml5  pa3">
-                            <form class="">
-                                <fieldset id="add_post" class="ba b--transparent ph0 mh0">
-                                    <div class="mv2">
-                                        <textarea
-                                            class="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                                            type="text" rows="3" name="contenu" id="contenu"></textarea>
-                                    </div>
-                                </fieldset>
-                                <div class="">
-                                    <input class="f7 no-underline black hover-bg-black hover-white pa2 nes"
-                                        type="submit" value="Commenter">
-                                </div>
-                            </form>
-                        </div>
-                        <hr class="bt-0  b--light-blue w-60  mv3">
-                    </div>
+                {% for comment in comments %}
+                    {{ include('blog/single/comment.html.twig') }}
+                {% endfor %}
                 </ul>
 
             </article>
         </section>
     </main>
+
+<script>
+$(document).ready(function(){
+$(document).on('click', '#reply-btn',function (e) {
+    e.preventDefault();
+    var comment_id = $(this).data('id');
+    console.log(comment_id)
+    $(this).parent().siblings('form#comment_reply_form_' + comment_id).toggle(500);
+})});
+</script>
+
     
 {% endblock %}

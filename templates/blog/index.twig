@@ -16,7 +16,7 @@
             {% for post in posts %}
                 
             <article class="bt bb b--black-10 pa2">
-                <a class="db no-underline black dim" href="/articles/{{ post.slug }}-{{ post.id }}?id={{ post.id }}">
+                <a class="db no-underline black dim" href="/articles/{{ post.slug }}?id={{ post.id }}">
                     <div class="flex-l flex-row-l db">
                         <div class="mb4 mb0-ns w-100 w-60-ns center">
                             <img src="/uploads/{{ post.filename }}" class="imgpost h5 w-100"
@@ -66,11 +66,11 @@
                 {% if pagination.page|number_format > (page|number_format) %}
                 <a href="/articles?page={{ page }}"
                         class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box nes">
-                        <span class="pr1">{{ page }}</span>
                         <svg class="w1" data-icon="chevronLeft" viewBox="0 0 32 32" style="fill:currentcolor">
                             <title>chevronLeft icon</title>
                             <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"></path>
                         </svg>
+                        <span class="pr1">{{ page }}</span>
                     </a>
                 {% endif %}
                  

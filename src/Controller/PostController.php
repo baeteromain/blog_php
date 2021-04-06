@@ -48,8 +48,8 @@ class PostController extends Controller
 
             $errors = $this->validator->validate($this->post, 'Post');
 
-            if (!empty($_FILES['file_upload']['tmp_name'])) {
-                $uploadfile = $this->uploadfile($_FILES['file_upload'], self::OUTPUT_DIR);
+            if (!empty($this->files['file_upload']['tmp_name'])) {
+                $uploadfile = $this->uploadfile($this->files['file_upload'], self::OUTPUT_DIR);
                 $data = $uploadfile;
             } else {
                 $data = [
@@ -58,7 +58,7 @@ class PostController extends Controller
             }
 
             if (!$errors) {
-                move_uploaded_file($_FILES['file_upload']['tmp_name'], self::OUTPUT_DIR.'/'.$data['image']);
+                move_uploaded_file($this->files['file_upload']['tmp_name'], self::OUTPUT_DIR.'/'.$data['image']);
 
                 $this->postManager->createPost($this->post['title'], $this->post['slug'], $data['image'], $this->post['chapo'], $this->post['content'], $user['id']);
                 if (isset($this->post['category'])) {
@@ -106,14 +106,13 @@ class PostController extends Controller
             if ($post->getSlug() === $this->post['slug']) {
                 unset($errors['slug']);
             }
-
-            if (!empty($_FILES['file_upload']['tmp_name'])) {
-                if (self::BASEIMAGEPOST === $_FILES['file_upload']['name']) {
+            if (!empty($this->files['file_upload']['tmp_name'])) {
+                if (self::BASEIMAGEPOST === $this->files['file_upload']['name']) {
                     $data = [
                         'image' => self::BASEIMAGEPOST,
                     ];
                 } else {
-                    $uploadfile = $this->uploadfile($_FILES['file_upload'], self::OUTPUT_DIR);
+                    $uploadfile = $this->uploadfile($this->files['file_upload'], self::OUTPUT_DIR);
                     $data = $uploadfile;
                 }
             } else {
@@ -124,7 +123,7 @@ class PostController extends Controller
 
             if (!$errors) {
                 if ($data['image'] != $post->getFilename()) {
-                    move_uploaded_file($_FILES['file_upload']['tmp_name'], self::OUTPUT_DIR.'/'.$data['image']);
+                    move_uploaded_file($this->files['file_upload']['tmp_name'], self::OUTPUT_DIR.'/'.$data['image']);
                 }
 
                 foreach ($categoriesOfPost as $categoryOfPost) {

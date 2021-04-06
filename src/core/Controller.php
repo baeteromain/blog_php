@@ -18,6 +18,7 @@ abstract class Controller
         $request = new Request();
         $this->get = $request->getGet();
         $this->post = $request->getPost();
+        $this->files = $request->getFiles();
         $this->session = $request->getSession();
 
         $this->getTwig();

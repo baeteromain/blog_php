@@ -1,0 +1,45 @@
+{% if comment.publish == 1 %}
+    <div id='comments_section'>
+        <div>
+            <li class="f5 b lh-title pb2 ">{{ comment.username }}, <small class="black-60 i f6">{{ comment.created_at|date("d/m/Y H:i:s") }}</small></li>
+            <li class="f6 pl5 ">{{ comment.content }}</li>
+            {% if user is empty %}
+                        <small id="comment-desc" class="f6 black-60">
+                        Vous devez être connecté pour poster une réponse : <a href="/login" class="link underline black-80 hover-blue b">Cliquez ici pour vous connecter.</a></small>
+            {% else %}
+
+            <a id="reply-btn" data-id="{{ comment.id }}" class="dib mt2 pa2 ml5 no-underline i blue hover-white hover-bg-blue br-pill"><i
+                    class="ph2 fas fa-reply fa-rotate-180"></i>Répondre</a>
+            {% endif %}
+        </div>
+
+        <form id="comment_reply_form_{{ comment.id }}" data-id="{{ comment.id }}" class="pa4 black-80 reply_form  clearfix" method="post">
+            <input name="post_id"  type="hidden" value="{{ post.id }}" >
+            <input name="comment_id"  type="hidden" value="{{ comment.id }}">
+            <label for="reply" class="f6 b db mb2 ">Laissez un réponse</label>
+            <textarea id="reply" name="reply" rows="3" class="db  border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2" aria-describedby="comment-desc"></textarea>
+            {% if errors_reply.reply %}<div class="red pt1 i">{{ errors_reply.reply }}</div>{% endif %}
+            <button name="post_reply" type="submit" class="f7  grow no-underline  br-pill br ph3 pv2 mt2 dib  black bg-animate hover-bg-black hover-white nes">Poster votre réponse</button>
+        </form>
+    
+        {% for id_comment,reply in replyComment %}
+            {% if id_comment == comment.id %}
+                {% for r in reply %}
+                    {% if r.publish == 1 %}
+                        <div class="ml5 mv3  br4 pa3 bg-white">
+                            <li class=" f5 b lh-title pb2">
+                            <i class="fas fa-comment-dots blue"></i> {{ r.username }} <small class=" black-60 i f6">le {{ r.created_at|date("d/m/Y H:i:s") }}</small></li>
+                            <li class="f6 pl5 ">{{ r.content }}</li>               
+                        </div>                                 
+                    {% endif %}
+                {% endfor %} 
+            {% endif %}
+        {% endfor %}            
+    </div>
+{% endif %}
+
+
+
+
+
+                
