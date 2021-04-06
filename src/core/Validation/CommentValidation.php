@@ -30,7 +30,12 @@ class CommentValidation
         if ('content' === $name) {
             $error = $this->checkContent($name, $value);
             $this->addError($name, $error);
+        } elseif ('reply' === $name) {
+            $error = $this->checkContentReply($name, $value);
+            $this->addError($name, $error);
         } elseif ('post_id' === $name) {
+            return null;
+        } elseif ('comment_id' === $name) {
             return null;
         } else {
             $this->addError('form_failed_comment', 'Une erreur est survenue, merci de resaisir vos informations');
@@ -53,6 +58,16 @@ class CommentValidation
         }
         if ($this->constraint->maxLength($name, $value, 255)) {
             return $this->constraint->maxLength('commentaire', $value, 255);
+        }
+    }
+
+    private function checkContentReply($name, $value)
+    {
+        if ($this->constraint->notBlank($name, $value)) {
+            return $this->constraint->notBlank('réponse', $value);
+        }
+        if ($this->constraint->maxLength($name, $value, 255)) {
+            return $this->constraint->maxLength('réponse', $value, 255);
         }
     }
 }
