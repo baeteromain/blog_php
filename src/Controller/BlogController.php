@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\core\Controller;
+use App\core\Validation\Validation;
 use App\Manager\CategoryManager;
+use App\Manager\CommentManager;
 use App\Manager\PostManager;
 use App\Model\Pagination;
 
@@ -12,6 +14,7 @@ class BlogController extends Controller
     private $postManager;
     private $categoryManager;
     private $pagination;
+    private $commentManager;
 
     public function __construct()
     {
@@ -20,6 +23,8 @@ class BlogController extends Controller
         $this->postManager = new PostManager();
         $this->categoryManager = new CategoryManager();
         $this->pagination = new Pagination();
+        $this->commentManager = new CommentManager();
+        $this->validator = new Validation();
     }
 
     public function listPosts()
@@ -46,12 +51,65 @@ class BlogController extends Controller
 
     public function singlePost()
     {
-        if (!empty($this->get['id'])) {
-            $post = $this->postManager->getPostById($this->get['id']);
-            $categoriesOfPost = $this->postManager->getCategoryByPost($this->get['id']);
+        if (!isset($this->get['id'])) {
+            header('Location: /articles');
+
+            exit();
+        }
+
+        $post = $this->postManager->getPostById($this->get['id']);
+
+        if (empty($post)) {
+            header('Location: /articles');
+
+            exit();
+        }
+
+        $user = $this->session->get('user');
+
+        if (isset($this->post['post_comment'])) {
+            unset($this->post['post_comment']);
+
+            $errors = $this->validator->validate($this->post, 'Comment');
+
+            if (!$errors) {
+                $this->addComment($user['id'], $this->post['content'], $this->post['post_id']);
+
+                header('Location: /articles/'.$post->getSlug().'-'.$post->getId().'?id='.$post->getId());
+
+                exit();
+            }
+        }
+
+        if (isset($this->post['post_reply'])) {
+            unset($this->post['post_reply']);
+
+            $errors_reply = $this->validator->validate($this->post, 'Comment');
+            if (!$errors_reply) {
+                $this->addCommentReply($user['id'], $this->post['comment_id'], $this->post['reply'], $this->post['post_id']);
+
+                header('Location: /articles/'.$post->getSlug().'-'.$post->getId().'?id='.$post->getId());
+
+                exit();
+            }
+        }
+
+        $comments = $this->commentManager->getCommentsByPost($this->get['id']);
+
+        $categoriesOfPost = $this->postManager->getCategoryByPost($this->get['id']);
+
+        $replyComment = [];
+
+        foreach ($comments as $comment) {
+            $replyComment[$comment->getId()] = $this->commentManager->getReplyByComment($comment->getId());
         }
 
         return $this->render('blog/single/index.twig', [
+            'replyComment' => $replyComment ?? null,
+            'errors_reply' => $errors_reply ?? null,
+            'errors' => $errors ?? null,
+            'comments' => $comments ?? null,
+            'user' => $user ?? null,
             'post' => $post ?? null,
             'categoriesOfPost' => $categoriesOfPost ?? null,
         ]);
@@ -86,5 +144,15 @@ class BlogController extends Controller
             'categories_slug' => $this->get['slug'] ?? null,
             'category_name' => $cat->getName(),
         ]);
+    }
+
+    private function addComment($user, $content, $post_id)
+    {
+        $this->commentManager->addComment($content, null, $post_id, $user);
+    }
+
+    private function addCommentReply($user, $comment_id, $content, $post_id)
+    {
+        $this->commentManager->addComment($content, $comment_id, $post_id, $user);
     }
 }

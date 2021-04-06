@@ -76,3 +76,29 @@
     min-height: 600px;
     max-height: 600px;
 }
+
+.title_post_box {
+    text-decoration: none;
+}
+.title_post_box:hover {
+    background: none;
+}
+.title_post_box span {
+    display: none;
+}
+.title_post_box:hover span {
+    display: inline;
+    position: absolute;
+    padding: 5px;
+    left: 100px;
+    width: 200px;
+    border: 2px solid black;
+    background: #ffffff;
+    text-align: center;
+    color: black;
+    z-index: 10;
+}
+
+.reply_form {
+    display: none;
+}

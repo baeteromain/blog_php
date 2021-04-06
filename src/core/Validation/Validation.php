@@ -22,11 +22,11 @@ class Validation
 
             return $postValidation->check($data);
         }
-        // if ('Comment' === $name) {
-        //     $commentValidation = new CommentValidation();
+        if ('Comment' === $name) {
+            $commentValidation = new CommentValidation($data);
 
-        //     return $commentValidation->check($data);
-        // }
+            return $commentValidation->check($data);
+        }
 
         return null;
     }

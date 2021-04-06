@@ -8,15 +8,7 @@
 
 <main class="mw8 pa3 center flex flex-column min-vh-100 main_admin pr4">
     <h1 class="nes pv2 tc">Gestion des articles</h1>
-    <div class="nes dt center ml2-l mt6-l sidenav fixed-l z-1 top-1 left-0 overflow-x-hidden pa3 bg-near-black f6 no-underline  ">
-        <a class="db-l pa2 link white hover-blue " href="/admin/users">Utilisateurs</a>
-        <hr class="bt-1-l dn-m mv2">
-        <a class="db-l pa2 link white hover-blue" href="/admin/posts">Articles</a>
-        <hr class="bt-1-l dn-m mv2">
-        <a class="db-l pa2 link white hover-blue" href="/admin/categories">Catégories</a>
-        <hr class="bt-1-l dn-m mv2">
-        <a class="db-l pa2 link white hover-blue" href="/admin/comments">Commentaires</a>
-    </div>
+    {{ include('admin/admin_menu.html.twig') }}
     <section>
         <div class="tc pv2">
             <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes" href="/admin/posts/add"><i
