@@ -98,3 +98,7 @@
     color: black;
     z-index: 10;
 }
+
+.reply_form {
+    display: none;
+}
