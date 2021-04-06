@@ -43,9 +43,9 @@ class Router extends AltoRouter
         $this->map('POST', '/admin/posts/update', 'PostController#updatePost');
         $this->map('GET', '/admin/posts/delete', 'PostController#deletePost');
         $this->map('GET', '/articles', 'BlogController#listPosts');
-        $this->map('GET', '/articles/[*:slug]-[i:id]', 'BlogController#singlePost');
+        $this->map('GET', '/articles/[*:slug]', 'BlogController#singlePost');
+        $this->map('POST', '/articles/[*:slug]', 'BlogController#singlePost');
         $this->map('GET', '/categories/[*:slug]', 'BlogController#listPostsByCategories');
-        $this->map('POST', '/comments/add', 'BlogController#singlePost');
         $this->map('GET', '/admin/comments', 'CommentController#index');
         $this->map('GET', '/admin/comments/validate', 'CommentController#validateComment');
         $this->map('GET', '/admin/comments/delete', 'CommentController#deleteComment');
