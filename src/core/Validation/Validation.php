@@ -27,6 +27,11 @@ class Validation
 
             return $commentValidation->check($data);
         }
+        if ('Contact' === $name) {
+            $contactValidation = new ContactValidation($data);
+
+            return $contactValidation->check($data);
+        }
 
         return null;
     }
