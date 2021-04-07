@@ -36,6 +36,9 @@ class Mailer extends PHPMailer
         if ('resetPassword' === $template) {
             $this->Subject = 'Réinitialisation de votre mot de passe';
         }
+        if ('contact' === $template) {
+            $this->Subject = "Contact d'un utilisateur";
+        }
     }
 
     public static function url()

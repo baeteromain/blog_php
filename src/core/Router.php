@@ -49,6 +49,8 @@ class Router extends AltoRouter
         $this->map('GET', '/admin/comments', 'CommentController#index');
         $this->map('GET', '/admin/comments/validate', 'CommentController#validateComment');
         $this->map('GET', '/admin/comments/delete', 'CommentController#deleteComment');
+        $this->map('GET', '/contact', 'ContactController#index');
+        $this->map('POST', '/contact', 'ContactController#index');
     }
 
     public function run()

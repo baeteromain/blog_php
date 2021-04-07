@@ -30,7 +30,7 @@
                             <label for="comment" class="f6 b db mb2 ">Laissez un commentaire</label>
                             <textarea id="comment" name="content" rows="5"
                                 class="db  border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2"
-                                aria-describedby="comment-desc"></textarea>
+                                aria-describedby="comment-desc">{{ content ? content|e : '' }}</textarea>
                             {% if errors.content %}
                                 <div class="red pt1 i">{{ errors.content }}</div>
                             {% endif %}
