@@ -72,11 +72,6 @@
     object-fit: cover;
 }
 
-.last_article {
-    min-height: 600px;
-    max-height: 600px;
-}
-
 .title_post_box {
     text-decoration: none;
 }
@@ -101,4 +96,22 @@
 
 .reply_form {
     display: none;
+}
+
+@media screen and (min-width: 60em) {
+    .imgpost {
+        height: 212px;
+    }
+    .last_article {
+        min-height: 650px;
+        max-height: 650px;
+    }
+}
+
+/* FOOTER */
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+    fill: white;
 }
