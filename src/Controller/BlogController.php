@@ -105,6 +105,8 @@ class BlogController extends Controller
         }
 
         return $this->render('blog/single/index.twig', [
+            'content' => $this->post['content'] ?? null,
+            'reply' => $this->post['reply'] ?? null,
             'replyComment' => $replyComment ?? null,
             'errors_reply' => $errors_reply ?? null,
             'errors' => $errors ?? null,
