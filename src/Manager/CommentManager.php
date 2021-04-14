@@ -10,6 +10,30 @@ use PDO;
 
 class CommentManager extends Database
 {
+    public function totalComments($filtre)
+    {
+        $result = $this->createQuery(
+            'SELECT COUNT(id) FROM comment WHERE comment_id IS NULL AND publish = :publish',
+            [
+                'publish' => $filtre,
+            ]
+        );
+
+        return $result->fetchColumn();
+    }
+
+    public function totalReplyComments($filtre)
+    {
+        $result = $this->createQuery(
+            'SELECT COUNT(id) FROM comment WHERE comment_id IS NOT NULL AND publish = :publish',
+            [
+                'publish' => $filtre,
+            ]
+        );
+
+        return $result->fetchColumn();
+    }
+
     public function getComments()
     {
         $query = $this->createQuery(
@@ -23,17 +47,23 @@ class CommentManager extends Database
         return $query->fetchAll();
     }
 
-    public function getCommentsFilter($filtre)
+    public function getCommentsFilter($filtre, $limit = null, $start = null)
     {
-        $query = $this->createQuery(
-            'SELECT comment.*, post.title as title_post, user.username FROM comment 
+        $sql = 'SELECT comment.*, post.title as title_post, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
             INNER JOIN post ON post.id = comment.post_id
-            WHERE publish = :publish ORDER BY created_at DESC',
+            WHERE publish = :publish ORDER BY created_at DESC';
+
+        if ($limit) {
+            $sql .= ' LIMIT '.$limit.' OFFSET '.$start;
+        }
+        $query = $this->createQuery(
+            $sql,
             [
                 'publish' => $filtre,
             ]
         );
+
         $query->setFetchMode(PDO::FETCH_CLASS, Comment::class);
 
         return $query->fetchAll();
@@ -62,7 +92,7 @@ class CommentManager extends Database
             'SELECT comment.*, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
             WHERE comment_id = :id 
-            ORDER BY created_at DESC',
+            ORDER BY created_at ASC',
             [
                 'id' => $comment_id,
             ]
