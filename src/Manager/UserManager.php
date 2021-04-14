@@ -59,19 +59,6 @@ class UserManager extends Database
         );
     }
 
-    // public function upgradeRole($id, $role)
-    // {
-    //     return $this->createQuery(
-    //         '
-    //      UPDATE user SET role_id = :role_id
-    //     WHERE id = :id',
-    //         [
-    //             'id' => $id,
-    //             'role_id' => $role,
-    //         ]
-    //     );
-    // }
-
     public function updateRole($id, $role)
     {
         return $this->createQuery(
@@ -112,33 +99,6 @@ class UserManager extends Database
             ]
         );
     }
-
-    // public function updateUsername($id, $username)
-    // {
-    //     return $this->createQuery(
-    //         '
-    //     UPDATE user SET username = :username
-    //     WHERE id = :id',
-    //         [
-    //             'id' => $id,
-    //             'username' => $username,
-    //         ]
-    //     );
-    // }
-
-    // public function updateEmail($id, $email, $token)
-    // {
-    //     return $this->createQuery(
-    //         '
-    //     UPDATE user SET email = :email, token = :token, valid = 0
-    //     WHERE id = :id',
-    //         [
-    //             'id' => $id,
-    //             'email' => $email,
-    //             'token' => $token,
-    //         ]
-    //     );
-    // }
 
     public function removeToken($email)
     {

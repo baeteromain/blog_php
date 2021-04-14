@@ -29,7 +29,6 @@ class ProfilController extends Controller
     {
         $this->checkLoggedIn();
         $user = $this->session->get('user');
-        // RECUPERE EN USER , UN SEUL IF
         if (!empty($this->post) && isset($this->post['username'], $this->post['email'])) {
             if ($this->post['username'] != $user['username'] || $this->post['email'] != $user['email']) {
                 $errors = $this->validator->validate($this->post, 'User');
