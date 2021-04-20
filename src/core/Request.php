@@ -4,9 +4,22 @@ namespace App\core;
 
 class Request
 {
+
+    /**
+     * @var array
+     */
     private $get;
+    /**
+     * @var array
+     */
     private $post;
+    /**
+     * @var array
+     */
     private $files;
+    /**
+     * @var Session
+     */
     private $session;
 
     public function __construct()
@@ -17,22 +30,22 @@ class Request
         $this->session = new Session($_SESSION);
     }
 
-    public function getGet()
+    public function getGet(): array
     {
         return $this->get;
     }
 
-    public function getPost()
+    public function getPost(): array
     {
         return $this->post;
     }
 
-    public function getSession()
+    public function getSession(): Session
     {
         return $this->session;
     }
 
-    public function getFiles()
+    public function getFiles(): array
     {
         return $this->files;
     }

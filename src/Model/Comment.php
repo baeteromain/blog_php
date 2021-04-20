@@ -27,39 +27,11 @@ class Comment
     }
 
     /**
-     * Set the value of id.
-     *
-     * @param mixed $id
-     *
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Get the value of content.
      */
     public function getContent()
     {
         return $this->content;
-    }
-
-    /**
-     * Set the value of content.
-     *
-     * @param mixed $content
-     *
-     * @return self
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
     }
 
     /**
@@ -71,39 +43,11 @@ class Comment
     }
 
     /**
-     * Set the value of created_at.
-     *
-     * @param mixed $created_at
-     *
-     * @return self
-     */
-    public function setCreated_at($created_at)
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    /**
      * Get the value of publish.
      */
     public function getPublish()
     {
         return $this->publish;
-    }
-
-    /**
-     * Set the value of publish.
-     *
-     * @param mixed $publish
-     *
-     * @return self
-     */
-    public function setPublish($publish)
-    {
-        $this->publish = $publish;
-
-        return $this;
     }
 
     /**
@@ -115,39 +59,11 @@ class Comment
     }
 
     /**
-     * Set the value of comment_id.
-     *
-     * @param mixed $comment_id
-     *
-     * @return self
-     */
-    public function setComment_id($comment_id)
-    {
-        $this->comment_id = $comment_id;
-
-        return $this;
-    }
-
-    /**
      * Get the value of post_id.
      */
     public function getPost_id()
     {
         return $this->post_id;
-    }
-
-    /**
-     * Set the value of post_id.
-     *
-     * @param mixed $post_id
-     *
-     * @return self
-     */
-    public function setPost_id($post_id)
-    {
-        $this->post_id = $post_id;
-
-        return $this;
     }
 
     /**
@@ -158,17 +74,4 @@ class Comment
         return $this->user_id;
     }
 
-    /**
-     * Set the value of user_id.
-     *
-     * @param mixed $user_id
-     *
-     * @return self
-     */
-    public function setUser_id($user_id)
-    {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
 }

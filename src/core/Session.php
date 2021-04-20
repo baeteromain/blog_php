@@ -11,7 +11,7 @@ class Session
         $this->session = $session;
     }
 
-    public function set($name, $value)
+    public function set($name, $value): Session
     {
         $_SESSION[$name] = $value;
 
@@ -44,7 +44,7 @@ class Session
         unset($_SESSION[$name]);
     }
 
-    public function update($name, $param, $value)
+    public function update($name, $param, $value): Session
     {
         unset($_SESSION[$name][$param]);
         $_SESSION[$name][$param] = $value;

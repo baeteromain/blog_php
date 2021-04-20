@@ -8,6 +8,10 @@ use Exception;
 
 class Router extends AltoRouter
 {
+
+    /**
+     * @var ErrorController
+     */
     private $errorController;
 
     public function __construct()
@@ -55,6 +59,9 @@ class Router extends AltoRouter
         $this->map('POST', '/contact', 'ContactController#index');
     }
 
+    /**
+     * @throws Exception
+     */
     public function run()
     {
         $match = $this->match();

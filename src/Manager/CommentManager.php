@@ -10,24 +10,24 @@ use PDO;
 
 class CommentManager extends Database
 {
-    public function totalComments($filtre)
+    public function totalComments($filter)
     {
         $result = $this->createQuery(
             'SELECT COUNT(id) FROM comment WHERE comment_id IS NULL AND publish = :publish',
             [
-                'publish' => $filtre,
+                'publish' => $filter,
             ]
         );
 
         return $result->fetchColumn();
     }
 
-    public function totalReplyComments($filtre)
+    public function totalReplyComments($filter)
     {
         $result = $this->createQuery(
             'SELECT COUNT(id) FROM comment WHERE comment_id IS NOT NULL AND publish = :publish',
             [
-                'publish' => $filtre,
+                'publish' => $filter,
             ]
         );
 
@@ -37,17 +37,19 @@ class CommentManager extends Database
     public function getComments()
     {
         $query = $this->createQuery(
-            'SELECT comment.*, post.title as title_post, user.username FROM comment 
+            '
+            SELECT comment.*, post.title as title_post, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
             INNER JOIN post ON post.id = comment.post_id 
-            ORDER BY created_at DESC'
+            ORDER BY created_at DESC
+            '
         );
         $query->setFetchMode(PDO::FETCH_CLASS, Comment::class);
 
         return $query->fetchAll();
     }
 
-    public function getCommentsFilter($filtre, $limit = null, $start = null)
+    public function getCommentsFilter($filter, $limit = null, $start = null)
     {
         $sql = 'SELECT comment.*, post.title as title_post, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
@@ -60,7 +62,7 @@ class CommentManager extends Database
         $query = $this->createQuery(
             $sql,
             [
-                'publish' => $filtre,
+                'publish' => $filter,
             ]
         );
 
@@ -72,11 +74,13 @@ class CommentManager extends Database
     public function getCommentsByPost($post_id)
     {
         $query = $this->createQuery(
-            'SELECT comment.*, post.title as title_post, user.username FROM comment 
+            '
+            SELECT comment.*, post.title as title_post, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
             INNER JOIN post ON post.id = comment.post_id
             WHERE post.id = :id AND comment.comment_id IS NULL
-            ORDER BY created_at DESC',
+            ORDER BY created_at DESC
+            ',
             [
                 'id' => $post_id,
             ]
@@ -89,10 +93,12 @@ class CommentManager extends Database
     public function getReplyByComment($comment_id)
     {
         $query = $this->createQuery(
-            'SELECT comment.*, user.username FROM comment 
+            '
+            SELECT comment.*, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
             WHERE comment_id = :id 
-            ORDER BY created_at ASC',
+            ORDER BY created_at ASC
+            ',
             [
                 'id' => $comment_id,
             ]
@@ -102,14 +108,19 @@ class CommentManager extends Database
         return $query->fetchAll();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function addComment($content, $comment_id, $post_id, $user_id)
     {
         $datePost = new DateTime('now', new DateTimeZone('Europe/Paris'));
         $datePost = $datePost->format('Y-m-d H:i:s');
 
         return $this->createQuery(
-            'INSERT INTO comment (content, created_at, comment_id, post_id, user_id) 
-            VALUES (:content, :created_at, :comment_id, :post_id, :user_id)',
+            '
+            INSERT INTO comment (content, created_at, comment_id, post_id, user_id) 
+            VALUES (:content, :created_at, :comment_id, :post_id, :user_id)
+            ',
             [
                 'content' => $content,
                 'created_at' => $datePost,

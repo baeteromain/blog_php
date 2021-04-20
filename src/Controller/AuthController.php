@@ -17,9 +17,19 @@ class AuthController extends Controller
     const TEMPLATE = [1 => 'register',
         2 => 'forgot_pwd', ];
 
+    /**
+     * @var Validation
+     */
     private $validator;
+    /**
+     * @var UserManager
+     */
     private $userManager;
+    /**
+     * @var ErrorController
+     */
     private $errorController;
+
 
     public function __construct()
     {
@@ -62,6 +72,9 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
     public function forgotpwd()
     {
         if (!empty($this->post['email']) && isset($this->post['email'])) {

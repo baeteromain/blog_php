@@ -10,7 +10,7 @@ class Pagination
     private $pageNumber;
     private $start;
 
-    public function paginate($limit, $page, $total)
+    public function paginate($limit, $page, $total): Pagination
     {
         $this->setLimit($limit);
         $this->setPage($page);

@@ -16,7 +16,7 @@ class PostManager extends Database
         return $this->createQuery('SELECT COUNT(*) FROM post')->fetchColumn();
     }
 
-    public function totatByCategory($category_id)
+    public function totalByCategory($category_id)
     {
         return $this->createQuery(
             '
@@ -123,6 +123,9 @@ class PostManager extends Database
         return $query->fetchAll();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function createPost($title, $slug, $filename, $chapo, $content, $user_id)
     {
         $datePost = new DateTime('now', new DateTimeZone('Europe/Paris'));
@@ -143,6 +146,9 @@ class PostManager extends Database
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function updatePost($id, $title, $slug, $filename, $chapo, $content, $created_at, $user_id)
     {
         $dateUpdatePost = new DateTime('now', new DateTimeZone('Europe/Paris'));
@@ -190,11 +196,7 @@ class PostManager extends Database
     public function checkTitleUnique($title)
     {
         $result = $this->createQuery(
-            '
-            SELECT COUNT(title)
-            FROM post
-            WHERE title = :title
-            ',
+            'SELECT COUNT(title) FROM post WHERE title = :title',
             [
                 'title' => $title,
             ]
@@ -208,14 +210,10 @@ class PostManager extends Database
         return false;
     }
 
-    public function checkSlugUnique($slug)
+    public function checkSlugUnique($slug): bool
     {
         $result = $this->createQuery(
-            '
-            SELECT COUNT(slug)
-            FROM post
-            WHERE slug = :slug
-            ',
+            'SELECT COUNT(slug) FROM post WHERE slug = :slug',
             [
                 'slug' => $slug,
             ]

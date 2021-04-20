@@ -7,8 +7,16 @@ use App\Manager\PostManager;
 class PostValidation
 {
     private $errors = [];
+
+    /**
+     * @var Constraint
+     */
     private $constraint;
+    /**
+     * @var PostManager
+     */
     private $postManager;
+
 
     public function __construct()
     {
@@ -16,7 +24,7 @@ class PostValidation
         $this->postManager = new PostManager();
     }
 
-    public function check($post)
+    public function check($post): array
     {
         foreach ($post as $key => $value) {
             $this->checkField($key, $value);

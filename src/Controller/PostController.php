@@ -14,7 +14,23 @@ class PostController extends Controller
     const OUTPUT_DIR = './uploads';
     const IMAGE_EXT = ['jpg', 'png', 'jpeg'];
 
+    /**
+     * @var PostManager
+     */
     private $postManager;
+    /**
+     * @var CategoryManager
+     */
+    private $categoryManager;
+    /**
+     * @var UserManager
+     */
+    private $userManager;
+    /**
+     * @var Validation
+     */
+    private $validator;
+
 
     public function __construct()
     {
@@ -199,7 +215,7 @@ class PostController extends Controller
         ]);
     }
 
-    private function uploadfile($file, $output_dir)
+    private function uploadfile($file, $output_dir): array
     {
         $success_upload = 1;
 

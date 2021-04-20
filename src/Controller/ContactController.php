@@ -10,6 +10,11 @@ class ContactController extends Controller
 {
     const TEMPLATE_CONTACT = 'contact';
 
+    /**
+     * @var Validation
+     */
+    private $validator;
+
     public function __construct()
     {
         parent::__construct();
@@ -17,6 +22,9 @@ class ContactController extends Controller
         $this->validator = new Validation();
     }
 
+    /**
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
     public function index()
     {
         if (!empty($this->post)) {

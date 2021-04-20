@@ -7,8 +7,16 @@ use App\Manager\CommentManager;
 class CommentValidation
 {
     private $errors = [];
+
+    /**
+     * @var Constraint
+     */
     private $constraint;
+    /**
+     * @var CommentManager
+     */
     private $commentManager;
+
 
     public function __construct()
     {
@@ -16,7 +24,7 @@ class CommentValidation
         $this->commentManager = new CommentManager();
     }
 
-    public function check($get)
+    public function check($get): array
     {
         foreach ($get as $key => $value) {
             $this->checkField($key, $value);

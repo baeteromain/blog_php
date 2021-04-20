@@ -7,8 +7,16 @@ use App\Manager\CategoryManager;
 class CategoryValidation
 {
     private $errors = [];
+
+    /**
+     * @var Constraint
+     */
     private $constraint;
+    /**
+     * @var CategoryManager
+     */
     private $categoryManager;
+
 
     public function __construct()
     {
@@ -16,7 +24,7 @@ class CategoryValidation
         $this->categoryManager = new CategoryManager();
     }
 
-    public function check($get)
+    public function check($get): array
     {
         foreach ($get as $key => $value) {
             $this->checkField($key, $value);

@@ -39,8 +39,7 @@ class CategoryManager extends Database
     public function createCategory($name, $slug)
     {
         return $this->createQuery(
-            'INSERT INTO category (name, slug) 
-            VALUES (:name, :slug)',
+            'INSERT INTO category (name, slug) VALUES (:name, :slug)',
             [
                 'name' => $name,
                 'slug' => $slug,
@@ -51,9 +50,7 @@ class CategoryManager extends Database
     public function updateCategory($id, $name, $slug)
     {
         return $this->createQuery(
-            '
-        UPDATE category SET id = :id, name = :name, slug = :slug
-        WHERE id = :id',
+            'UPDATE category SET id = :id, name = :name, slug = :slug WHERE id = :id',
             [
                 'id' => $id,
                 'name' => $name,
@@ -72,14 +69,10 @@ class CategoryManager extends Database
         );
     }
 
-    public function checkNameUnique($name)
+    public function checkNameUnique($name): bool
     {
         $result = $this->createQuery(
-            '
-            SELECT COUNT(name)
-            FROM category
-            WHERE name = :name
-            ',
+            'SELECT COUNT(name) FROM category WHERE name = :name',
             [
                 'name' => $name,
             ]
@@ -93,14 +86,10 @@ class CategoryManager extends Database
         return false;
     }
 
-    public function checkSlugUnique($slug)
+    public function checkSlugUnique($slug): bool
     {
         $result = $this->createQuery(
-            '
-            SELECT COUNT(slug)
-            FROM category
-            WHERE slug = :slug
-            ',
+            'SELECT COUNT(slug) FROM category WHERE slug = :slug',
             [
                 'slug' => $slug,
             ]

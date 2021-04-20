@@ -34,7 +34,7 @@ class Constraint
     public function isEmail($name, $value, $filter = FILTER_VALIDATE_EMAIL)
     {
         if (!filter_var($value, $filter)) {
-            return 'Le champ '.$name.' n\'est pas une adresse email valide';
+            return 'Le champ '.$name." n'est pas une adresse email valide";
         }
 
         return null;
@@ -52,7 +52,7 @@ class Constraint
     public function validSlug($name, $value)
     {
         if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $value)) {
-            return 'Le champ '.$name.' n\'est pas un slug valide';
+            return 'Le champ '.$name." n'est pas un slug valide";
         }
 
         return null;

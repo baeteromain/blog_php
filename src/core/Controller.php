@@ -8,10 +8,23 @@ use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
 {
-    protected $twig;
+
+    /**
+     * @var array
+     */
+    protected $get;
+    /**
+     * @var array
+     */
     protected $post;
+    /**
+     * @var array
+     */
+    protected $files;
+    /**
+     * @var Session
+     */
     protected $session;
-    protected $validation;
 
     public function __construct()
     {
@@ -24,7 +37,7 @@ abstract class Controller
         $this->getTwig();
     }
 
-    public function checkLoggedIn()
+    public function checkLoggedIn(): bool
     {
         if ($this->session->get('user')) {
             return true;
@@ -35,7 +48,7 @@ abstract class Controller
         exit;
     }
 
-    public function checkAdmin()
+    public function checkAdmin(): bool
     {
         if ($this->checkLoggedIn()) {
             $user = $this->session->get('user');

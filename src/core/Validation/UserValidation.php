@@ -7,9 +7,17 @@ use App\Manager\UserManager;
 class UserValidation
 {
     private $errors = [];
+
+    /**
+     * @var Constraint
+     */
     private $constraint;
-    private $post;
+    /**
+     * @var UserManager
+     */
     private $userManager;
+    private $post;
+
 
     public function __construct($post)
     {
@@ -18,7 +26,7 @@ class UserValidation
         $this->post = $post;
     }
 
-    public function check($post)
+    public function check($post): array
     {
         foreach ($post as $key => $value) {
             $this->checkField($key, $value);
