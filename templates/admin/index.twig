@@ -10,7 +10,6 @@
     <h1 class="nes pv2 tc">Gestion du blog</h1>
     {{ include('admin/admin_menu.html.twig') }}
     <section>
-        <h3 class="underline ">Liste des articles</h3>
         <div class="tc pv2">
             <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes" href="add_post.html"><i
                     class="fas fa-plus-circle"></i> Ajouter un article</a>
@@ -19,99 +18,56 @@
         <table class="w-100 collapse">
             <thead>
                 <tr class="bb b--silver">
-                    <th class="tl pv3">id</th>
-                    <th class="tl pv3 ph3">Title</th>
-                    <th class="tl pv3">Auteur</th>
-                    <th class="tl pv3 tc ">Administration</th>
-                    <th class="tl pv3  tc">Commentaires en attente</th>
+                    
+                    <th class="tl pv3 tc ">Commentaires en attente de validation</th>
+                    <th class="tl pv3  tc">Réponses de commentaires en attente de validation</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="bb b--moon-gray hover-bg-lightest-blue">
-                    <th class="tl ph2">1</th>
-                    <td class="pv3 ph3">Titre du post</td>
-                    <td class="pv3">BAETE Romain</td>
-                    <td class="flex flex-column flex-row-l tc-m w-100">
-                        <a href="post.html"
-                            class="link br2 ba b--dark-blue bg-blue white pa2 ml1 mv1 bg-animate hover-bg-dark-blue border-box center">Voir
-                        </a>
-                        <a href="#"
-                            class="link br2 ba b--orange bg-gold white pa2 ml1 mv1 bg-animate hover-bg-orange border-box  center">Modifier
-                        </a>
-                        <a href="#"
-                            class="link br2 ba b--dark-red bg-red white pa2 ml1 mv1 bg-animate hover-bg-dark-red border-box center">Supprimer
-                        </a>
+                <tr class="bb b--moon-gray">
+                    <td class="tc pv4">
+                        <a href='/admin/comments' class="link bg-black-90 white pa4 tracked-tight nes hover-bg-blue">{{countCommentsUnPublish}}</a>
                     </td>
                     <td class="tc">
-                        <a href='#' class="link bg-black-90 white pa2 tracked-tight nes">25</a>
+                        <a href='/admin/comments' class="link bg-black-90 white pa4 tracked-tight nes hover-bg-blue">{{countReplyUnPublish}}</a>
                     </td>
                 </tr>
-                <tr class="hover-bg-lightest-blue">
-                    <th class="tl ph2">2</th>
-                    <td class="pv3 ph3 mr4">Titre du post 2</td>
-                    <td class="pv3">Florent ROUYAT</td>
-                    <td class=" flex flex-column tc-m flex-row-l ">
-                        <a href="post.html"
-                            class="link  br2 ba b--dark-blue bg-blue white pa2 ml1 mv1 bg-animate hover-bg-dark-blue border-box center">Voir
-                        </a>
-                        <a href="#"
-                            class="link br2 ba b--orange bg-gold white pa2 ml1 mv1 bg-animate hover-bg-orange border-box center">Modifier
-                        </a>
-                        <a href="#"
-                            class="link br2 ba b--dark-red bg-red white pa2 ml1 mv1 bg-animate hover-bg-dark-red border-box center">Supprimer
-                        </a>
-                    </td>
-                    <td class="tc">
-                        <a href="#" class=" link bg-black-90 white pa2 tracked-tight nes">10</a>
-                    </td>
-                </tr>
+               
             </tbody>
         </table>
     </section>
+    {% if countCommentsUnPublish > 0 %}
     <section>
-        <h3 class="underline ">Liste des catégories</h3>
-        <div class="tc pv2">
-            <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes"
-                href="add_category.html"><i class="fas fa-plus-circle"></i> Ajouter une catégorie</a>
-        </div>
+        <h3 class="underline ">Derniers commentaires postés sur le blog</h3>
         <table class="w-100 collapse ph2">
             <thead>
                 <tr class="bb b--silver">
-                    <th class="tl pv3 ph2">#</th>
-                    <th class="tc pv3">Catégorie</th>
-                    <th class="tc pv3">Administration</th>
-
+                    <th class="tl pv3 ph2">Posté le :</th>
+                    <th class="tc pv3 ph2">Titre de l'article</th>
+                    <th class="tc pv3">Commentaire</th>
+                    <th class="tc pv3">Administration</th>                   
                 </tr>
             </thead>
             <tbody>
-                <tr class="bb b--moon-gray hover-bg-lightest-blue">
-                    <th class="tl ph2">1</th>
-                    <td class="pv3 tc">Technologie</td>
-                    <td class="flex flex-column flex-row-l tc-m w-100">
-                        <a href="#"
-                            class="link br2 ba b--orange bg-gold white pa2 ml1 mv1 bg-animate hover-bg-orange border-box  center">Modifier
-                        </a>
-                        <a href="#"
-                            class="link br2 ba b--dark-red bg-red white pa2 ml1 mv1 bg-animate hover-bg-dark-red border-box center">Supprimer
-                        </a>
-                    </td>
-
-                </tr>
-                <tr class="bb b--moon-gray hover-bg-lightest-blue">
-                    <th class="tl ph2">2</th>
-                    <td class="pv3 tc">PHP</td>
-                    <td class="flex flex-column flex-row-l tc-m w-100">
-                        <a href="#"
-                            class="link br2 ba b--orange bg-gold white pa2 ml1 mv1 bg-animate hover-bg-orange border-box  center">Modifier
-                        </a>
-                        <a href="#"
-                            class="link br2 ba b--dark-red bg-red white pa2 ml1 mv1 bg-animate hover-bg-dark-red border-box center">Supprimer
-                        </a>
-                    </td>
-                </tr>
+                {% for commentUnPublish in commentsUnPublish %}
+                    <tr class="bb b--moon-gray hover-bg-lightest-blue">
+                        <td class="pv3">{{commentUnPublish.created_at|date("d/m/Y H:i:s")}}</td>
+                        <td class="tl pv3 tc">{{commentUnPublish.title_post}}</td>
+                        <td class="tl pv3 tc">{{commentUnPublish.content}}</td>
+                        <td class="flex flex-column flex-row-l tc-m w-100 justify-center">
+                            <a href="/admin/comments/validate?id={{ commentUnPublish.id|e }}"
+                                class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Valider
+                            </a>
+                            <a href="/admin/comments/delete?id={{ commentUnPublish.id|e }}"
+                                class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </section>
+    {% endif %}
 </main>
 
 {% endblock %}

@@ -8,6 +8,8 @@ use Exception;
 
 class Router extends AltoRouter
 {
+    private $errorController;
+
     public function __construct()
     {
         $this->errorController = new ErrorController();

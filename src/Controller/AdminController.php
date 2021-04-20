@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\core\Controller;
 use App\core\Mailer;
 use App\core\Validation\Validation;
+use App\Manager\CommentManager;
 use App\Manager\UserManager;
+use App\Model\Pagination;
 
 class AdminController extends Controller
 {
@@ -14,21 +16,41 @@ class AdminController extends Controller
         'admin' => 2,
     ];
 
+    const FILTRE = [
+        'publish' => 1,
+        'not_publish' => 0,
+    ];
+
     private $userManager;
+    private $commentManager;
+    private $pagination;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->userManager = new UserManager();
+        $this->commentManager = new CommentManager();
         $this->validator = new Validation();
+        $this->pagination = new Pagination();
     }
 
     public function index()
     {
         $this->checkAdmin();
 
-        return $this->render('admin/index.twig');
+        $countCommentsUnPublish = $this->commentManager->totalComments(self::FILTRE['not_publish']);
+
+        $countReplyUnPublish = $this->commentManager->totalReplyComments(self::FILTRE['not_publish']);
+
+        $pagination = $this->pagination->paginate(5, null, $this->commentManager->totalComments(self::FILTRE['not_publish']));
+        $commentsUnPublish = $this->commentManager->getCommentsFilter(self::FILTRE['not_publish'], $pagination->getLimit(), $this->pagination->getStart());
+
+        return $this->render('admin/index.twig', [
+            'commentsUnPublish' => $commentsUnPublish ?? null,
+            'countCommentsUnPublish' => $countCommentsUnPublish ?? null,
+            'countReplyUnPublish' => $countReplyUnPublish ?? null,
+        ]);
     }
 
     public function adminUsers()
