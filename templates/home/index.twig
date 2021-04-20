@@ -26,8 +26,8 @@
                     </div>
                     <img src="/uploads/{{ post.filename }}" class="w-100 db h-50-l imgpost" alt="article_image">
                     <div class="pa3">
-                        <a href="/articles/{{ post.slug }}-{{ post.id }}?id={{ post.id }}" class="link dim lh-title black b ">{{ post.title }}</a>
-                        <p class="pv2 f6 lh-copy measure center">{{ post.chapo|slice(0, 500)|nl2br }} ...</p>
+                        <a href="/articles/{{ post.slug }}?id={{ post.id }}" class="link dim lh-title black b ">{{ post.title }}</a>
+                        <p class="pv2 f6 lh-copy measure center">{{ post.chapo|slice(0, 450)|nl2br }} ...</p>
                         <small class="blue db pv2 absolute bottom-0 left-0 right-0 ">{{post.update_at ? post.update_at|date("d/m/Y H:i:s") : post.created_at|date("d/m/Y H:i:s") }}</small>
                     </div>
                 </article>
