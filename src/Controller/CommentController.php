@@ -25,11 +25,11 @@ class CommentController extends Controller
 
         $comments = $this->commentManager->getComments();
 
-        if (!empty($this->get['publish']) && 'yes' === $this->get['publish']) {
+        if (isset($this->get['publish'])) {
             $comments = $this->commentManager->getCommentsFilter(self::PUBLISH);
         }
 
-        if (!empty($this->get['publish']) && 'no' === $this->get['publish']) {
+        if (isset($this->get['unpublish'])) {
             $comments = $this->commentManager->getCommentsFilter(self::UNPUBLISH);
         }
 
@@ -64,6 +64,14 @@ class CommentController extends Controller
         $this->checkAdmin();
 
         if (!empty($this->get['id'])) {
+            $replies = $this->commentManager->getReplyByComment($this->get['id']);
+
+            if ($replies) {
+                foreach ($replies as $reply) {
+                    $this->commentManager->deleteComment($reply->getID());
+                }
+            }
+
             $this->commentManager->deleteComment($this->get['id']);
 
             $this->session->set('delete_comment', 'Le commentaire a bien été supprimé');
