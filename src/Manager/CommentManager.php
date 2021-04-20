@@ -10,24 +10,24 @@ use PDO;
 
 class CommentManager extends Database
 {
-    public function totalComments($filtre)
+    public function totalComments($filter)
     {
         $result = $this->createQuery(
             'SELECT COUNT(id) FROM comment WHERE comment_id IS NULL AND publish = :publish',
             [
-                'publish' => $filtre,
+                'publish' => $filter,
             ]
         );
 
         return $result->fetchColumn();
     }
 
-    public function totalReplyComments($filtre)
+    public function totalReplyComments($filter)
     {
         $result = $this->createQuery(
             'SELECT COUNT(id) FROM comment WHERE comment_id IS NOT NULL AND publish = :publish',
             [
-                'publish' => $filtre,
+                'publish' => $filter,
             ]
         );
 
@@ -49,7 +49,7 @@ class CommentManager extends Database
         return $query->fetchAll();
     }
 
-    public function getCommentsFilter($filtre, $limit = null, $start = null)
+    public function getCommentsFilter($filter, $limit = null, $start = null)
     {
         $sql = 'SELECT comment.*, post.title as title_post, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
@@ -62,7 +62,7 @@ class CommentManager extends Database
         $query = $this->createQuery(
             $sql,
             [
-                'publish' => $filtre,
+                'publish' => $filter,
             ]
         );
 
@@ -108,6 +108,9 @@ class CommentManager extends Database
         return $query->fetchAll();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function addComment($content, $comment_id, $post_id, $user_id)
     {
         $datePost = new DateTime('now', new DateTimeZone('Europe/Paris'));

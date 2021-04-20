@@ -11,10 +11,28 @@ use App\Model\Pagination;
 
 class BlogController extends Controller
 {
+
+
+    /**
+     * @var PostManager
+     */
     private $postManager;
+    /**
+     * @var CategoryManager
+     */
     private $categoryManager;
+    /**
+     * @var Pagination
+     */
     private $pagination;
+    /**
+     * @var CommentManager
+     */
     private $commentManager;
+    /**
+     * @var Validation
+     */
+    private $validator;
 
     public function __construct()
     {
@@ -124,7 +142,7 @@ class BlogController extends Controller
         }
 
         if (!empty($this->get['id'])) {
-            $pagination = $this->pagination->paginate(2, $this->get['page'], $this->postManager->totatByCategory($this->get['id']));
+            $pagination = $this->pagination->paginate(2, $this->get['page'], $this->postManager->totalByCategory($this->get['id']));
 
             $posts = $this->postManager->getPostByCategories($pagination->getLimit(), $this->pagination->getStart(), $this->get['id']);
         }

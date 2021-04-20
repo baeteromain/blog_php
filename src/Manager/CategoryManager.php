@@ -69,7 +69,7 @@ class CategoryManager extends Database
         );
     }
 
-    public function checkNameUnique($name)
+    public function checkNameUnique($name): bool
     {
         $result = $this->createQuery(
             'SELECT COUNT(name) FROM category WHERE name = :name',
@@ -86,7 +86,7 @@ class CategoryManager extends Database
         return false;
     }
 
-    public function checkSlugUnique($slug)
+    public function checkSlugUnique($slug): bool
     {
         $result = $this->createQuery(
             'SELECT COUNT(slug) FROM category WHERE slug = :slug',

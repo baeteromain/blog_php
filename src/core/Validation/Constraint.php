@@ -34,7 +34,7 @@ class Constraint
     public function isEmail($name, $value, $filter = FILTER_VALIDATE_EMAIL)
     {
         if (!filter_var($value, $filter)) {
-            return 'Le champ '.$name.' n\'est pas une adresse email valide';
+            return 'Le champ '.$name." n'est pas une adresse email valide";
         }
 
         return null;

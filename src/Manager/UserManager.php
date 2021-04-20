@@ -183,7 +183,7 @@ class UserManager extends Database
         return false;
     }
 
-    public function checkUsername($username)
+    public function checkUsername($username): bool
     {
         $result = $this->createQuery(
             'SELECT COUNT(username) FROM user WHERE username = :username',
@@ -199,7 +199,7 @@ class UserManager extends Database
         return false;
     }
 
-    public function checkEmail($email)
+    public function checkEmail($email): bool
     {
         $result = $this->createQuery(
             'SELECT COUNT(email) FROM user WHERE email = :email',

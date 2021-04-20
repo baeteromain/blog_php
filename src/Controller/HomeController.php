@@ -7,6 +7,10 @@ use App\Manager\PostManager;
 
 class HomeController extends Controller
 {
+
+    /**
+     * @var PostManager
+     */
     private $postManager;
 
     public function __construct()

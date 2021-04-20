@@ -10,6 +10,9 @@ class CommentController extends Controller
     const PUBLISH = 1;
     const UNPUBLISH = 0;
 
+    /**
+     * @var CommentManager
+     */
     private $commentManager;
 
     public function __construct()

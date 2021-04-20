@@ -9,7 +9,15 @@ use App\Manager\UserManager;
 
 class ProfilController extends Controller
 {
+
+    /**
+     * @var UserManager
+     */
     private $userManager;
+    /**
+     * @var Validation
+     */
+    private $validator;
 
     public function __construct()
     {
@@ -25,6 +33,9 @@ class ProfilController extends Controller
         return $this->render('profil/index.twig');
     }
 
+    /**
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
     public function updateProfil()
     {
         $this->checkLoggedIn();

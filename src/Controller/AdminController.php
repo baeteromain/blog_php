@@ -16,14 +16,25 @@ class AdminController extends Controller
         'admin' => 2,
     ];
 
-    const FILTRE = [
+    const FILTER = [
         'publish' => 1,
         'not_publish' => 0,
     ];
 
-    private $userManager;
-    private $commentManager;
+  
     private $pagination;
+    /**
+     * @var Validation
+     */
+    private $validator;
+    /**
+     * @var UserManager
+     */
+    private $userManager;
+    /**
+     * @var CommentManager
+     */
+    private $commentManager;
 
     public function __construct()
     {
@@ -39,12 +50,12 @@ class AdminController extends Controller
     {
         $this->checkAdmin();
 
-        $countCommentsUnPublish = $this->commentManager->totalComments(self::FILTRE['not_publish']);
+        $countCommentsUnPublish = $this->commentManager->totalComments(self::FILTER['not_publish']);
 
-        $countReplyUnPublish = $this->commentManager->totalReplyComments(self::FILTRE['not_publish']);
+        $countReplyUnPublish = $this->commentManager->totalReplyComments(self::FILTER['not_publish']);
 
-        $pagination = $this->pagination->paginate(5, null, $this->commentManager->totalComments(self::FILTRE['not_publish']));
-        $commentsUnPublish = $this->commentManager->getCommentsFilter(self::FILTRE['not_publish'], $pagination->getLimit(), $this->pagination->getStart());
+        $pagination = $this->pagination->paginate(5, null, $this->commentManager->totalComments(self::FILTER['not_publish']));
+        $commentsUnPublish = $this->commentManager->getCommentsFilter(self::FILTER['not_publish'], $pagination->getLimit(), $this->pagination->getStart());
 
         return $this->render('admin/index.twig', [
             'commentsUnPublish' => $commentsUnPublish ?? null,

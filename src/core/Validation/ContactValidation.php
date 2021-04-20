@@ -5,14 +5,19 @@ namespace App\core\Validation;
 class ContactValidation
 {
     private $errors = [];
+
+    /**
+     * @var Constraint
+     */
     private $constraint;
+
 
     public function __construct()
     {
         $this->constraint = new Constraint();
     }
 
-    public function check($get)
+    public function check($get): array
     {
         foreach ($get as $key => $value) {
             $this->checkField($key, $value);
