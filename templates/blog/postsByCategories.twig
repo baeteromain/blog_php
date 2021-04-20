@@ -25,7 +25,7 @@
                         <div class="w-100 w-60-ns pl3-ns center">
                             <h1 class="f3 fw1 baskerville mt0-l mt2 lh-title">{{ post.title }}</h1>
                             <p class=" f6 f5-l lh-copy">
-                                {{ post.chapo|slice(0, 500)|nl2br }} ...
+                                {{ post.chapo|slice(0, 350) }} ...
                             </p>
                             <p class="f6 lh-copy mv0 blue">{{post.update_at ? post.update_at|date("d/m/Y H:i:s") : post.created_at|date("d/m/Y H:i:s") }}</p>
                         </div>
