@@ -21,15 +21,11 @@
 
         <div class='flex'>
             <h3>Filtres :</h3>
-            <a href="/admin/comments?publish"
-            class="link br2 ba b--dark-black bg-black white pa2 mh3 self-center">Commentaires validés
-            </a>
-            <a href="/admin/comments?unpublish"
-            class="link br2 ba b--dark-black bg-black white pa2 mh3 self-center">Commentaires en attente de validation
-            </a>
+            <a href="/admin/comments?publish" class="link br2 ba b--dark-black bg-black white pa2 mh3 self-center">Commentaires validés</a>
+            <a href="/admin/comments?unpublish" class="link br2 ba b--dark-black bg-black white pa2 mh3 self-center">Commentaires en attente de validation</a>
         </div>
       
-        <table class="w-100 collapse ph2 ">
+        <table class="w-100 collapse ph2">
             <thead>
                 <tr class="bb b--silver">
                     <th class="tl pv3 ph2">id de l'article</th>
@@ -45,30 +41,24 @@
                     <td class="pv3 tc ph2">{{ comment.id|e }}</td>
                     <td class="pv3 tc ph2">{{ comment.content|e }}</td>
                     <td class="flex flex-column flex-row-l tc-m w-100 justify-center">
-                    {% if comment.publish == 1 %}
-                    <button 
-                        class="link br2 ba b--dark-green bg-green white pa2 mh3 mv1 bg-animate hover-bg-dark-green border-box">Publié
-                    </button>
-                    {% else %}
-                    <a href="/admin/comments/validate?id={{ comment.id|e }}"
-                        class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Valider
-                    </a>
-                    {% endif %}                        
-                        <a href="/admin/comments/delete?id={{ comment.id|e }}"
-                            class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer
-                        </a>
+                        {% if comment.publish == 1 %}
+                            <button class="link br2 ba b--dark-green bg-green white pa2 mh3 mv1 bg-animate hover-bg-dark-green border-box">Publié</button>
+                        {% else %}
+                            <a href="/admin/comments/validate?id={{ comment.id|e }}" class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Valider</a>
+                        {% endif %}                        
+                        <a href="/admin/comments/delete?id={{ comment.id|e }}" class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer</a>
                     </td>
                 </tr>
             {% endfor %} 
             </tbody>
         </table>
         {% if session.get('delete_comment') %}
-            <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+            <div class="mt3 flex items-center justify-center pa4 bg-light-green">
                 <span class="i"> {{ session.show('delete_comment') }}</span>
             </div>
         {% endif %}
         {% if session.get('error_delete_comment') %}
-            <div class="mt3 flex items-center justify-center pa4 bg-light-red ">
+            <div class="mt3 flex items-center justify-center pa4 bg-light-red">
                 <span class="i"> {{ session.show('error_delete_comment') }}</span>
             </div>
         {% endif %}

@@ -11,31 +11,30 @@
     {{ include('admin/admin_menu.html.twig') }}
     <section>
         <div class="tc pv2">
-            <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes" href="/admin/categories/add"><i
-                    class="fas fa-plus-circle"></i> Ajouter une categorie</a>
+            <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes" href="/admin/categories/add">
+            <i class="fas fa-plus-circle"></i> Ajouter une categorie</a>
         </div>
 
         <h3 class="underline ">Liste des catégories</h3>
 
         {% if session.get('add_category') %}
-        <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+        <div class="mt3 flex items-center justify-center pa4 bg-light-green">
             <span class="i"> {{ session.show('add_category') }}</span>
         </div>
         {% endif %}
         {% if session.get('update_category') %}
-        <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+        <div class="mt3 flex items-center justify-center pa4 bg-light-green">
             <span class="i"> {{ session.show('update_category') }}</span>
         </div>
         {% endif %}
         
-        <table class="w-100 collapse ph2 ">
+        <table class="w-100 collapse ph2">
             <thead>
                 <tr class="bb b--silver">
                     <th class="tl pv3 ph2">id</th>
                     <th class="tc pv3">Catégorie</th>
                     <th class="tc pv3">Slug</th>
                     <th class="tc pv3">Administration</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -46,23 +45,20 @@
                     <td class="pv3 tc ph2">{{ category.slug|e }}</td>
                     <td class="flex flex-column flex-row-l tc-m w-100 justify-center">
                         <a href="/admin/categories/update?id={{ category.id|e }}"
-                            class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Modifier
-                        </a>
-                        <a href="/admin/categories/delete?id={{ category.id|e }}"
-                            class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer
-                        </a>
+                            class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Modifier</a>
+                        <a href="/admin/categories/delete?id={{ category.id|e }}" class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer</a>
                     </td>
                 </tr>
             {% endfor %} 
             </tbody>
         </table>
         {% if session.get('delete_category') %}
-            <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
+            <div class="mt3 flex items-center justify-center pa4 bg-light-green">
                 <span class="i"> {{ session.show('delete_category') }}</span>
             </div>
         {% endif %}
         {% if session.get('error_delete_category') %}
-            <div class="mt3 flex items-center justify-center pa4 bg-light-red ">
+            <div class="mt3 flex items-center justify-center pa4 bg-light-red">
                 <span class="i"> {{ session.show('error_delete_category') }}</span>
             </div>
         {% endif %}
