@@ -79,7 +79,7 @@ class AdminController extends Controller
                     $this->userManager->updateRole($user->getId(), self::ROLE['subscriber']);
                 }
 
-                $this->session->set('upgrade_user', 'Le role de l\'utilisateur à bien été changé');
+                $this->session->set('upgrade_user', "Le role de l'utilisateur à bien été changé");
 
                 header('Location: /admin/users');
 
@@ -87,7 +87,7 @@ class AdminController extends Controller
             }
         }
 
-        $this->session->set('error_upgrade_user', 'Un problème est survenu lors du changement du role de l\'utilisateur');
+        $this->session->set('error_upgrade_user', "Un problème est survenu lors du changement du role de l'utilisateur");
 
         $users = $this->userManager->getUsers();
 
@@ -166,14 +166,14 @@ class AdminController extends Controller
 
         if (!empty($this->get) && isset($this->get['id']) && $user) {
             $this->userManager->deleteUser($this->get['id']);
-            $this->session->set('delete_user', 'L\'utilisateur à bien été supprimé');
+            $this->session->set('delete_user', "L'utilisateur à bien été supprimé");
 
             header('Location: /admin/users');
 
             exit();
         }
 
-        $this->session->set('error_delete_user', 'Un problème est survenu lors de la suppression de l\'utilisateur');
+        $this->session->set('error_delete_user', "Un problème est survenu lors de la suppression de l'utilisateur");
 
         $users = $this->userManager->getUsers();
 

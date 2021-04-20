@@ -37,10 +37,12 @@ class CommentManager extends Database
     public function getComments()
     {
         $query = $this->createQuery(
-            'SELECT comment.*, post.title as title_post, user.username FROM comment 
+            '
+            SELECT comment.*, post.title as title_post, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
             INNER JOIN post ON post.id = comment.post_id 
-            ORDER BY created_at DESC'
+            ORDER BY created_at DESC
+            '
         );
         $query->setFetchMode(PDO::FETCH_CLASS, Comment::class);
 
@@ -72,11 +74,13 @@ class CommentManager extends Database
     public function getCommentsByPost($post_id)
     {
         $query = $this->createQuery(
-            'SELECT comment.*, post.title as title_post, user.username FROM comment 
+            '
+            SELECT comment.*, post.title as title_post, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
             INNER JOIN post ON post.id = comment.post_id
             WHERE post.id = :id AND comment.comment_id IS NULL
-            ORDER BY created_at DESC',
+            ORDER BY created_at DESC
+            ',
             [
                 'id' => $post_id,
             ]
@@ -89,10 +93,12 @@ class CommentManager extends Database
     public function getReplyByComment($comment_id)
     {
         $query = $this->createQuery(
-            'SELECT comment.*, user.username FROM comment 
+            '
+            SELECT comment.*, user.username FROM comment 
             INNER JOIN user ON user.id = comment.user_id 
             WHERE comment_id = :id 
-            ORDER BY created_at ASC',
+            ORDER BY created_at ASC
+            ',
             [
                 'id' => $comment_id,
             ]
@@ -108,8 +114,10 @@ class CommentManager extends Database
         $datePost = $datePost->format('Y-m-d H:i:s');
 
         return $this->createQuery(
-            'INSERT INTO comment (content, created_at, comment_id, post_id, user_id) 
-            VALUES (:content, :created_at, :comment_id, :post_id, :user_id)',
+            '
+            INSERT INTO comment (content, created_at, comment_id, post_id, user_id) 
+            VALUES (:content, :created_at, :comment_id, :post_id, :user_id)
+            ',
             [
                 'content' => $content,
                 'created_at' => $datePost,

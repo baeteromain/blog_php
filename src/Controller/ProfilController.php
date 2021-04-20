@@ -55,7 +55,7 @@ class ProfilController extends Controller
                         ]);
                         $mailer->send();
 
-                        $this->session->set('update_email', 'Votre lien d\'activation vous a été envoyé à votre nouvelle adresse');
+                        $this->session->set('update_email', "Votre lien d'activation vous a été envoyé à votre nouvelle adresse");
 
                         header('Location: /login');
 

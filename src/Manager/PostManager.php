@@ -190,11 +190,7 @@ class PostManager extends Database
     public function checkTitleUnique($title)
     {
         $result = $this->createQuery(
-            '
-            SELECT COUNT(title)
-            FROM post
-            WHERE title = :title
-            ',
+            'SELECT COUNT(title) FROM post WHERE title = :title',
             [
                 'title' => $title,
             ]
@@ -211,11 +207,7 @@ class PostManager extends Database
     public function checkSlugUnique($slug)
     {
         $result = $this->createQuery(
-            '
-            SELECT COUNT(slug)
-            FROM post
-            WHERE slug = :slug
-            ',
+            'SELECT COUNT(slug) FROM post WHERE slug = :slug',
             [
                 'slug' => $slug,
             ]
