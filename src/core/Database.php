@@ -21,7 +21,7 @@ abstract class Database
         return $this->checkConnection()->query($sql);
     }
 
-    private function checkConnection()
+    private function checkConnection(): PDO
     {
         if (null === $this->connection) {
             return $this->getConnection();
@@ -30,7 +30,7 @@ abstract class Database
         return $this->connection;
     }
 
-    private function getConnection()
+    private function getConnection(): PDO
     {
         try {
             $this->connection = new PDO(DB_HOST, DB_USER, DB_PASS);

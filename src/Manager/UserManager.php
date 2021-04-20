@@ -11,10 +11,7 @@ class UserManager extends Database
     public function getUserById($id)
     {
         $query = $this->createQuery(
-            '
-            SELECT * FROM user
-            WHERE id = :id
-            ',
+            'SELECT * FROM user WHERE id = :id',
             [
                 'id' => $id,
             ]
@@ -62,9 +59,7 @@ class UserManager extends Database
     public function updateRole($id, $role)
     {
         return $this->createQuery(
-            '
-         UPDATE user SET role_id = :role_id 
-        WHERE id = :id',
+            'UPDATE user SET role_id = :role_id WHERE id = :id',
             [
                 'id' => $id,
                 'role_id' => $role,
@@ -75,9 +70,7 @@ class UserManager extends Database
     public function deleteUser($id)
     {
         return $this->createQuery(
-            '
-        DELETE FROM user 
-        WHERE id = :id',
+            'DELETE FROM user WHERE id = :id',
             [
                 'id' => $id,
             ]
@@ -103,9 +96,7 @@ class UserManager extends Database
     public function removeToken($email)
     {
         return $this->createQuery(
-            '
-        UPDATE user SET token = null
-        WHERE email = :email',
+            'UPDATE user SET token = null WHERE email = :email',
             [
                 'email' => $email,
             ]
@@ -115,9 +106,7 @@ class UserManager extends Database
     public function tokenForgotpwd($email, $token)
     {
         return $this->createQuery(
-            '
-        UPDATE user SET token = :token
-        WHERE email = :email',
+            'UPDATE user SET token = :token WHERE email = :email',
             [
                 'email' => $email,
                 'token' => $token,
@@ -175,9 +164,7 @@ class UserManager extends Database
     public function login($username, $password)
     {
         $query = $this->createQuery(
-            '
-        SELECT *
-        FROM user WHERE username = :username',
+            'SELECT * FROM user WHERE username = :username',
             [
                 'username' => $username,
             ]
@@ -196,12 +183,10 @@ class UserManager extends Database
         return false;
     }
 
-    public function checkUsername($username)
+    public function checkUsername($username): bool
     {
         $result = $this->createQuery(
-            '
-            SELECT COUNT(username) 
-            FROM user WHERE username = :username',
+            'SELECT COUNT(username) FROM user WHERE username = :username',
             [
                 'username' => $username,
             ]
@@ -214,12 +199,10 @@ class UserManager extends Database
         return false;
     }
 
-    public function checkEmail($email)
+    public function checkEmail($email): bool
     {
         $result = $this->createQuery(
-            '
-            SELECT COUNT(email) 
-            FROM user WHERE email = :email',
+            'SELECT COUNT(email) FROM user WHERE email = :email',
             [
                 'email' => $email,
             ]

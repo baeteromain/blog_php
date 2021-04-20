@@ -8,6 +8,9 @@ use PHPMailer\PHPMailer\SMTP;
 
 class Mailer extends PHPMailer
 {
+    /**
+     * @throws Exception
+     */
     public function __construct($exceptions, string $to, string $template)
     {
         parent::__construct($exceptions);
@@ -41,14 +44,14 @@ class Mailer extends PHPMailer
         }
     }
 
-    public static function url()
+    public static function url(): string
     {
         $http = isset($_SERVER['HTTPS']) && 'on' == $_SERVER['HTTPS'] ? 'https://' : 'http://';
 
         return $http.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'];
     }
 
-    public function send()
+    public function send(): bool
     {
         try {
             $r = parent::send();

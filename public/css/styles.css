@@ -1,6 +1,8 @@
+/* ----FONT----- */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-/* NAV */
+/* ----NAVBAR----- */
+
 .animated_title {
     border-right: solid 3px rgba(0, 247, 255, 0.75);
     white-space: nowrap;
@@ -38,14 +40,14 @@
     }
 }
 
-/* BANNER */
+/* ----BANNER----- */
 
 .quote-banner,
 .nes {
     font-family: 'Press Start 2P', cursive;
 }
 
-/* BODY */
+/* ----BODY----- */
 
 .main_login {
     min-height: 600px;
@@ -55,7 +57,7 @@
     min-height: 600px;
 }
 
-/* MENU ADMIN  */
+/* ----ADMIN PANEL----- */
 
 @media screen and (min-width: 960px) and (max-width: 1465px) {
     .main_admin {
@@ -66,7 +68,7 @@
     width: 160px;
 }
 
-/* HOME */
+/* ----HOMEPAGE----- */
 
 .imgpost {
     object-fit: cover;
@@ -108,7 +110,7 @@
     }
 }
 
-/* FOOTER */
+/* ----FOOTER----- */
 
 .svg-icon path,
 .svg-icon polygon,

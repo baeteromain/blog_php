@@ -8,7 +8,16 @@ use App\Manager\CategoryManager;
 
 class CategoryController extends Controller
 {
+
+
+    /**
+     * @var CategoryManager
+     */
     private $categoryManager;
+    /**
+     * @var Validation
+     */
+    private $validator;
 
     public function __construct()
     {
