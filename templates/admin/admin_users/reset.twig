@@ -21,22 +21,18 @@
         <form class="measure center" method="get" action="/admin/users/reset" >
         <fieldset id="update" class="ba b--transparent ph0 mh0">
             <div class="mt3">
-                <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="hidden"
-                    name="id" id="id" value="{{ user.id|e }}">
+                <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="hidden" name="id" id="id" value="{{ user.id|e }}">
             </div>
             <div class="mt3">
                 <label class="db fw6 lh-copy f6" for="username">Adresse Email</label>
-                <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
-                    name="email" id="email" value="{{ user.email|e }}">
+                <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" name="email" id="email" value="{{ user.email|e }}">
             </div>
             {% if errors.email %}
                 <div class="red pt1 i">{{ errors.email }}</div>
             {% endif %}
         </fieldset>
-        <div class="">
-            <input
-                class="ph3 pv2 input-reset b--black bg-transparent pointer f6 dib no-underline black bg-animate hover-bg-black hover-white nes"
-                type="submit" value="Modifier l'adresse email" name"submit">
+        <div>
+            <input class="ph3 pv2 input-reset b--black bg-transparent pointer f6 dib no-underline black bg-animate hover-bg-black hover-white nes" type="submit" value="Modifier l'adresse email" name"submit">
         </div>
     </form>
     <a href="/admin/users/reset/password?id={{ user.id|e }}" class="ph3 pv2 mt6  b--black bg-transparent pointer f6 dib no-underline red bg-animate hover-bg-black hover-red nes">Réinitialiser le mot de passe</a>

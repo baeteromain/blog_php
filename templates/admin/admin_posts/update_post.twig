@@ -13,24 +13,21 @@
             <fieldset id="add_post" class="ba b--transparent ph0 mh0">
                 <legend class="f4 fw6 ph0 mh0 nes tc">Modifier l'article</legend>
                 <div class="mt3">
-                <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="hidden"
-                    name="id" id="id" value="{{post ? post.id|e : ''}}">
+                    <input class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="hidden" name="id" id="id" value="{{post ? post.id|e : ''}}">
                 </div>
                 <div class="mt3">
                     <label class="db fw6 lh-copy f6" for="title">Titre</label>
-                    <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" name="title"
-                        id="title" value="{{post ? post.title|e : ''}}">
+                    <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" name="title" id="title" value="{{post ? post.title|e : ''}}">
                 </div>
                 {% if errors.title %}
-                <div class="red pt1 i">{{ errors.title }}</div>
+                    <div class="red pt1 i">{{ errors.title }}</div>
                 {% endif %}
                 <div class="mt3">
                     <label class="db fw6 lh-copy f6" for="title">Slug</label>
-                    <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100 i" type="text" name="slug"
-                        value="{{post ? post.slug|e : ''}}">
+                    <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100 i" type="text" name="slug" value="{{post ? post.slug|e : ''}}">
                 </div>
                 {% if errors.slug %}
-                <div class="red pt1 i">{{ errors.slug }}</div>
+                    <div class="red pt1 i">{{ errors.slug }}</div>
                 {% endif %}
                 <div class="mt3">
                     <label class="db fw6 lh-copy f6" for="title">Catégories</label>
@@ -54,24 +51,21 @@
                 {% endif %}
                 <div class="mt3">
                     <label class="db fw6 lh-copy f6" for="chapo">Chapô</label>
-                    <textarea class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" rows="4"
-                        name="chapo" id="chapo">{{post ? post.chapo|e : ''}}</textarea>
+                    <textarea class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" rows="4" name="chapo" id="chapo">{{post ? post.chapo|e : ''}}</textarea>
                 </div>
                 {% if errors.chapo %}
-                <div class="red pt1 i">{{ errors.chapo }}</div>
+                    <div class="red pt1 i">{{ errors.chapo }}</div>
                 {% endif %}
                 <div class="mv3">
                     <label class="db fw6 lh-copy f6" for="contenu">Contenu</label>
-                    <textarea class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
-                        rows="10" name="content">{{post ? post.content|e : ''}}</textarea>
+                    <textarea class="b pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" rows="10" name="content">{{post ? post.content|e : ''}}</textarea>
                 </div>
                 {% if errors.content %}
-                <div class="red pt1 i">{{ errors.content }}</div>
+                    <div class="red pt1 i">{{ errors.content }}</div>
                 {% endif %}
             </fieldset>
-            <div class="">
-                <input class="db center no-underline black bg-animate hover-bg-black hover-white grow-large pa3 ba nes"
-                    type="submit" value="Modifier">
+            <div>
+                <input class="db center no-underline black bg-animate hover-bg-black hover-white grow-large pa3 ba nes" type="submit" value="Modifier">
             </div>
             {% if errors.form_failed_post %}
                 <div class="red pt1 i">{{ errors.form_failed_post }}</div>

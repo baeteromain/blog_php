@@ -11,33 +11,30 @@
     {{ include('admin/admin_menu.html.twig') }}
     <section>
         <form class="measure center" method="get" action="/admin/categories/add" >
-        <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
-            <legend class="f4 fw6 ph0 mh0 nes">Ajout d'une catégorie</legend>
-            <div class="mt3">
-                <label class="db fw6  lh-copy f6" for="pseudo">Nom de la catégorie</label>
-                <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
-                    name="name" id="name" value="{{ get ? get.name|e : '' }}">
+            <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
+                <legend class="f4 fw6 ph0 mh0 nes">Ajout d'une catégorie</legend>
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="pseudo">Nom de la catégorie</label>
+                    <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
+                        name="name" id="name" value="{{ get ? get.name|e : '' }}">
+                </div>
+                {% if errors.name %}
+                    <div class="red pt1 i">{{ errors.name }}</div>
+                {% endif %}
+                <div class="mt3">
+                    <label class="db fw6 lh-copy f6" for="email-address">Slug</label>
+                    <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text" name="slug" id="slug" value="{{ get ? get.slug|e : '' }}">
+                </div>
+                {% if errors.slug %}
+                    <div class="red pt1 i">{{ errors.slug }}</div>
+                {% endif %}
+                {% if errors.form_failed_register %}
+                    <div class="red pt1 i">{{ errors.form_failed_register }}</div>
+                {% endif %}
+            </fieldset>
+            <div>
+                <input class="ph3 pv2 input-reset b--black bg-transparent pointer f6 dib no-underline black bg-animate hover-bg-black hover-white nes" type="submit" value="Ajouter" name"submit">
             </div>
-            {% if errors.name %}
-                <div class="red pt1 i">{{ errors.name }}</div>
-            {% endif %}
-            <div class="mt3">
-                <label class="db fw6 lh-copy f6" for="email-address">Slug</label>
-                <input class="pa2 input-reset ba bg-white hover-bg-black hover-white w-100" type="text"
-                    name="slug" id="slug" value="{{ get ? get.slug|e : '' }}">
-            </div>
-            {% if errors.slug %}
-                <div class="red pt1 i">{{ errors.slug }}</div>
-            {% endif %}
-            {% if errors.form_failed_register %}
-                <div class="red pt1 i">{{ errors.form_failed_register }}</div>
-            {% endif %}
-        </fieldset>
-        <div class="">
-            <input
-                class="ph3 pv2 input-reset b--black bg-transparent pointer f6 dib no-underline black bg-animate hover-bg-black hover-white nes"
-                type="submit" value="Ajouter" name"submit">
-        </div>
         </form>
     </section>
 </main>

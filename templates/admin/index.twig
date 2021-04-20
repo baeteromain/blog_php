@@ -11,14 +11,12 @@
     {{ include('admin/admin_menu.html.twig') }}
     <section>
         <div class="tc pv2">
-            <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes" href="add_post.html"><i
-                    class="fas fa-plus-circle"></i> Ajouter un article</a>
+            <a class="f6 grow-large no-underline br-pill ph3 pv2 mb2 white bg-black dib nes" href="add_post.html"><i class="fas fa-plus-circle"></i> Ajouter un article</a>
         </div>
 
         <table class="w-100 collapse">
             <thead>
-                <tr class="bb b--silver">
-                    
+                <tr class="bb b--silver">                    
                     <th class="tl pv3 tc ">Commentaires en attente de validation</th>
                     <th class="tl pv3  tc">Réponses de commentaires en attente de validation</th>
                 </tr>
@@ -31,14 +29,13 @@
                     <td class="tc">
                         <a href='/admin/comments' class="link bg-black-90 white pa4 tracked-tight nes hover-bg-blue">{{countReplyUnPublish}}</a>
                     </td>
-                </tr>
-               
+                </tr>               
             </tbody>
         </table>
     </section>
     {% if countCommentsUnPublish > 0 %}
     <section>
-        <h3 class="underline ">Derniers commentaires postés sur le blog</h3>
+        <h3 class="underline">Derniers commentaires postés sur le blog</h3>
         <table class="w-100 collapse ph2">
             <thead>
                 <tr class="bb b--silver">
@@ -55,12 +52,8 @@
                         <td class="tl pv3 tc">{{commentUnPublish.title_post}}</td>
                         <td class="tl pv3 tc">{{commentUnPublish.content}}</td>
                         <td class="flex flex-column flex-row-l tc-m w-100 justify-center">
-                            <a href="/admin/comments/validate?id={{ commentUnPublish.id|e }}"
-                                class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Valider
-                            </a>
-                            <a href="/admin/comments/delete?id={{ commentUnPublish.id|e }}"
-                                class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer
-                            </a>
+                            <a href="/admin/comments/validate?id={{ commentUnPublish.id|e }}" class="link br2 ba b--dark-orange bg-orange white pa2 mh3 mv1 bg-animate hover-bg-dark-orange border-box">Valider</a>
+                            <a href="/admin/comments/delete?id={{ commentUnPublish.id|e }}" class="link br2 ba b--dark-red bg-red white pa2 mh3 mv1 bg-animate hover-bg-dark-red border-box">Supprimer</a>
                         </td>
                     </tr>
                 {% endfor %}

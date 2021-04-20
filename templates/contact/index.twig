@@ -6,29 +6,25 @@
 
 {% block content %}
  
-<main class="pa4 black-80 mt4 mw8 center flex flex-column min-vh-100 ">
+<main class="pa4 black-80 mt4 mw8 center flex flex-column min-vh-100">
     <h1 class="tc ttu nes">Contact</h1>
     {% if session.get('contact') %}
-    <div class="mt3 flex items-center justify-center pa4 bg-light-green ">
-        <span class="i"> {{ session.show('contact') }}</span>
-    </div>
+        <div class="mt3 flex items-center justify-center pa4 bg-light-green">
+            <span class="i"> {{ session.show('contact') }}</span>
+        </div>
     {% endif %}
     <form method="post" action="/contact">
         <div class="flex mv3 justify-between">
             <div class=" w-40">
                 <label class="fw7 f6" for="exampleInputEmail1">Prénom</label>
-                <input type="text"
-                    class="pa2 input-reset mt2 ba bg-white hover-white hover-bg-black hover-white w-100"
-                    id="exampleInputEmail1" placeholder="Prénom" name="firstname" value="{{ post ? post.firstname|e : '' }}">
+                <input type="text" class="pa2 input-reset mt2 ba bg-white hover-white hover-bg-black hover-white w-100" id="exampleInputEmail1" placeholder="Prénom" name="firstname" value="{{ post ? post.firstname|e : '' }}">
             {% if errors.firstname %}
                 <div class="red pt1 i">{{ errors.firstname }}</div>
             {% endif %}
             </div>
-            <div class="w-40 ">
+            <div class="w-40">
                 <label class="fw7 f6" for="exampleInputEmail1">Nom</label>
-                <input type="text"
-                    class="pa2 input-reset mt2 ba bg-white hover-white hover-bg-black hover-white w-100"
-                    id="exampleInputEmail1" placeholder="Nom" name="lastname" value="{{ post ? post.lastname|e : '' }}">
+                <input type="text" class="pa2 input-reset mt2 ba bg-white hover-white hover-bg-black hover-white w-100" id="exampleInputEmail1" placeholder="Nom" name="lastname" value="{{ post ? post.lastname|e : '' }}">
             {% if errors.lastname %}
                 <div class="red pt1 i">{{ errors.lastname }}</div>
             {% endif %}
@@ -36,26 +32,22 @@
         </div>
         <div class="mv3">
             <label class="fw7 f6" for="exampleInputEmail1">Email address</label>
-            <input type="email"
-                class="pa2 input-reset mt2 ba bg-white hover-white hover-bg-black hover-white w-100"
-                id="exampleInputEmail1" placeholder="Email" name="email" value="{{ post ? post.email|e : '' }}">
+            <input type="email" class="pa2 input-reset mt2 ba bg-white hover-white hover-bg-black hover-white w-100" id="exampleInputEmail1" placeholder="Email" name="email" value="{{ post ? post.email|e : '' }}">
         </div>
         {% if errors.email %}
             <div class="red pt1 i">{{ errors.email }}</div>
         {% endif %}
         <div class="mv3">
             <label class="fw7 f6" for="exampleInputArea">Votre message</label>
-            <textarea class="pa2 input-reset mt2 ba bg-white hover-white hover-bg-black hover-white w-100"
-                rows="15" placeholder="Votre message" name="content">{{ post ? post.content|e : '' }}</textarea>
+            <textarea class="pa2 input-reset mt2 ba bg-white hover-white hover-bg-black hover-white w-100" rows="15" placeholder="Votre message" name="content">{{ post ? post.content|e : '' }}</textarea>
         </div>
         {% if errors.content %}
             <div class="red pt1 i">{{ errors.content }}</div>
         {% endif %}
-        <button type="submit"
-            class="db center ph3 pv2 input-reset pointer f6 no-underline black bg-animate hover-bg-black hover-white grow-large nes ">Envoyer</button>
-    {% if errors.form_failed_contact %}
-        <div class="red pv1 i">{{ errors.form_failed_contact }}</div>
-    {% endif %}
+        <button type="submit" class="db center ph3 pv2 input-reset pointer f6 no-underline black bg-animate hover-bg-black hover-white grow-large nes">Envoyer</button>
+        {% if errors.form_failed_contact %}
+            <div class="red pv1 i">{{ errors.form_failed_contact }}</div>
+        {% endif %}
     </form>
 </main>
 

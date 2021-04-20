@@ -11,16 +11,15 @@
         {% endfor %}
     </nav>
     <main>
-        <section class="mw7 center ">
+        <section class="mw7 center">
             <h2 class="fw1 ph3 ph0-l tc nes">Tous les articles</h2>
-            {% for post in posts %}
-                
+
+            {% for post in posts %}         
             <article class="bt bb b--black-10 pa2">
                 <a class="db no-underline black dim" href="/articles/{{ post.slug }}?id={{ post.id }}">
                     <div class="flex-l flex-row-l db">
                         <div class="mb4 mb0-ns w-100 w-60-ns center">
-                            <img src="/uploads/{{ post.filename }}" class="imgpost h5 w-100"
-                                alt="article_image">
+                            <img src="/uploads/{{ post.filename }}" class="imgpost h5 w-100" alt="article_image">
                         </div>
                         <div class="w-100 w-60-ns pl3-ns center">
                             <h1 class="f3 fw1 baskerville mt0-l mt2 lh-title">{{ post.title }}</h1>
@@ -35,8 +34,7 @@
                     {% for id_post,categoryofposts in categoriesofposts %}
                         {% if id_post == post.id %}
                             {% for category in categoryofposts %}
-                             <li class="dib mr1 mb2 "><a href="#"
-                            class="f6 f5-ns b db pa2 link dim dark-gray ba b--black-20">{{category.name}}</a></li>
+                             <li class="dib mr1 mb2 "><a href="#" class="f6 f5-ns b db pa2 link dim dark-gray ba b--black-20">{{category.name}}</a></li>
                             {% endfor %}
                         {% endif %}                      
                     {% endfor %}
@@ -46,38 +44,32 @@
             
             <div class=" flex justify-between pa4">
             {% for page in 1..pagination.pageNumber|number_format %}
-             {% if pagination.page|number_format is same as (page|number_format) %}
-             <a href="#0"
-                    class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box nes">
-                    
+                {% if pagination.page|number_format is same as (page|number_format) %}
+                <a href="#0" class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box nes">
                     <span class="pl1">{{ page }}</span>
                 </a>
-             {% else %}
-                {% if pagination.page|number_format < (page|number_format) %}
-                <a href="/articles?page={{ page }}"
-                        class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box nes">
-                        <span class="pr1">{{ page }}</span>
-                        <svg class="w1" data-icon="chevronRight" viewBox="0 0 32 32" style="fill:currentcolor">
-                            <title>chevronRight icon</title>
-                            <path d="M12 1 L26 16 L12 31 L8 27 L18 16 L8 5 z"></path>
-                        </svg>
-                    </a>
+                {% else %}
+                    {% if pagination.page|number_format < (page|number_format) %}
+                        <a href="/articles?page={{ page }}" class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box nes">
+                            <span class="pr1">{{ page }}</span>
+                            <svg class="w1" data-icon="chevronRight" viewBox="0 0 32 32" style="fill:currentcolor">
+                                <title>chevronRight icon</title>
+                                <path d="M12 1 L26 16 L12 31 L8 27 L18 16 L8 5 z"></path>
+                            </svg>
+                        </a>
+                    {% endif %}
+                        {% if pagination.page|number_format > (page|number_format) %}
+                            <a href="/articles?page={{ page }}" class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box nes">
+                                <svg class="w1" data-icon="chevronLeft" viewBox="0 0 32 32" style="fill:currentcolor">
+                                    <title>chevronLeft icon</title>
+                                    <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"></path>
+                                </svg>
+                                <span class="pr1">{{ page }}</span>
+                            </a>
+                        {% endif %}                
                 {% endif %}
-                {% if pagination.page|number_format > (page|number_format) %}
-                <a href="/articles?page={{ page }}"
-                        class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box nes">
-                        <svg class="w1" data-icon="chevronLeft" viewBox="0 0 32 32" style="fill:currentcolor">
-                            <title>chevronLeft icon</title>
-                            <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"></path>
-                        </svg>
-                        <span class="pr1">{{ page }}</span>
-                    </a>
-                {% endif %}
-                 
-             {% endif %}
             {% endfor %}
             </div>
         </section> 
-    </main>
-    
+    </main>   
 {% endblock %}
