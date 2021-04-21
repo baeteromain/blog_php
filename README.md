@@ -1,18 +1,18 @@
 # PHP - P5 Openclassrooms - Créez votre premier blog en PHP
 
-## Installation du projet :building_construction: 
+## Installation du projet 
 Telechargez directement le projet ou effectuez un ```git clone``` via la commande suite : 
 
 ```git clone https://github.com/baeteromain/blog_php.git```
 
 En suivant, effectuez un ```composer install``` à la racine du projet permettant d'installer les dépendances utilisées dans ce projet.
 
-## CSS :lipstick:
+## CSS
 
 Le thème graphique du blog à été entièrement réalisé via le framework **TACHYONS**
 ( https://tachyons.io/ )
 
-## Base de données :nerd_face: 
+## Base de données 
 Modifiez le fichier ```/config/database.php``` avec vos informations spécifiques à votre base de données, voir l'exemple ci-dessous : 
 
 ```
@@ -26,24 +26,22 @@ const DB_PASS = ''; // le mot de passe d'accès
 
 Le projet est fournit avec une base de données déjà pré-remplie d'articles, de commentaires, ainsi qu'un **compte administrateur** :
 
-* Nom d'utilisateur : **admin**
-* Mot de passe : **admin**
+*   Nom d'utilisateur : **admin**
+*   Mot de passe : **admin**
 
 et d'un **compte utilisateur ( abonné )** :
 
-* Nom d'utilisateur : **utilisateur_test**
-* Mot de passe : **azerty**
-
+*   Nom d'utilisateur : **utilisateur_test**
+*   Mot de passe : **azerty**
 
 permettant d'être fonctionnel et de tester le blog.
 Libre à vous de supprimer les données et d'ajouter vos propres données par la suite.
 
-
 :warning: Il est important de garder la structure de la base de données identique à celle du projet. Pour ce faire, vous trouverez dans le dossier ```/config``` un fichier sql nommé ```blog_php_br.sql```. Il ne vous reste plus qu'à importer ce fichier via votre SGBD.
 
-## Mail :e-mail: 
+## Mail 
 
-### En développement : :mailbox: 
+### En développement 
 
 Dans le dossier ```/config```, vous trouverez le fichier ```mailer_config.php```, celui-ci est pré-rempli pour une utilisation en local, merci de simplement ajouter votre ***EMAIL_USERNAME*** qui correspond à l'adresse email qui enverra les mails depuis le blog : 
 ```
@@ -66,7 +64,7 @@ MailDev SMTP Server running at 0.0.0.0:1025
 ```
 
 Les mails envoyés par le blog sont tous redirigés vers la page web de MailDev ( si vous êtes en localhost à l'adresse suivant : ```http://localhost:1080/```)
-### En production : :email: 
+### En production 
 Pour l'envoi de mails en production, modifier le fichier ```/config/mailer_config.php``` suivant les informations de votre serveur mail, comme suivant : 
 ```
 const EMAIL_HOST = '' // le host de votre serveur mail;
@@ -84,7 +82,7 @@ Allez au fichier ```/src/core/Mailer.php```, puis décommenter les deux lignes s
 ```
 
 Les mails sont maintenants reçus et transmis par votre serveur mail.
-## Serveur de développement :serious_face_with_symbols_covering_mouth: 
+## Serveur de développement 
 Démarrage du projet en local en pointant sur le dossier racine du projet puis effectuez la commande suivante :
 
 ```php -S localhost:8000 -t public``` 
@@ -99,19 +97,19 @@ Le blog est maintenant disponible à l'addresse local.
 
 Le projet est donc de développer votre blog professionnel. Ce site web se décompose en deux grands groupes de pages :
 
-* les pages utiles à tous les visiteurs ;
-* les pages permettant d’administrer votre blog.
+*   les pages utiles à tous les visiteurs ;
+*   les pages permettant d’administrer votre blog.
 
 Voici la liste des pages qui devront être accessibles depuis votre site web :
 
-* la page d'accueil ;
-* la page listant l’ensemble des blog posts ;
-* la page affichant un blog post ;
-* la page permettant d’ajouter un blog post ;
-* la page permettant de modifier un blog post ;
-* les pages permettant de modifier/supprimer un blog post ;
-* les pages de connexion/enregistrement des utilisateurs.
-* Vous développerez une partie administration qui devra être accessible uniquement aux utilisateurs inscrits et validés.
+*   la page d'accueil ;
+*   la page listant l’ensemble des blog posts ;
+*   la page affichant un blog post ;
+*   la page permettant d’ajouter un blog post ;
+*   la page permettant de modifier un blog post ;
+*   les pages permettant de modifier/supprimer un blog post ;
+*   les pages de connexion/enregistrement des utilisateurs.
+*   Vous développerez une partie administration qui devra être accessible uniquement aux utilisateurs inscrits et validés.
 
 Les pages d’administration seront donc accessibles sur conditions et vous veillerez à la sécurité de la partie administration.
 
@@ -119,33 +117,33 @@ Commençons par les pages utiles à tous les internautes.
 
 Sur la page d’accueil, il faudra présenter les informations suivantes :
 
-* votre nom et votre prénom ;
-* une photo et/ou un logo ;
-* une phrase d’accroche qui vous ressemble (exemple : “Martin Durand, le développeur qu’il vous faut !”) ;
-* un menu permettant de naviguer parmi l’ensemble des pages de votre site web ;
-* un formulaire de contact (à la soumission de ce formulaire, un e-mail avec toutes ces informations vous sera envoyé) avec les champs suivants :
-    * nom/prénom,
-    * e-mail de contact,
-    * message,
-    * un lien vers votre CV au format PDF ;
-    * et l’ensemble des liens vers les réseaux sociaux où l’on peut vous suivre (GitHub, LinkedIn, Twitter…).
+*   votre nom et votre prénom,
+*   une photo et/ou un logo,
+*   une phrase d’accroche qui vous ressemble (exemple : “Martin Durand, le développeur qu’il vous faut !”),
+*   un menu permettant de naviguer parmi l’ensemble des pages de votre site web ;
+*   un formulaire de contact (à la soumission de ce formulaire, un e-mail avec toutes ces informations vous sera envoyé) avec les champs suivants :
+    *   nom/prénom,
+    *   e-mail de contact,
+    *   message,
+    *   un lien vers votre CV au format PDF,
+    *   et l’ensemble des liens vers les réseaux sociaux où l’on peut vous suivre (GitHub, LinkedIn, Twitter…).
 
 Sur la page listant tous les blogs posts (du plus récent au plus ancien), il faut afficher les informations suivantes pour chaque blog post :
 
-* le titre ;
-* la date de dernière modification ;
-* le châpo ;
-* et un lien vers le blog post.
+*  le titre ;
+*  la date de dernière modification ;
+*  le châpo ;
+*  et un lien vers le blog post.
 
 Sur la page présentant le détail d’un blog post, il faut afficher les informations suivantes :
 
-* le titre ;
-* le chapô ;
-* le contenu ;
-* l’auteur ;
-* la date de dernière mise à jour ;
-* le formulaire permettant d’ajouter un commentaire (soumis pour validation) ;
-* les listes des commentaires validés et publiés.
+*  le titre ;
+*  le chapô ;
+*  le contenu ;
+*  l’auteur ;
+*  la date de dernière mise à jour ;
+*  le formulaire permettant d’ajouter un commentaire (soumis pour validation) ;
+*  les listes des commentaires validés et publiés.
 
 Sur la page permettant de modifier un blog post, l’utilisateur a la possibilité de modifier les champs titre, chapô, auteur et contenu.
 
