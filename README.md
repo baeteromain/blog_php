@@ -118,9 +118,13 @@ Commençons par les pages utiles à tous les internautes.
 Sur la page d’accueil, il faudra présenter les informations suivantes :
 
 *   votre nom et votre prénom,
+
 *   une photo et/ou un logo,
+
 *   une phrase d’accroche qui vous ressemble (exemple : “Martin Durand, le développeur qu’il vous faut !”),
+
 *   un menu permettant de naviguer parmi l’ensemble des pages de votre site web ;
+
 *   un formulaire de contact (à la soumission de ce formulaire, un e-mail avec toutes ces informations vous sera envoyé) avec les champs suivants :
     *   nom/prénom,
     *   e-mail de contact,
@@ -130,20 +134,20 @@ Sur la page d’accueil, il faudra présenter les informations suivantes :
 
 Sur la page listant tous les blogs posts (du plus récent au plus ancien), il faut afficher les informations suivantes pour chaque blog post :
 
-*  le titre ;
-*  la date de dernière modification ;
-*  le châpo ;
-*  et un lien vers le blog post.
+*   le titre ;
+*   la date de dernière modification ;
+*   le châpo ;
+*   et un lien vers le blog post.
 
 Sur la page présentant le détail d’un blog post, il faut afficher les informations suivantes :
 
-*  le titre ;
-*  le chapô ;
-*  le contenu ;
-*  l’auteur ;
-*  la date de dernière mise à jour ;
-*  le formulaire permettant d’ajouter un commentaire (soumis pour validation) ;
-*  les listes des commentaires validés et publiés.
+*   le titre ;
+*   le chapô ;
+*   le contenu ;
+*   l’auteur ;
+*   la date de dernière mise à jour ;
+*   le formulaire permettant d’ajouter un commentaire (soumis pour validation) ;
+*   les listes des commentaires validés et publiés.
 
 Sur la page permettant de modifier un blog post, l’utilisateur a la possibilité de modifier les champs titre, chapô, auteur et contenu.
 
