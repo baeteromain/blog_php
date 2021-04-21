@@ -4,110 +4,110 @@
 /* ----NAVBAR----- */
 
 .animated_title {
-    border-right: solid 3px rgba(0, 247, 255, 0.75);
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 21px;
-    color: rgba(0, 0, 0, 0.7);
+  border-right: solid 3px rgba(0, 247, 255, 0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 21px;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 /* Animation */
 .animated_title {
-    animation: animated-text 2s steps(29, end) 1s 1 normal both,
-        animated-cursor 600ms steps(29, end) infinite;
-    max-width: 175px;
+  animation: animated-text 2s steps(29, end) 1s 1 normal both,
+      animated-cursor 600ms steps(29, end) infinite;
+  max-width: 175px;
 }
 
 /* text animation */
 
 @keyframes animated-text {
-    from {
-        width: 0;
-    }
-    to {
-        width: 210px;
-    }
+from {
+    width: 0;
+}
+to {
+    width: 210px;
+}
 }
 
 /* cursor animations */
 
 @keyframes animated-cursor {
-    from {
-        border-right-color: rgba(0, 247, 255, 0.75);
-    }
-    to {
-        border-right-color: transparent;
-    }
+from {
+    border-right-color: rgba(0, 247, 255, 0.75);
+}
+to {
+    border-right-color: transparent;
+}
 }
 
 /* ----BANNER----- */
 
 .quote-banner,
 .nes {
-    font-family: 'Press Start 2P', cursive;
+font-family: 'Press Start 2P', cursive;
 }
 
 /* ----BODY----- */
 
 .main_login {
-    min-height: 600px;
+min-height: 600px;
 }
 
 .main_register {
-    min-height: 600px;
+min-height: 600px;
 }
 
 /* ----ADMIN PANEL----- */
 
 @media screen and (min-width: 960px) and (max-width: 1465px) {
-    .main_admin {
-        margin-left: 250px;
-    }
+  .main_admin {
+      margin-left: 250px;
+  }
 }
 .sidenav {
-    width: 160px;
+  width: 160px;
 }
 
 /* ----HOMEPAGE----- */
 
 .imgpost {
-    object-fit: cover;
+  object-fit: cover;
 }
 
 .title_post_box {
-    text-decoration: none;
+  text-decoration: none;
 }
 .title_post_box:hover {
-    background: none;
+  background: none;
 }
 .title_post_box span {
-    display: none;
+  display: none;
 }
 .title_post_box:hover span {
-    display: inline;
-    position: absolute;
-    padding: 5px;
-    left: 100px;
-    width: 200px;
-    border: 2px solid black;
-    background: #ffffff;
-    text-align: center;
-    color: black;
-    z-index: 10;
+  display: inline;
+  position: absolute;
+  padding: 5px;
+  left: 100px;
+  width: 200px;
+  border: 2px solid black;
+  background: #ffffff;
+  text-align: center;
+  color: black;
+  z-index: 10;
 }
 
 .reply_form {
-    display: none;
+  display: none;
 }
 
 @media screen and (min-width: 60em) {
-    .imgpost {
-        height: 212px;
-    }
-    .last_article {
-        min-height: 650px;
-        max-height: 650px;
-    }
+  .imgpost {
+      height: 212px;
+  }
+  .last_article {
+      min-height: 650px;
+      max-height: 650px;
+  }
 }
 
 /* ----FOOTER----- */
@@ -115,5 +115,5 @@
 .svg-icon path,
 .svg-icon polygon,
 .svg-icon rect {
-    fill: white;
+  fill: white;
 }
