@@ -20,8 +20,9 @@ class AdminController extends Controller
         'publish' => 1,
         'not_publish' => 0,
     ];
-
-  
+    /**
+     * @var Pagination
+     */
     private $pagination;
     /**
      * @var Validation
@@ -79,14 +80,14 @@ class AdminController extends Controller
     {
         $this->checkAdmin();
 
-        $user = $this->userManager->getUserById($this->get['id']);
+        $user = $this->userManager->getUserById($this->getId);
 
-        if (!empty($this->get) && isset($this->get['id'], $this->get['role']) && $user) {
-            if ('subscriber' === $this->get['role'] || 'admin' === $this->get['role']) {
-                if ('admin' === $this->get['role']) {
+        if (!empty($this->getAll) && isset($this->getId, $this->getRole) && $user) {
+            if ('subscriber' === $this->getRole || 'admin' === $this->getRole) {
+                if ('admin' === $this->getRole) {
                     $this->userManager->updateRole($user->getId(), self::ROLE['admin']);
                 }
-                if ('subscriber' === $this->get['role']) {
+                if ('subscriber' === $this->getRole) {
                     $this->userManager->updateRole($user->getId(), self::ROLE['subscriber']);
                 }
 
@@ -111,10 +112,10 @@ class AdminController extends Controller
     {
         $this->checkAdmin();
 
-        $user = $this->userManager->getUserById($this->get['id']);
+        $user = $this->userManager->getUserById($this->getId);
 
-        if (!empty($this->get) & isset($this->get['email'])) {
-            $errors = $this->validator->validate($this->get, 'User');
+        if (!empty($this->getAll) & isset($this->getEmail)) {
+            $errors = $this->validator->validate($this->getAll, 'User');
             if (!$errors['email']) {
                 $this->resetEmail($user->getId(), $user->getUsername());
             }
@@ -130,12 +131,12 @@ class AdminController extends Controller
     {
         $token = bin2hex(openssl_random_pseudo_bytes(16));
 
-        $this->userManager->updateUser($id, $username, $this->get['email'], $token, '0');
+        $this->userManager->updateUser($id, $username, $this->getEmail, $token, '0');
 
-        $mailer = new Mailer(true, $this->get['email'], 'update');
+        $mailer = new Mailer(true, $this->getEmail, 'update');
 
         $mailer->Body = $this->renderMail('profil/mail_confirm_email.html.twig', [
-            'email' => $this->get['email'],
+            'email' => $this->getEmail,
             'url' => Mailer::url(),
             'token' => $token,
         ]);
@@ -151,7 +152,7 @@ class AdminController extends Controller
         $this->checkAdmin();
 
         $password = bin2hex(openssl_random_pseudo_bytes(8));
-        $user = $this->userManager->getUserById($this->get['id']);
+        $user = $this->userManager->getUserById($this->getId);
 
         $this->userManager->updatePassword($password, $user->getEmail());
 
@@ -173,10 +174,10 @@ class AdminController extends Controller
     {
         $this->checkAdmin();
 
-        $user = $this->userManager->getUserById($this->get['id']);
+        $user = $this->userManager->getUserById($this->getId);
 
-        if (!empty($this->get) && isset($this->get['id']) && $user) {
-            $this->userManager->deleteUser($this->get['id']);
+        if (!empty($this->getAll) && isset($this->getId) && $user) {
+            $this->userManager->deleteUser($this->getId);
             $this->session->set('delete_user', "L'utilisateur à bien été supprimé");
 
             header('Location: /admin/users');

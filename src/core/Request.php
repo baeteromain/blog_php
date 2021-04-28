@@ -4,15 +4,6 @@ namespace App\core;
 
 class Request
 {
-
-    /**
-     * @var array
-     */
-    private $get;
-    /**
-     * @var array
-     */
-    private $post;
     /**
      * @var array
      */
@@ -24,20 +15,28 @@ class Request
 
     public function __construct()
     {
-        $this->get = $_GET;
-        $this->post = $_POST;
         $this->files = $_FILES;
-        $this->session = new Session($_SESSION);
+        $this->session = new Session();
     }
 
-    public function getGet(): array
+    public function getGet($params = null)
     {
-        return $this->get;
+        return filter_input(INPUT_GET, $params);
     }
 
-    public function getPost(): array
+    public function getGetAll()
     {
-        return $this->post;
+        return filter_input_array(INPUT_GET);
+    }
+
+    public function getPost($params = null)
+    {
+        return filter_input(INPUT_POST, $params);
+    }
+
+    public function getPostAll()
+    {
+        return filter_input_array(INPUT_POST);
     }
 
     public function getSession(): Session

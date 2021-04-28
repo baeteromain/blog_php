@@ -27,17 +27,17 @@ class ContactController extends Controller
      */
     public function index()
     {
-        if (!empty($this->post)) {
-            $errors = $this->validator->validate($this->post, 'Contact');
+        if (!empty($this->postAll)) {
+            $errors = $this->validator->validate($this->postAll, 'Contact');
 
             if (!$errors) {
                 $mailer = new Mailer(true, EMAIL_USERNAME, self::TEMPLATE_CONTACT);
 
                 $mailer->Body = $this->renderMail('contact/mail_contact.html.twig', [
-                    'firstname' => $this->post['firstname'],
-                    'lastname' => $this->post['lastname'],
-                    'email' => $this->post['email'],
-                    'content' => $this->post['content'],
+                    'firstname' => $this->postFirstname,
+                    'lastname' => $this->postLastname,
+                    'email' => $this->postEmail,
+                    'content' => $this->postContent,
                 ]);
                 $mailer->send();
 
@@ -51,7 +51,7 @@ class ContactController extends Controller
 
         return $this->render('contact/index.twig', [
             'errors' => $errors ?? null,
-            'post' => $this->post ?? null,
+            'post' => $this->postAll ?? null,
         ]);
     }
 }

@@ -4,13 +4,6 @@ namespace App\core;
 
 class Session
 {
-    private $session;
-
-    public function __construct($session)
-    {
-        $this->session = $session;
-    }
-
     public function set($name, $value): Session
     {
         $_SESSION[$name] = $value;
