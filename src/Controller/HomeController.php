@@ -7,7 +7,6 @@ use App\Manager\PostManager;
 
 class HomeController extends Controller
 {
-
     /**
      * @var PostManager
      */

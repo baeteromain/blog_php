@@ -30,7 +30,6 @@ class AuthController extends Controller
      */
     private $errorController;
 
-
     public function __construct()
     {
         parent::__construct();
@@ -41,20 +40,20 @@ class AuthController extends Controller
 
     public function signin()
     {
-        if (!empty($this->post)) {
-            $errors = $this->validator->validate($this->post, 'User');
+        if (!empty($this->postAll)) {
+            $errors = $this->validator->validate($this->postAll, 'User');
 
             if (!$errors) {
                 $token = bin2hex(openssl_random_pseudo_bytes(16));
-                $this->userManager->createUser($this->post['username'], $this->post['email'], $this->post['password'], self::ROLE['subscriber'], $token);
+                $this->userManager->createUser($this->postUsername, $this->postEmail, $this->postPassword, self::ROLE['subscriber'], $token);
 
-                $this->session->set('register', 'Merci de valider votre compte via le lien de confirmation envoyé à votre adresse mail '.$this->post['email']);
+                $this->session->set('register', 'Merci de valider votre compte via le lien de confirmation envoyé à votre adresse mail '.$this->postEmail);
 
-                $mailer = new Mailer(true, $this->post['email'], self::TEMPLATE[1]);
+                $mailer = new Mailer(true, $this->postEmail, self::TEMPLATE[1]);
 
                 $mailer->Body = $this->renderMail('register/mail_confirm_email.html.twig', [
-                    'username' => $this->post['username'],
-                    'email' => $this->post['email'],
+                    'username' => $this->postUsername,
+                    'email' => $this->postEmail,
                     'url' => Mailer::url(),
                     'token' => $token,
                 ]);
@@ -68,7 +67,7 @@ class AuthController extends Controller
 
         return $this->render('register/index.twig', [
             'errors' => $errors ?? null,
-            'post' => $this->post ?? null,
+            'post' => $this->postAll ?? null,
         ]);
     }
 
@@ -77,16 +76,16 @@ class AuthController extends Controller
      */
     public function forgotpwd()
     {
-        if (!empty($this->post['email']) && isset($this->post['email'])) {
-            $exist = $this->userManager->checkEmail($this->post['email']);
+        if (!empty($this->postEmail) && isset($this->postEmail)) {
+            $exist = $this->userManager->checkEmail($this->postEmail);
             if ($exist) {
                 $token = bin2hex(openssl_random_pseudo_bytes(16));
-                $this->userManager->tokenForgotpwd($this->post['email'], $token);
+                $this->userManager->tokenForgotpwd($this->postEmail, $token);
 
-                $mailer = new Mailer(true, $this->post['email'], self::TEMPLATE[2]);
+                $mailer = new Mailer(true, $this->postEmail, self::TEMPLATE[2]);
 
                 $mailer->Body = $this->renderMail('register/mail_forgot_pwd.html.twig', [
-                    'email' => $this->post['email'],
+                    'email' => $this->postEmail,
                     'url' => Mailer::url(),
                     'token' => $token,
                 ]);
@@ -103,18 +102,18 @@ class AuthController extends Controller
 
         return $this->render('register/forgotPassword.twig', [
             'errors' => $errors ?? null,
-            'post' => $this->post ?? null,
+            'post' => $this->postAll ?? null,
         ]);
     }
 
     public function changePassword()
     {
-        if (!empty($this->post) && isset($this->post['password'], $this->post['confirm_password'])) {
-            $postPassword = array_splice($this->post, -2);
+        if (!empty($this->posta) && isset($this->postPassword, $this->postConfirmPassword)) {
+            $postPassword = array_splice($this->postAll, -2);
             $errors = $this->validator->validate($postPassword, 'User');
             if (!$errors) {
-                $this->userManager->updatePassword($postPassword['password'], $this->post['email']);
-                $this->userManager->removeToken($this->post['email']);
+                $this->userManager->updatePassword($postPassword['password'], $this->postEmail);
+                $this->userManager->removeToken($this->postEmail);
                 if ($this->checkLoggedIn()) {
                     $this->session->stop();
                 }
@@ -127,15 +126,15 @@ class AuthController extends Controller
 
         return $this->render('register/changePassword.twig', [
             'errors' => $errors ?? null,
-            'post' => $this->post ?? null,
-            'get' => $this->get ?? null,
+            'post' => $this->postAll ?? null,
+            'get' => $this->getAll ?? null,
         ]);
     }
 
     public function login()
     {
-        if (!empty($this->post) && isset($this->post['username'], $this->post['password'])) {
-            $user = $this->userManager->login($this->post['username'], $this->post['password']);
+        if (!empty($this->postAll) && isset($this->postUsername, $this->postPassword)) {
+            $user = $this->userManager->login($this->postUsername, $this->postPassword);
 
             if (!$user) {
                 $errors['login'] = 'Vos identifiants sont incorrects';
@@ -160,12 +159,12 @@ class AuthController extends Controller
             }
         }
 
-        if (!empty($this->post) && !isset($this->post['username'], $this->post['password'])) {
+        if (!empty($this->postAll) && !isset($this->postUsername, $this->postPassword)) {
             $errors['form_failed_login'] = 'Une erreur est survenue, merci de resaisir vos informations';
         }
 
-        if (!empty($this->get) && isset($this->get['email'], $this->get['token'])) {
-            $errors = !$this->userManager->emailConfirmation($this->get['email'], $this->get['token']);
+        if (!empty($this->getAll) && isset($this->getEmail, $this->getToken)) {
+            $errors = !$this->userManager->emailConfirmation($this->getEmail, $this->getToken);
             if ($errors) {
                 $this->errorController->errorNotFound();
 
@@ -173,8 +172,8 @@ class AuthController extends Controller
             }
 
             if (!$errors) {
-                $this->userManager->validEmail($this->get['email'], $this->get['token']);
-                $this->userManager->removeToken($this->get['email']);
+                $this->userManager->validEmail($this->getEmail, $this->getToken);
+                $this->userManager->removeToken($this->getEmail);
 
                 $this->session->set('confirm_email', 'Votre adresse mail est confirmée, connectez-vous !');
             }
@@ -182,7 +181,7 @@ class AuthController extends Controller
 
         return $this->render('login/index.twig', [
             'errors' => $errors ?? null,
-            'post' => $this->post ?? null,
+            'post' => $this->postAll ?? null,
         ]);
     }
 
