@@ -8,8 +8,6 @@ use App\Manager\CategoryManager;
 
 class CategoryController extends Controller
 {
-
-
     /**
      * @var CategoryManager
      */
@@ -42,11 +40,11 @@ class CategoryController extends Controller
     {
         $this->checkAdmin();
 
-        if (!empty($this->get) && isset($this->get['name'], $this->get['slug'])) {
-            $errors = $this->validator->validate($this->get, 'Category');
+        if (!empty($this->getAll) && isset($this->getName, $this->getSlug)) {
+            $errors = $this->validator->validate($this->getAll, 'Category');
 
             if (!$errors) {
-                $this->categoryManager->createCategory($this->get['name'], $this->get['slug']);
+                $this->categoryManager->createCategory($this->getName, $this->getSlug);
 
                 $this->session->set('add_category', 'La catégorie a bien été ajoutée');
 
@@ -58,7 +56,7 @@ class CategoryController extends Controller
 
         return $this->render('admin/admin_categories/add_category.twig', [
             'errors' => $errors ?? null,
-            'get' => $this->get ?? null,
+            'get' => $this->getAll ?? null,
         ]);
     }
 
@@ -66,19 +64,19 @@ class CategoryController extends Controller
     {
         $this->checkAdmin();
 
-        $category = $this->categoryManager->getCategoryById($this->get['id']);
+        $category = $this->categoryManager->getCategoryById($this->getId);
 
-        if (!empty($this->get) && isset($this->get['name'], $this->get['slug'])) {
-            $errors = $this->validator->validate($this->get, 'Category');
-            if ($category->getName() === $this->get['name']) {
+        if (!empty($this->getAll) && isset($this->getName, $this->getSlug)) {
+            $errors = $this->validator->validate($this->getAll, 'Category');
+            if ($category->getName() === $this->getName) {
                 unset($errors['name']);
             }
 
-            if ($category->getSlug() === $this->get['slug']) {
+            if ($category->getSlug() === $this->getSlug) {
                 unset($errors['slug']);
             }
             if (!$errors) {
-                $this->categoryManager->updateCategory($category->getId(), $this->get['name'], $this->get['slug']);
+                $this->categoryManager->updateCategory($category->getId(), $this->getName, $this->getSlug);
 
                 $this->session->set('update_category', 'La catégorie a bien été modifiée');
 
@@ -98,10 +96,10 @@ class CategoryController extends Controller
     {
         $this->checkAdmin();
 
-        $category = $this->categoryManager->getCategoryById($this->get['id']);
+        $category = $this->categoryManager->getCategoryById($this->getId);
 
-        if (!empty($this->get) && isset($this->get['id']) && $category) {
-            $this->categoryManager->deleteCategory($this->get['id']);
+        if (!empty($this->getAll) && isset($this->getId) && $category) {
+            $this->categoryManager->deleteCategory($this->getId);
             $this->session->set('delete_category', 'La catégorie a bien été supprimée');
 
             header('Location: /admin/categories');

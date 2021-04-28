@@ -31,7 +31,6 @@ class PostController extends Controller
      */
     private $validator;
 
-
     public function __construct()
     {
         parent::__construct();
@@ -59,10 +58,10 @@ class PostController extends Controller
 
         $categories = $this->categoryManager->getCategories();
 
-        if (!empty($this->post)) {
+        if (!empty($this->postAll)) {
             $user = $this->session->get('user');
 
-            $errors = $this->validator->validate($this->post, 'Post');
+            $errors = $this->validator->validate($this->postAll, 'Post');
 
             if (!empty($this->files['file_upload']['tmp_name'])) {
                 $uploadfile = $this->uploadfile($this->files['file_upload'], self::OUTPUT_DIR);
@@ -76,10 +75,10 @@ class PostController extends Controller
             if (!$errors) {
                 move_uploaded_file($this->files['file_upload']['tmp_name'], self::OUTPUT_DIR.'/'.$data['image']);
 
-                $this->postManager->createPost($this->post['title'], $this->post['slug'], $data['image'], $this->post['chapo'], $this->post['content'], $user['id']);
-                if (isset($this->post['category'])) {
-                    foreach ($this->post['category'] as $categoryId) {
-                        $this->postManager->addCategoryToPost($categoryId, $this->post['title']);
+                $this->postManager->createPost($this->postTitle, $this->postSlug, $data['image'], $this->postChapo, $this->postContent, $user['id']);
+                if (isset($this->postCategory)) {
+                    foreach ($this->postCategory as $categoryId) {
+                        $this->postManager->addCategoryToPost($categoryId, $this->postTitle);
                     }
                 }
 
@@ -94,32 +93,32 @@ class PostController extends Controller
         return $this->render('admin/admin_posts/add_post.twig', [
             'errors' => $errors ?? null,
             'categories' => $categories ?? null,
-            'post' => $this->post ?? null,
+            'post' => $this->postAll ?? null,
         ]);
     }
 
     public function updatePost()
     {
         $this->checkAdmin();
-        if (!empty($this->get['id'])) {
-            $post = $this->postManager->getPostById($this->get['id']);
+        if (!empty($this->getId)) {
+            $post = $this->postManager->getPostById($this->getId);
 
             $categories = $this->categoryManager->getCategories();
 
-            $categoriesOfPost = $this->postManager->getCategoryByPost($this->get['id']);
+            $categoriesOfPost = $this->postManager->getCategoryByPost($this->getId);
         }
 
-        if (!empty($this->post)) {
-            $post = $this->postManager->getPostById($this->post['id']);
-            $categoriesOfPost = $this->postManager->getCategoryByPost($this->post['id']);
+        if (!empty($this->postAll)) {
+            $post = $this->postManager->getPostById($this->postId);
+            $categoriesOfPost = $this->postManager->getCategoryByPost($this->postId);
 
-            $errors = $this->validator->validate($this->post, 'Post');
+            $errors = $this->validator->validate($this->postAll, 'Post');
 
-            if ($post->getTitle() === $this->post['title']) {
+            if ($post->getTitle() === $this->postTitle) {
                 unset($errors['title']);
             }
 
-            if ($post->getSlug() === $this->post['slug']) {
+            if ($post->getSlug() === $this->postSlug) {
                 unset($errors['slug']);
             }
             if (!empty($this->files['file_upload']['tmp_name'])) {
@@ -146,24 +145,24 @@ class PostController extends Controller
                     $cat[] = $categoryOfPost->getId();
                 }
 
-                if (empty($this->post['category'])) {
+                if (empty($this->postCategory)) {
                     foreach ($cat  as $c) {
                         $this->postManager->deleteCategoryOfPost($c['id'], $post->getId());
                     }
                 }
 
-                foreach ($this->post['category'] as $categoryid) {
+                foreach ($this->postCategory as $categoryid) {
                     if (!in_array($categoryid, $cat)) {
-                        $this->postManager->addCategoryToPost($categoryid, $this->post['title']);
+                        $this->postManager->addCategoryToPost($categoryid, $this->postTitle);
                     }
 
-                    $categoriesRemoved = array_diff($cat, $this->post['category']);
+                    $categoriesRemoved = array_diff($cat, $this->postCategory);
                     foreach ($categoriesRemoved as $categoryRemoved) {
                         $this->postManager->deleteCategoryOfPost($categoryRemoved, $post->getId());
                     }
                 }
 
-                $this->postManager->updatePost($post->getId(), $this->post['title'], $this->post['slug'], $data['image'], $this->post['chapo'], $this->post['content'], $post->getCreated_at(), 85);
+                $this->postManager->updatePost($post->getId(), $this->postTitle, $this->postSlug, $data['image'], $this->postChapo, $this->postContent, $post->getCreated_at(), 85);
 
                 $this->session->set('update_post', "L'article bien été modifié");
 
@@ -177,7 +176,7 @@ class PostController extends Controller
             'errors' => $errors ?? null,
             'categories' => $categories ?? null,
             'post' => $post ?? null,
-            'get' => $this->get ?? null,
+            'get' => $this->getAll ?? null,
             'categoriesOfPost' => $categoriesOfPost ?? null,
         ]);
     }
@@ -185,9 +184,9 @@ class PostController extends Controller
     public function deletePost()
     {
         $this->checkAdmin();
-        if (!empty($this->get['id'])) {
-            $post = $this->postManager->getPostById($this->get['id']);
-            $categoriesOfPost = $this->postManager->getCategoryByPost($this->get['id']);
+        if (!empty($this->getId)) {
+            $post = $this->postManager->getPostById($this->getId);
+            $categoriesOfPost = $this->postManager->getCategoryByPost($this->getId);
 
             if ($post) {
                 foreach ($categoriesOfPost as $categoryOfPost) {

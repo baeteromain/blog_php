@@ -15,11 +15,16 @@ class CommentController extends Controller
      */
     private $commentManager;
 
+    private $getPublish;
+    private $getUnPublish;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->commentManager = new CommentManager();
+        $this->getPublish = $this->request->getGet('publish');
+        $this->getUnPublish = $this->request->getGet('unpublish');
     }
 
     public function index()
@@ -28,11 +33,11 @@ class CommentController extends Controller
 
         $comments = $this->commentManager->getComments();
 
-        if (isset($this->get['publish'])) {
+        if (isset($this->getPublish)) {
             $comments = $this->commentManager->getCommentsFilter(self::PUBLISH);
         }
 
-        if (isset($this->get['unpublish'])) {
+        if (isset($this->getUnPublish)) {
             $comments = $this->commentManager->getCommentsFilter(self::UNPUBLISH);
         }
 
@@ -47,8 +52,8 @@ class CommentController extends Controller
 
         $comments = $this->commentManager->getComments();
 
-        if (!empty($this->get['id'])) {
-            $this->commentManager->validateComment($this->get['id']);
+        if (!empty($this->getId)) {
+            $this->commentManager->validateComment($this->getId);
 
             $this->session->set('validate_comment', 'Le commentaire a bien été validé');
 
@@ -66,8 +71,8 @@ class CommentController extends Controller
     {
         $this->checkAdmin();
 
-        if (!empty($this->get['id'])) {
-            $replies = $this->commentManager->getReplyByComment($this->get['id']);
+        if (!empty($this->getId)) {
+            $replies = $this->commentManager->getReplyByComment($this->getId);
 
             if ($replies) {
                 foreach ($replies as $reply) {
@@ -75,7 +80,7 @@ class CommentController extends Controller
                 }
             }
 
-            $this->commentManager->deleteComment($this->get['id']);
+            $this->commentManager->deleteComment($this->getId);
 
             $this->session->set('delete_comment', 'Le commentaire a bien été supprimé');
 

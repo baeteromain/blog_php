@@ -11,8 +11,6 @@ use App\Model\Pagination;
 
 class BlogController extends Controller
 {
-
-
     /**
      * @var PostManager
      */
@@ -47,10 +45,10 @@ class BlogController extends Controller
 
     public function listPosts()
     {
-        if (empty($this->get['page'])) {
-            $this->get['page'] = 1;
+        if (empty($this->getPage)) {
+            $this->getPage = 1;
         }
-        $pagination = $this->pagination->paginate(5, $this->get['page'], $this->postManager->total());
+        $pagination = $this->pagination->paginate(5, $this->getPage, $this->postManager->total());
         $posts = $this->postManager->getPosts($pagination->getLimit(), $this->pagination->getStart());
 
         foreach ($posts as $post) {
@@ -69,13 +67,13 @@ class BlogController extends Controller
 
     public function singlePost()
     {
-        if (!isset($this->get['id'])) {
+        if (!isset($this->getId)) {
             header('Location: /articles');
 
             exit();
         }
 
-        $post = $this->postManager->getPostById($this->get['id']);
+        $post = $this->postManager->getPostById($this->getId);
 
         if (empty($post)) {
             header('Location: /articles');
@@ -85,13 +83,13 @@ class BlogController extends Controller
 
         $user = $this->session->get('user');
 
-        if (isset($this->post['post_comment'])) {
-            unset($this->post['post_comment']);
+        if (isset($this->postPostComment)) {
+            unset($this->postPostComment);
 
-            $errors = $this->validator->validate($this->post, 'Comment');
+            $errors = $this->validator->validate($this->postAll, 'Comment');
 
             if (!$errors) {
-                $this->addComment($user['id'], $this->post['content'], $this->post['post_id']);
+                $this->addComment($user['id'], $this->postContent, $this->postPostId);
 
                 header('Location: /articles/'.$post->getSlug().'-'.$post->getId().'?id='.$post->getId());
 
@@ -99,12 +97,12 @@ class BlogController extends Controller
             }
         }
 
-        if (isset($this->post['post_reply'])) {
-            unset($this->post['post_reply']);
+        if (isset($this->postPostReply)) {
+            unset($this->postPostReply);
 
             $errors_reply = $this->validator->validate($this->post, 'Comment');
             if (!$errors_reply) {
-                $this->addCommentReply($user['id'], $this->post['comment_id'], $this->post['reply'], $this->post['post_id']);
+                $this->addCommentReply($user['id'], $this->postCommentId, $this->postReply, $this->postPostId);
 
                 header('Location: /articles/'.$post->getSlug().'-'.$post->getId().'?id='.$post->getId());
 
@@ -112,9 +110,9 @@ class BlogController extends Controller
             }
         }
 
-        $comments = $this->commentManager->getCommentsByPost($this->get['id']);
+        $comments = $this->commentManager->getCommentsByPost($this->getId);
 
-        $categoriesOfPost = $this->postManager->getCategoryByPost($this->get['id']);
+        $categoriesOfPost = $this->postManager->getCategoryByPost($this->getId);
 
         $replyComment = [];
 
@@ -123,8 +121,8 @@ class BlogController extends Controller
         }
 
         return $this->render('blog/single/index.twig', [
-            'content' => $this->post['content'] ?? null,
-            'reply' => $this->post['reply'] ?? null,
+            'content' => $this->postContent ?? null,
+            'reply' => $this->postReply ?? null,
             'replyComment' => $replyComment ?? null,
             'errors_reply' => $errors_reply ?? null,
             'errors' => $errors ?? null,
@@ -137,14 +135,14 @@ class BlogController extends Controller
 
     public function listPostsByCategories()
     {
-        if (empty($this->get['page'])) {
-            $this->get['page'] = 1;
+        if (empty($this->getPage)) {
+            $this->getPage = 1;
         }
 
-        if (!empty($this->get['id'])) {
-            $pagination = $this->pagination->paginate(2, $this->get['page'], $this->postManager->totalByCategory($this->get['id']));
+        if (isset($this->getId)) {
+            $pagination = $this->pagination->paginate(2, $this->getPage, $this->postManager->totalByCategory($this->getId));
 
-            $posts = $this->postManager->getPostByCategories($pagination->getLimit(), $this->pagination->getStart(), $this->get['id']);
+            $posts = $this->postManager->getPostByCategories($pagination->getLimit(), $this->pagination->getStart(), $this->getId);
         }
 
         foreach ($posts as $post) {
@@ -153,15 +151,15 @@ class BlogController extends Controller
 
         $categories = $this->categoryManager->getCategories();
 
-        $cat = $this->categoryManager->getCategoryById($this->get['id']);
+        $cat = $this->categoryManager->getCategoryById($this->getId);
 
         return $this->render('blog/postsByCategories.twig', [
             'posts' => $posts ?? null,
             'pagination' => $pagination,
             'categories' => $categories ?? null,
             'categoriesofposts' => $categoriesofposts ?? null,
-            'categories_id' => $this->get['id'] ?? null,
-            'categories_slug' => $this->get['slug'] ?? null,
+            'categories_id' => $this->getId ?? null,
+            'categories_slug' => $this->getSlug ?? null,
             'category_name' => $cat->getName(),
         ]);
     }
