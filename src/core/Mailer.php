@@ -60,12 +60,9 @@ class Mailer extends PHPMailer
     public function send(): bool
     {
         try {
-            $r = parent::send();
-            echo 'Message a été envoyé';
-
-            return $r;
+            return parent::send();
         } catch (Exception $e) {
-            echo "Le message n'a pas pu être envoyé - Error: {$e->getMessage()}";
+            exit("Le message n'a pas pu être envoyé - Error".$e->getMessage());
         }
     }
 }
