@@ -76,8 +76,9 @@ class PostController extends Controller
                 move_uploaded_file($this->files['file_upload']['tmp_name'], self::OUTPUT_DIR.'/'.$data['image']);
 
                 $this->postManager->createPost($this->postTitle, $this->postSlug, $data['image'], $this->postChapo, $this->postContent, $user['id']);
-                if (isset($this->postCategory)) {
-                    foreach ($this->postCategory as $categoryId) {
+
+                if (isset($this->postAll['category'])) {
+                    foreach ($this->postAll['category'] as $categoryId) {
                         $this->postManager->addCategoryToPost($categoryId, $this->postTitle);
                     }
                 }
@@ -145,18 +146,18 @@ class PostController extends Controller
                     $cat[] = $categoryOfPost->getId();
                 }
 
-                if (empty($this->postCategory)) {
+                if (empty($this->postAll['category'])) {
                     foreach ($cat  as $c) {
                         $this->postManager->deleteCategoryOfPost($c['id'], $post->getId());
                     }
                 }
 
-                foreach ($this->postCategory as $categoryid) {
+                foreach ($this->postAll['category'] as $categoryid) {
                     if (!in_array($categoryid, $cat)) {
                         $this->postManager->addCategoryToPost($categoryid, $this->postTitle);
                     }
 
-                    $categoriesRemoved = array_diff($cat, $this->postCategory);
+                    $categoriesRemoved = array_diff($cat, $this->postAll['category']);
                     foreach ($categoriesRemoved as $categoryRemoved) {
                         $this->postManager->deleteCategoryOfPost($categoryRemoved, $post->getId());
                     }
