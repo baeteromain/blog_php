@@ -24,7 +24,17 @@
                     {% if user is empty %}
                         <small id="comment-desc" class="f6 black-60">
                         Vous devez être connecté pour laisser un commentaire : <a href="/login" class="link underline black-80 hover-blue b">Cliquez ici pour vous connecter.</a></small>
-                    {% else %}   
+                    {% else %}
+                    {% if session.get('post_comment') %}
+                        <div class="mt3 flex items-center justify-center pa4 bg-light-green">
+                            <span class="i"> {{ session.show('post_comment') }}</span>
+                        </div>
+                    {% endif %}   
+                    {% if session.get('reply_comment') %}
+                        <div class="mt3 flex items-center justify-center pa4 bg-light-green">
+                            <span class="i"> {{ session.show('reply_comment') }}</span>
+                        </div>
+                    {% endif %}   
                         <form class="pa4 black-80" method="post" >
                             <input name='post_id'  type="hidden" value="{{ post.id }}" >
                             <label for="comment" class="f6 b db mb2 ">Laissez un commentaire</label>
