@@ -17,7 +17,6 @@ class CommentValidation
      */
     private $commentManager;
 
-
     public function __construct()
     {
         $this->constraint = new Constraint();
@@ -44,6 +43,8 @@ class CommentValidation
         } elseif ('post_id' === $name) {
             return null;
         } elseif ('comment_id' === $name) {
+            return null;
+        } elseif ('post_comment' === $name) {
             return null;
         } else {
             $this->addError('form_failed_comment', 'Une erreur est survenue, merci de resaisir vos informations');
