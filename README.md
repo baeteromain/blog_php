@@ -1,5 +1,7 @@
 # PHP - P5 Openclassrooms - Créez votre premier blog en PHP
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/10a9f360d423489b8b20520d105977a1)](https://app.codacy.com/gh/baeteromain/blog_php?utm_source=github.com&utm_medium=referral&utm_content=baeteromain/blog_php&utm_campaign=Badge_Grade_Settings)
+
 ## Installation du projet 
 Telechargez directement le projet ou effectuez un ```git clone``` via la commande suite : 
 
