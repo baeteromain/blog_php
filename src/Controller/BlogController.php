@@ -91,7 +91,9 @@ class BlogController extends Controller
             if (!$errors) {
                 $this->addComment($user['id'], $this->postContent, $this->postPostId);
 
-                header('Location: /articles/'.$post->getSlug().'-'.$post->getId().'?id='.$post->getId());
+                $this->session->set('post_comment', 'Votre commentaire a bien été posté, il est en attente de validation.');
+
+                header('Location: /articles/'.$post->getSlug().'-'.$post->getId().'?id='.$post->getId().'#comment');
 
                 exit();
             }
@@ -104,7 +106,9 @@ class BlogController extends Controller
             if (!$errors_reply) {
                 $this->addCommentReply($user['id'], $this->postCommentId, $this->postReply, $this->postPostId);
 
-                header('Location: /articles/'.$post->getSlug().'-'.$post->getId().'?id='.$post->getId());
+                $this->session->set('reply_comment', 'Votre réponse a bien été posté, elle est en attente de validation.');
+
+                header('Location: /articles/'.$post->getSlug().'-'.$post->getId().'?id='.$post->getId().'#comment');
 
                 exit();
             }
