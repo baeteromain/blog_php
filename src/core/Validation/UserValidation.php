@@ -18,7 +18,6 @@ class UserValidation
     private $userManager;
     private $post;
 
-
     public function __construct($post)
     {
         $this->constraint = new Constraint();
@@ -39,19 +38,26 @@ class UserValidation
     {
         if ('username' === $name) {
             $error = $this->checkUsername($name, $value);
-            $this->addError($name, $error);
-        } elseif ('password' === $name) {
-            $error = $this->checkPassword($name, $value);
-            $this->addError($name, $error);
-        } elseif ('confirm_password' === $name) {
-            $error = $this->checkPasswordConfirm($name, $value, $this->post['password']);
-            $this->addError($name, $error);
-        } elseif ('email' === $name) {
-            $error = $this->checkEmail($name, $value);
-            $this->addError($name, $error);
-        } else {
-            $this->addError('form_failed_register', 'Une erreur est survenue lors de votre inscription, merci de resaisir vos informations');
+
+            return $this->addError($name, $error);
         }
+        if ('password' === $name) {
+            $error = $this->checkPassword($name, $value);
+
+            return $this->addError($name, $error);
+        }
+        if ('confirm_password' === $name) {
+            $error = $this->checkPasswordConfirm($name, $value, $this->post['password']);
+
+            return $this->addError($name, $error);
+        }
+        if ('email' === $name) {
+            $error = $this->checkEmail($name, $value);
+
+            return $this->addError($name, $error);
+        }
+
+        return $this->addError('form_failed_register', 'Une erreur est survenue lors de votre inscription, merci de resaisir vos informations');
     }
 
     private function addError($name, $error)

@@ -63,13 +63,14 @@ class PostController extends Controller
 
             $errors = $this->validator->validate($this->postAll, 'Post');
 
+            $data = [
+                'image' => self::BASEIMAGEPOST,
+            ];
+
             if (!empty($this->files['file_upload']['tmp_name'])) {
                 $uploadfile = $this->uploadfile($this->files['file_upload'], self::OUTPUT_DIR);
+
                 $data = $uploadfile;
-            } else {
-                $data = [
-                    'image' => self::BASEIMAGEPOST,
-                ];
             }
 
             if (!$errors) {

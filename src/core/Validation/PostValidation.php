@@ -17,7 +17,6 @@ class PostValidation
      */
     private $postManager;
 
-
     public function __construct()
     {
         $this->constraint = new Constraint();
@@ -37,21 +36,29 @@ class PostValidation
     {
         if ('title' === $name) {
             $error = $this->checkTitle($name, $value);
-            $this->addError($name, $error);
-        } elseif ('chapo' === $name) {
-            $error = $this->checkChapo($name, $value);
-            $this->addError($name, $error);
-        } elseif ('content' === $name) {
-            $error = $this->checkContent($name, $value);
-            $this->addError($name, $error);
-        } elseif ('slug' === $name) {
-            $error = $this->checkSlug($name, $value);
-            $this->addError($name, $error);
-        } elseif ('category' === $name || 'id' === $name) {
-            return null;
-        } else {
-            $this->addError('form_failed_post', 'Une erreur est survenue, merci de resaisir vos informations');
+
+            return $this->addError($name, $error);
         }
+        if ('chapo' === $name) {
+            $error = $this->checkChapo($name, $value);
+
+            return $this->addError($name, $error);
+        }
+        if ('content' === $name) {
+            $error = $this->checkContent($name, $value);
+
+            return $this->addError($name, $error);
+        }
+        if ('slug' === $name) {
+            $error = $this->checkSlug($name, $value);
+
+            return $this->addError($name, $error);
+        }
+        if ('category' === $name || 'id' === $name) {
+            return null;
+        }
+
+        return $this->addError('form_failed_post', 'Une erreur est survenue, merci de resaisir vos informations');
     }
 
     private function addError($name, $error)
