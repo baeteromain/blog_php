@@ -17,7 +17,6 @@ class CategoryValidation
      */
     private $categoryManager;
 
-
     public function __construct()
     {
         $this->constraint = new Constraint();
@@ -37,15 +36,19 @@ class CategoryValidation
     {
         if ('name' === $name) {
             $error = $this->checkname($name, $value);
-            $this->addError($name, $error);
-        } elseif ('slug' === $name) {
-            $error = $this->checkSlug($name, $value);
-            $this->addError($name, $error);
-        } elseif ('id' === $name) {
-            return null;
-        } else {
-            $this->addError('form_failed_update_category', 'Une erreur est survenue, merci de resaisir vos informations');
+
+            return $this->addError($name, $error);
         }
+        if ('slug' === $name) {
+            $error = $this->checkSlug($name, $value);
+
+            return $this->addError($name, $error);
+        }
+        if ('id' === $name) {
+            return null;
+        }
+
+        return $this->addError('form_failed_update_category', 'Une erreur est survenue, merci de resaisir vos informations');
     }
 
     private function addError($name, $error)

@@ -36,19 +36,25 @@ class CommentValidation
     {
         if ('content' === $name) {
             $error = $this->checkContent($name, $value);
-            $this->addError($name, $error);
-        } elseif ('reply' === $name) {
-            $error = $this->checkContentReply($name, $value);
-            $this->addError($name, $error);
-        } elseif ('post_id' === $name) {
-            return null;
-        } elseif ('comment_id' === $name) {
-            return null;
-        } elseif ('post_comment' === $name) {
-            return null;
-        } else {
-            $this->addError('form_failed_comment', 'Une erreur est survenue, merci de resaisir vos informations');
+
+            return $this->addError($name, $error);
         }
+        if ('reply' === $name) {
+            $error = $this->checkContentReply($name, $value);
+
+            return $this->addError($name, $error);
+        }
+        if ('post_id' === $name) {
+            return null;
+        }
+        if ('comment_id' === $name) {
+            return null;
+        }
+        if ('post_comment' === $name) {
+            return null;
+        }
+
+        return $this->addError('form_failed_comment', 'Une erreur est survenue, merci de resaisir vos informations');
     }
 
     private function addError($name, $error)

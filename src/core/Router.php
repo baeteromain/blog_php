@@ -8,7 +8,6 @@ use Exception;
 
 class Router extends AltoRouter
 {
-
     /**
      * @var ErrorController
      */
@@ -66,18 +65,17 @@ class Router extends AltoRouter
     {
         $match = $this->match();
         if (false === $match) {
-            $this->errorController->errorNotFound();
+            return $this->errorController->errorNotFound();
+        }
+        list($controller, $action) = explode('#', $match['target']);
+        $cname = '\\App\\Controller\\'.$controller;
+        $controllerName = new $cname();
+        if (is_callable([$controllerName, $action])) {
+            call_user_func_array([$controllerName, $action], [$match['params']]);
         } else {
-            list($controller, $action) = explode('#', $match['target']);
-            $cname = '\\App\\Controller\\'.$controller;
-            $controllerName = new $cname();
-            if (is_callable([$controllerName, $action])) {
-                call_user_func_array([$controllerName, $action], [$match['params']]);
-            } else {
-                $this->errorController->errorNotFound();
+            $this->errorController->errorNotFound();
 
-                throw new Exception('Error: can not call '.get_class($controllerName).'#'.$action);
-            }
+            throw new Exception('Error: can not call '.get_class($controllerName).'#'.$action);
         }
     }
 }
