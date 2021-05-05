@@ -11,7 +11,6 @@ class ContactValidation
      */
     private $constraint;
 
-
     public function __construct()
     {
         $this->constraint = new Constraint();
@@ -30,19 +29,26 @@ class ContactValidation
     {
         if ('firstname' === $name) {
             $error = $this->checkFistName($name, $value);
-            $this->addError($name, $error);
-        } elseif ('lastname' === $name) {
-            $error = $this->checkLastName($name, $value);
-            $this->addError($name, $error);
-        } elseif ('email' === $name) {
-            $error = $this->checkEmail($name, $value);
-            $this->addError($name, $error);
-        } elseif ('content' === $name) {
-            $error = $this->checkContent($name, $value);
-            $this->addError($name, $error);
-        } else {
-            $this->addError('form_failed_contact', 'Une erreur est survenue, merci de resaisir vos informations');
+
+            return $this->addError($name, $error);
         }
+        if ('lastname' === $name) {
+            $error = $this->checkLastName($name, $value);
+
+            return $this->addError($name, $error);
+        }
+        if ('email' === $name) {
+            $error = $this->checkEmail($name, $value);
+
+            return $this->addError($name, $error);
+        }
+        if ('content' === $name) {
+            $error = $this->checkContent($name, $value);
+
+            return $this->addError($name, $error);
+        }
+
+        return $this->addError('form_failed_contact', 'Une erreur est survenue, merci de resaisir vos informations');
     }
 
     private function addError($name, $error)
