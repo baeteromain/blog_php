@@ -58,7 +58,7 @@ Si vous voulez tester les mails en local, installer MailDev ( lien vers la docum
 
 Une fois l'installation faite, lancer MailDev dans un terminal via la commande : 
 ```maildev```
-Vous devriez voir apparaitre un retour vous indiquant l'addresse de la page web permettant de voir les mails
+Vous devriez voir apparaitre un retour vous indiquant l'adresse de la page web permettant de voir les mails
 
 ```
 MailDev webapp running at http://0.0.0.0:1080
